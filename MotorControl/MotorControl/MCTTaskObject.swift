@@ -47,8 +47,10 @@ class MCTTaskObject: RSDMotionTaskObject, RSDTaskDesign {
 
     /// Override the taskData builder to add the run count.
     override func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
-        let data = super.taskData(for: taskResult)
-        var json: [String : RSDJSONSerializable] = (data?.json as? [String : RSDJSONSerializable]) ?? [:]
+        let builder = RSDDefaultScoreBuilder()
+        var json: [String : RSDJSONSerializable] =
+            (builder.getScoringData(from: taskResult) as? [String : RSDJSONSerializable])
+                ?? [:]
         json[RSDIdentifier.taskRunCount.stringValue] = runCount
         return TaskData(identifier: self.identifier, timestampDate: taskResult.endDate, json: json)
     }
