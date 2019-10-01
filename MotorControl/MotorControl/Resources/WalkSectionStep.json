@@ -94,7 +94,7 @@
             "placementType": "fullsizeBackground"
         },
         "duration": 5,
-        "commands": ["playSoundOnStart", "transitionAutomatically"],
+        "commands": ["playSoundOnStart", "transitionAutomatically", "speakWarningOnPause"],
         "spokenInstructions": {
             "start": "Place the phone in your pocket."
         }
