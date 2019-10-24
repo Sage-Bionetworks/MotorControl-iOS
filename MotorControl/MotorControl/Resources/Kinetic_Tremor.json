@@ -8,7 +8,7 @@
                 "identifier":"introduction",
                 "type":"overview",
                 "title":"Finger-to-Nose",
-                "text":"In this activity, you’ll hold your phone beside you at arm’s length. You’ll hold your phone with your pointer finger sticking out sideways. Then touch the tip of your nose with the tip of your finger. You will do this repeatedly for 30 seconds.  Our goal is to measure your hand movement during the arm swing and then during the precise movement when you touch finger-to-nose.",
+                "text":"In this activity, you’ll hold your phone beside you at arm’s length. You’ll hold your phone with your pointer finger sticking out sideways. Then touch the tip of your nose with the tip of your finger. You will do this repeatedly for 30 seconds. Our goal is to measure your hand movement during the arm swing and then during the precise movement when you touch finger-to-nose.",
                 "permissions":[
                                {
                                 "permissionType":"motion",
@@ -19,8 +19,7 @@
                     "type":"animated",
                     "imageNames":["KineticHoldPhone-Left", "FingerToNose4", "FingerToNose5"],
                     "placementType":"topBackground",
-                    "animationDuration": 4,
-                    "animationRepeatCount": 1
+                    "animationDuration": 4
                 },
                 "icons": [
                           {
@@ -48,12 +47,12 @@
                  "type":"instruction",
                  "title":"Each hand for 30 seconds",
                  "text":"We will do this finger-to-nose motion repeatedly for 30 seconds with one hand, and then for 30 seconds with your other hand.",
+                 "fullInstructionsOnly": true,
                  "image":{
                      "type":"animated",
                      "imageNames":["KineticHoldPhone-Left", "FingerToNose4", "FingerToNose5"],
                      "placementType":"topBackground",
-                     "animationDuration": 4,
-                     "animationRepeatCount": 1
+                     "animationDuration": 4
                  },
                  "actions":{
                      "goForward":{
