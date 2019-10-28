@@ -116,7 +116,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         var buttonTitle: String? = nil
         if hand != handOrder.last,
            let otherHand = hand.otherHand {
-            buttonTitle = Localization.localizedStringWithFormatKey("TAPPING_CONTINUE_WITH_%@", otherHand.rawValue)
+            buttonTitle = String.localizedStringWithFormat(Localization.localizedString("TAPPING_CONTINUE_WITH_%@"), otherHand.rawValue)
         } else {
             buttonTitle = Localization.localizedString("TAPPING_CONTINUE")
         }
