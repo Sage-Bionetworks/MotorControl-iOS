@@ -55,7 +55,7 @@ public class MCTCompletionStepViewController : RSDStepViewController {
             let task = self.stepViewModel.rootPathComponent.task as? MCTTaskObject,
             let ordinal = formatter.string(from: NSNumber(value: task.runCount)) {
             let textFormat = "\(textKey)_%@"
-            self.stepTextLabel?.text = Localization.localizedStringWithFormatKey(textFormat, ordinal)
+            self.stepTextLabel?.text = String.localizedStringWithFormat(Localization.localizedString(textFormat), ordinal)
         }
         else {
             self.stepTextLabel?.text = defaultText
