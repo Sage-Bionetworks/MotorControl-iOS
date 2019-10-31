@@ -44,6 +44,8 @@
 		FF24D12E22D3F707009D8AE3 /* MCTTappingStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF24D12D22D3F707009D8AE3 /* MCTTappingStepObject.swift */; };
 		FFBBABDF22D3E22000978A9B /* BalanceSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = FFBBABDD22D3E21F00978A9B /* BalanceSectionStep.json */; };
 		FFBBABE022D3E22000978A9B /* WalkSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = FFBBABDE22D3E21F00978A9B /* WalkSectionStep.json */; };
+		FFD7D767236BA0AC0073E17C /* PhoneInPocket-4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFD7D765236BA0AC0073E17C /* PhoneInPocket-4@2x.png */; };
+		FFD7D768236BA0AC0073E17C /* PhoneInPocket-4@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFD7D766236BA0AC0073E17C /* PhoneInPocket-4@3x.png */; };
 		FFF0C13A2321E1E500498AFC /* FingerToNose9@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF0C1262321E1E400498AFC /* FingerToNose9@3x.png */; };
 		FFF0C13B2321E1E500498AFC /* KineticHoldPhone-Left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF0C1272321E1E400498AFC /* KineticHoldPhone-Left@2x.png */; };
 		FFF0C13C2321E1E500498AFC /* FingerToNose1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF0C1282321E1E400498AFC /* FingerToNose1@3x.png */; };
@@ -194,6 +196,8 @@
 		FF24D12D22D3F707009D8AE3 /* MCTTappingStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingStepObject.swift; sourceTree = "<group>"; };
 		FFBBABDD22D3E21F00978A9B /* BalanceSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BalanceSectionStep.json; sourceTree = "<group>"; };
 		FFBBABDE22D3E21F00978A9B /* WalkSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = WalkSectionStep.json; sourceTree = "<group>"; };
+		FFD7D765236BA0AC0073E17C /* PhoneInPocket-4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-4@2x.png"; sourceTree = "<group>"; };
+		FFD7D766236BA0AC0073E17C /* PhoneInPocket-4@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PhoneInPocket-4@3x.png"; sourceTree = "<group>"; };
 		FFF0C1262321E1E400498AFC /* FingerToNose9@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FingerToNose9@3x.png"; sourceTree = "<group>"; };
 		FFF0C1272321E1E400498AFC /* KineticHoldPhone-Left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KineticHoldPhone-Left@2x.png"; sourceTree = "<group>"; };
 		FFF0C1282321E1E400498AFC /* FingerToNose1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FingerToNose1@3x.png"; sourceTree = "<group>"; };
@@ -537,6 +541,8 @@
 				FFF0C1D62321E27F00498AFC /* PhoneInPocket-2@3x.png */,
 				FFF0C1D82321E27F00498AFC /* PhoneInPocket-3@2x.png */,
 				FFF0C1DA2321E27F00498AFC /* PhoneInPocket-3@3x.png */,
+				FFD7D765236BA0AC0073E17C /* PhoneInPocket-4@2x.png */,
+				FFD7D766236BA0AC0073E17C /* PhoneInPocket-4@3x.png */,
 			);
 			path = PhoneInPocket;
 			sourceTree = "<group>";
@@ -734,6 +740,7 @@
 				FFF0C1922321E25200498AFC /* Walking-12@3x.png in Resources */,
 				FFF0C14B2321E1E500498AFC /* FingerToNose2@2x.png in Resources */,
 				FFF0C1CF2321E26900498AFC /* Balance-7@2x.png in Resources */,
+				FFD7D768236BA0AC0073E17C /* PhoneInPocket-4@3x.png in Resources */,
 				FFF0C1482321E1E500498AFC /* FingerToNose5@3x.png in Resources */,
 				FFF0C1D52321E26900498AFC /* Balance-2@2x.png in Resources */,
 				FFF0C1632321E20A00498AFC /* F-FlatSurface@3x.png in Resources */,
@@ -761,6 +768,7 @@
 				FFF0C1472321E1E500498AFC /* KineticHoldPhone-Right@2x.png in Resources */,
 				FFF0C1462321E1E500498AFC /* FingerToNose1@2x.png in Resources */,
 				FFF0C1A02321E25200498AFC /* Walking-7@3x.png in Resources */,
+				FFD7D767236BA0AC0073E17C /* PhoneInPocket-4@2x.png in Resources */,
 				FFF0C1422321E1E500498AFC /* KineticHoldPhone-Left@3x.png in Resources */,
 				FFF0C1A12321E25200498AFC /* Walking-5@2x.png in Resources */,
 				FFF0C1642321E20A00498AFC /* PhoneOnSurface@2x.png in Resources */,
