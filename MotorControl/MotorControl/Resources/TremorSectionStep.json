@@ -26,6 +26,10 @@
                         "goForward":{
                             "type":"default",
                             "buttonTitle":"Hold phone"
+                        },
+                        "cancel":{
+                            "type":"default",
+                            "iconName" : "closeActivity_Circle"
                         }
                     }
               },
