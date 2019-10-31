@@ -23,11 +23,11 @@
                 },
                 "icons": [
                           {
-                            "icon":"SpaceToMoveYourArmsRose",
+                            "icon":"SpaceToMoveYourArms",
                             "title": "SPACE TO MOVE YOUR ARMS"
                           },
                           {
-                            "icon":"ComfortablePlaceToSitRose",
+                            "icon":"ComfortablePlaceToSit",
                             "title": "COMFORTABLE PLACE TO SIT"
                           }
                         ],
