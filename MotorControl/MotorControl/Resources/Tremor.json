@@ -31,6 +31,10 @@
                         "type":"default",
                         "buttonTitle":"Get started"
                     },
+                    "cancel":{
+                        "type":"default",
+                        "iconName" : "closeActivity_Circle"
+                    },
                     "skip":{
                         "type":"reminder",
                         "reminderIdentifier":"Tremor"
