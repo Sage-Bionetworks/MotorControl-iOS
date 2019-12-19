@@ -64,7 +64,7 @@ public enum MCTTaskIdentifier : String, Codable, CaseIterable {
 }
 
 /// A task info object for the tasks included in this submodule.
-public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor, RSDTaskDesign {
+public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData, RSDTaskDesign {
 
     /// The task identifier for this task.
     public let taskIdentifier: MCTTaskIdentifier
@@ -107,7 +107,7 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor, RSDTaskDesign {
 
         // Get the task icon for this taskIdentifier
         do {
-            self.icon = try RSDImageWrapper(imageName: "\(taskIdentifier.stringValue)TaskIcon", bundle: Bundle(for: MCTFactory.self))
+            self.icon = try RSDResourceImageDataObject(imageName: "\(taskIdentifier.stringValue)TaskIcon", bundle: Bundle(for: MCTFactory.self))
         } catch let err {
             print("Failed to load the task icon. \(err)")
         }
@@ -128,7 +128,7 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor, RSDTaskDesign {
     public var detail: String?
     
     /// The image icon for the task.
-    public var icon: RSDImageWrapper?
+    public var icon: RSDResourceImageDataObject?
     
     /// Estimated minutes to perform the task.
     public var estimatedMinutes: Int {
@@ -161,9 +161,8 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconVendor, RSDTaskDesign {
 
 /// A task transformer for the resources included in this module.
 public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
-
     private enum CodingKeys : String, CodingKey {
-        case resourceName
+        case resourceName, packageName
     }
     
     public init(_ taskIdentifier: MCTTaskIdentifier) {
@@ -184,17 +183,20 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
     /// Name of the resource for this transformer.
     public let resourceName: String
     
+    /// Name of the Android package.
+    public var packageName: String?
+    
     /// Get the task resource from this bundle.
     public var bundleIdentifier: String? {
         return factoryBundle?.bundleIdentifier
     }
     
     /// The factory bundle points to this framework. (nil-resettable)
-    public var factoryBundle: Bundle? {
+    public var factoryBundle: RSDResourceBundle? {
         get { return _bundle ?? Bundle(for: MCTFactory.self)}
         set { _bundle = newValue  }
     }
-    private var _bundle: Bundle? = nil
+    private var _bundle: RSDResourceBundle? = nil
     
     // MARK: Not used.
     
@@ -204,7 +206,7 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
 }
 
 /// `RSDTaskGroupObject` is a concrete implementation of the `RSDTaskGroup` protocol.
-public struct MCTTaskGroup : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
+public struct MCTTaskGroup : RSDTaskGroup, RSDEmbeddedIconData, Decodable {
     
     private enum CodingKeys: String, CodingKey, CaseIterable {
         case identifier, title, detail, icon
@@ -219,8 +221,8 @@ public struct MCTTaskGroup : RSDTaskGroup, RSDEmbeddedIconVendor, Decodable {
     /// Additional detail text to display for the task group in a localized string.
     public let detail: String?
     
-    /// The optional `RSDImageWrapper` with the pointer to the image.
-    public let icon: RSDImageWrapper?
+    /// The optional `RSDResourceImageDataObject` with the pointer to the image.
+    public let icon: RSDResourceImageDataObject?
 
     /// The task group object is 
     public let tasks: [RSDTaskInfo] = MCTTaskIdentifier.allCases.map { MCTTaskInfo($0) }
