@@ -138,11 +138,11 @@
 		FFF0C1E02321E27F00498AFC /* PhoneInPocket-3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF0C1DA2321E27F00498AFC /* PhoneInPocket-3@3x.png */; };
 		FFF0C1E12321E27F00498AFC /* PhoneInPocket-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF0C1DB2321E27F00498AFC /* PhoneInPocket-2@2x.png */; };
 		FFFBE9CF23AD527400650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7F921BB45010004284E /* Research.framework */; };
-		FFFBE9D023AD527400650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7F921BB45010004284E /* Research.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FFFBE9D023AD527400650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7F921BB45010004284E /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFFBE9D223AD527600650F11 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E12674228E344800AE37E1 /* ResearchMotion.framework */; };
-		FFFBE9D323AD527600650F11 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E12674228E344800AE37E1 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FFFBE9D323AD527600650F11 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E12674228E344800AE37E1 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFFBE9D423AD527900650F11 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7FB21BB450B0004284E /* ResearchUI.framework */; };
-		FFFBE9D523AD527900650F11 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7FB21BB450B0004284E /* ResearchUI.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FFFBE9D523AD527900650F11 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7FB21BB450B0004284E /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
