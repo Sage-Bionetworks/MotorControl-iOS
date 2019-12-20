@@ -19,9 +19,6 @@
 		F82A4A222295EC9D00BEBE3C /* MCTActiveStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82A4A212295EC9D00BEBE3C /* MCTActiveStepObject.swift */; };
 		F837224B223320B400C9A2EA /* MCTHandInstructionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F837224A223320B400C9A2EA /* MCTHandInstructionStepObject.swift */; };
 		F8C36BCB223881A3000E42A7 /* MCTTaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C36BCA223881A3000E42A7 /* MCTTaskObject.swift */; };
-		F8E12675228E344800AE37E1 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E12674228E344800AE37E1 /* ResearchMotion.framework */; };
-		F8E3B7FA21BB45010004284E /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7F921BB45010004284E /* Research.framework */; };
-		F8E3B7FC21BB450B0004284E /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7FB21BB450B0004284E /* ResearchUI.framework */; };
 		F8E3B80821BB45630004284E /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B80721BB45630004284E /* Research_UnitTest.framework */; };
 		F8E3B81221BB46590004284E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B80A21BB46590004284E /* Images.xcassets */; };
 		F8E3B81321BB46590004284E /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8E3B80B21BB46590004284E /* TappingSectionStep.json */; };
@@ -140,6 +137,12 @@
 		FFF0C1DF2321E27F00498AFC /* PhoneInPocket-1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF0C1D92321E27F00498AFC /* PhoneInPocket-1@2x.png */; };
 		FFF0C1E02321E27F00498AFC /* PhoneInPocket-3@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF0C1DA2321E27F00498AFC /* PhoneInPocket-3@3x.png */; };
 		FFF0C1E12321E27F00498AFC /* PhoneInPocket-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FFF0C1DB2321E27F00498AFC /* PhoneInPocket-2@2x.png */; };
+		FFFBE9CF23AD527400650F11 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7F921BB45010004284E /* Research.framework */; };
+		FFFBE9D023AD527400650F11 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7F921BB45010004284E /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFFBE9D223AD527600650F11 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E12674228E344800AE37E1 /* ResearchMotion.framework */; };
+		FFFBE9D323AD527600650F11 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E12674228E344800AE37E1 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFFBE9D423AD527900650F11 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7FB21BB450B0004284E /* ResearchUI.framework */; };
+		FFFBE9D523AD527900650F11 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8E3B7FB21BB450B0004284E /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +154,22 @@
 			remoteInfo = MotorControl;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FFFBE9D123AD527400650F11 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FFFBE9D023AD527400650F11 /* Research.framework in Embed Frameworks */,
+				FFFBE9D323AD527600650F11 /* ResearchMotion.framework in Embed Frameworks */,
+				FFFBE9D523AD527900650F11 /* ResearchUI.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4498285A21F5216300C1A8C3 /* Walk_30seconds.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Walk_30seconds.json; sourceTree = "<group>"; };
@@ -299,9 +318,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8E12675228E344800AE37E1 /* ResearchMotion.framework in Frameworks */,
-				F8E3B7FC21BB450B0004284E /* ResearchUI.framework in Frameworks */,
-				F8E3B7FA21BB45010004284E /* Research.framework in Frameworks */,
+				FFFBE9D223AD527600650F11 /* ResearchMotion.framework in Frameworks */,
+				FFFBE9CF23AD527400650F11 /* Research.framework in Frameworks */,
+				FFFBE9D423AD527900650F11 /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +647,7 @@
 				F813D6DD21BB40D900795664 /* Sources */,
 				F813D6DE21BB40D900795664 /* Frameworks */,
 				F813D6DF21BB40D900795664 /* Resources */,
+				FFFBE9D123AD527400650F11 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -899,7 +919,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -963,7 +983,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 37;
+				CURRENT_PROJECT_VERSION = 38;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -996,7 +1016,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 37;
+				DYLIB_CURRENT_VERSION = 38;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MotorControl/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1024,7 +1044,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 37;
+				DYLIB_CURRENT_VERSION = 38;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MotorControl/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
