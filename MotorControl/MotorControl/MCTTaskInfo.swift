@@ -98,10 +98,10 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData, RSDTaskDesign {
         
         if let step = (task.stepNavigator as? RSDConditionalStepNavigator)?.steps.first as? RSDUIStep {
             if let mutableStep = step as? RSDUIStepObject, let text = overviewText {
-                mutableStep.text = text
+                mutableStep.subtitle = text
             }
             self.title = step.title
-            self.subtitle = step.text
+            self.subtitle = step.subtitle
             self.detail = step.detail
         }
 

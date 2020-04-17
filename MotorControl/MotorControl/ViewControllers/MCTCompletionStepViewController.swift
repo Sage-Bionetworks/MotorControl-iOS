@@ -45,7 +45,7 @@ public class MCTCompletionStepViewController : RSDStepViewController {
     /// has been completed.
     public func updateTextLabel() {
         // Check that there is a key into the strings table or else exist early
-        guard let textKey = (self.step as? RSDUIStep)?.text else { return }
+        guard let textKey = (self.step as? RSDUIStep)?.subtitle else { return }
         let defaultText = Localization.localizedString(textKey)
         guard textKey != defaultText else { return }
         

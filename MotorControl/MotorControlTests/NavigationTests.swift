@@ -111,17 +111,18 @@ class NavigationTests: XCTestCase {
     
     private func _insertHandSelectionResult(for taskController: TestTaskController) {
         var collectionResult = RSDCollectionResultObject(identifier: "handSelection")
-        var answerResult = RSDAnswerResultObject(identifier: "handSelection", answerType: .string)
+        
+        let answerResult = AnswerResultObject(identifier: "handSelection", answerType: AnswerTypeString())
         if self.handSelection.count == 2 {
-            answerResult.value = "both"
+            answerResult.jsonValue = .string("both")
         } else {
-            answerResult.value = self.handSelection.first!
+            answerResult.jsonValue = .string(self.handSelection.first!)
         }
         
         collectionResult.appendInputResults(with: answerResult)
-        let answerType = RSDAnswerResultType(baseType: .string, sequenceType: .array)
-        var handOrderResult = RSDAnswerResultObject(identifier: MCTHandSelectionDataSource.handOrderKey, answerType: answerType)
-        handOrderResult.value = self.handSelection
+        let answerType = AnswerTypeArray(baseType: .string)
+        let handOrderResult = AnswerResultObject(identifier: MCTHandSelectionDataSource.handOrderKey, answerType: answerType)
+        handOrderResult.jsonValue = .array(self.handSelection)
         collectionResult.appendInputResults(with: handOrderResult)
         self.taskController.taskViewModel.taskResult.appendStepHistory(with: collectionResult)
     }

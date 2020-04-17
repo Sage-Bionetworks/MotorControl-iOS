@@ -34,48 +34,44 @@
 import Foundation
 
 /// A Subclass of RSDFormUIStepObject which uses MCTHandSelectionDataSource.
-public class MCTHandSelectionStepObject : RSDUIStepObject, RSDFormUIStep {
-    
-    public var inputFields: [RSDInputField] {
-        return [choiceField]
-    }
+public class MCTHandSelectionStepObject : RSDUIStepObject, ChoiceQuestion, Question, Encodable {
 
-    public private(set) var choiceField: RSDChoiceInputFieldObject!
-
-    override public func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
-        return MCTHandSelectionDataSource(step: self, parent: parent, supportedHints: supportedHints)
-    }
+    public var baseType: JsonType { .string }
+    public var inputUIHint: RSDFormUIHint { .list }
+    public var isOptional: Bool { false }
+    public var isSingleAnswer: Bool { true }
     
+    lazy public var jsonChoices: [JsonChoice] = {
+        MCTHandSelection.allCases.map {
+            JsonChoiceObject(matchingValue: .string($0.rawValue),
+                             text: Localization.localizedString("HAND_SELECTION_CHOICE_\($0.rawValue.uppercased())"))
+        }
+    }()
+
     override public func decode(from decoder: Decoder, for deviceType: RSDDeviceType?) throws {
         try super.decode(from: decoder, for: deviceType)
-        
-        // Set up the choices.
-        let choiceValues = ["left", "right", "both"]
-        let choices = try choiceValues.map {
-            try RSDChoiceObject<String>(value: $0,
-                                    text: Localization.localizedString("HAND_SELECTION_CHOICE_\($0.uppercased())"))
-        }
-        choiceField = RSDChoiceInputFieldObject(identifier: self.identifier, choices: choices, dataType: .collection(.singleChoice, .string), uiHint: .list, prompt: nil, defaultAnswer: "both")
-        choiceField.isOptional = false
-        
+
         // Set up the title if not defined.
-        if self.title == nil && self.text == nil {
+        if self.title == nil && self.subtitle == nil {
             self.title = Localization.localizedString("HAND_SELECTION_TITLE")
         }
     }
     
-    public override func copyInto(_ copy: RSDUIStepObject) {
-        super.copyInto(copy)
-        guard let step = copy as? MCTHandSelectionStepObject else {
-            assertionFailure("Expecting the copy to be the same class as self.")
-            return
-        }
-        step.choiceField = self.choiceField.copy(with: step.identifier)
+    public func instantiateAnswerResult() -> AnswerResult {
+        AnswerResultObject(identifier: MCTHandSelectionDataSource.selectionKey, answerType: self.answerType)
+    }
+    
+    public override func instantiateStepResult() -> RSDResult {
+        RSDCollectionResultObject(identifier: self.identifier)
+    }
+    
+    override public func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
+        return MCTHandSelectionDataSource(step: self, parent: parent)
     }
 }
 
 /// An enum that represents the choices the user has for which hands they can use.
-public enum MCTHandSelection : String, Codable {
+public enum MCTHandSelection : String, Codable, CaseIterable {
     case left, right, both
     
     public var otherHand: MCTHandSelection? {
@@ -91,7 +87,7 @@ public enum MCTHandSelection : String, Codable {
 }
 
 /// The object that serves as the data soruce for an MCTHandSelectionStep
-public class MCTHandSelectionDataSource : RSDFormStepDataSourceObject {
+public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
     
     /// Key for the randomized hand order in the task result.
     public static let handOrderKey = "handOrder"
@@ -99,68 +95,99 @@ public class MCTHandSelectionDataSource : RSDFormStepDataSourceObject {
     /// Key for which hands the user said they could use in the task result.
     public static let selectionKey = "handSelection"
     
-    /// Override the initial result to look for the user's previous answer to this question in
-    /// UserDefaults.
-    override open var initialResult : RSDCollectionResult? {
-        // TODO: syoung 05/06/2019 Replace user defaults with data tracking.
-        let defaults = UserDefaults.standard
-        let handSelection = defaults.string(forKey: lastHandSelectionKey) ?? MCTHandSelection.both.rawValue
-        var ret = self.instantiateCollectionResult()
-        var answerResult = RSDAnswerResultObject(identifier: MCTHandSelectionDataSource.selectionKey, answerType: .string)
-        answerResult.value = handSelection
-        ret.appendInputResults(with: answerResult)
-        return ret
-    }
+    public weak var delegate: RSDTableDataSourceDelegate?
     
-    /// Override populateInitialResults to also write a randomized handOrder result.
-    override open func populateInitialResults() {
-        super.populateInitialResults()
-        _updateHandOrder()
-    }
+    public let sections: [RSDTableSection]
+    public let itemGroup: QuestionTableItemGroup
     
-    /// Override select answer to write the user's choice to UserDefaults, and to write a randomized handOrder result.
-    override open func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
-        let ret = try super.selectAnswer(item: item, at: indexPath)
-        guard let handSelection = _updateHandOrder()
-               else {
-            assertionFailure("_updateHandOrder() failed")
-            return ret
-        }
-       
-        let defaults = UserDefaults.standard
-        defaults.set(handSelection, forKey: lastHandSelectionKey)
+    private let handSelectionResult: AnswerResult
+    private let handOrderResult: AnswerResult
+    
+    public init(step: MCTHandSelectionStepObject, parent: RSDPathComponent?) {
+        
+        let previousValue: JsonElement? = {
+            guard let taskVM = parent as? RSDTaskViewModel else { return nil }
+            if let previousResult = taskVM.previousResult(for: step) as? RSDCollectionResult,
+                let answerResult = previousResult.findAnswer(with: MCTHandSelectionDataSource.selectionKey) {
+                return answerResult.jsonValue
+            }
+            guard let dataManager = taskVM.dataManager,
+                (dataManager.shouldUsePreviousAnswers?(for: taskVM.identifier) ?? false),
+                let dictionary = taskVM.previousTaskData?.json as? [String : Any],
+                let value = dictionary[MCTHandSelectionDataSource.selectionKey] as? RSDJSONValue
+                else {
+                    return nil
+            }
+            return JsonElement(value)
+        }()
 
+        let idx = 0
+        let itemGroup = QuestionTableItemGroup(beginningRowIndex: idx,
+                                               question: step,
+                                               supportedHints: nil,
+                                               initialValue: previousValue)
+        var sections = [RSDTableSection(identifier: step.identifier, sectionIndex: idx, tableItems: itemGroup.items)]
+        step.buildFooterTableItems().map {
+            sections.append(RSDTableSection(identifier: "footer", sectionIndex: idx + 1, tableItems: $0))
+        }
+        
+        self.sections = sections
+        self.itemGroup = itemGroup
+        
+        self.handSelectionResult = itemGroup.answerResult
+        self.handOrderResult = AnswerResultObject(identifier: MCTHandSelectionDataSource.handOrderKey,
+                                                  answerType: AnswerTypeArray(baseType: .string))
+        
+        var collectionResult = RSDCollectionResultObject(identifier: step.identifier)
+        collectionResult.appendInputResults(with: self.handSelectionResult as! RSDResult)
+        collectionResult.appendInputResults(with: self.handOrderResult as! RSDResult)
+        parent?.taskResult.appendStepHistory(with: collectionResult)
+        
+        super.init(step: step, parent: parent)
+    }
+    
+    /// Specifies whether the next button should be enabled based on the validity of the answers for
+    /// all form items.
+    override public var isForwardEnabled: Bool {
+        return super.isForwardEnabled && allAnswersValid()
+    }
+
+    public func allAnswersValid() -> Bool {
+        itemGroup.isAnswerValid
+    }
+    
+    public func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
+        indexPath.section == itemGroup.sectionIndex ? itemGroup : nil
+    }
+    
+    public func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
+        guard indexPath.section == itemGroup.sectionIndex else { return }
+        try itemGroup.saveAnswer(answer, at: indexPath.item)
+        delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
+    }
+    
+    public func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
+        guard indexPath.section == itemGroup.sectionIndex else {
+            return (false, false)
+        }
+        let ret = try itemGroup.toggleSelection(at: indexPath.item)
+        _updateHandOrder()
+        delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
         return ret
     }
-    
-    private var lastHandSelectionKey: String {
-        let rootIdentifier = self.rootPathComponent.identifier
-        return "\(rootIdentifier)_lastHandSelection"
-    }
-    
+       
     /// Writes a randomized hand order result to the task result.
-    @discardableResult
-    private func _updateHandOrder() -> String? {
-        var stepResult: RSDCollectionResult = self.collectionResult()
-        guard let selectionResult = stepResult.findAnswerResult(with: MCTHandSelectionDataSource.selectionKey),
-              let handSelection = selectionResult.value as? String
-              else {
-                return nil
-        }
+    private func _updateHandOrder() {
+        guard let hand = handSelectionResult.value as? String,
+            let handSelection = MCTHandSelection(rawValue: hand)
+            else { return }
         
-        let handOrderResultType = RSDAnswerResultType(baseType: .string, sequenceType: .array)
-        var handOrderResult = RSDAnswerResultObject(identifier: MCTHandSelectionDataSource.handOrderKey, answerType: handOrderResultType)
-        switch handSelection {
-        case "both":
+        if handSelection == .both {
             let handOrder: [MCTHandSelection] = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
-            handOrderResult.value = handOrder.map { $0.stringValue }
-        default:
-            handOrderResult.value = [handSelection]
+            handOrderResult.jsonValue = .array(handOrder.map { $0.stringValue })
         }
-        
-        stepResult.appendInputResults(with: handOrderResult)
-        self.taskResult.appendStepHistory(with: stepResult)
-        
-        return handSelection
+        else {
+            handOrderResult.jsonValue = .array([handSelection.rawValue])
+        }
     }
 }

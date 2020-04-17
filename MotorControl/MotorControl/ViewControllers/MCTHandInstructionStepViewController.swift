@@ -62,7 +62,7 @@ extension MCTHandStepController {
         var taskPath: RSDPathComponent? = self.stepViewModel.parent
         repeat {
             if let handSelectionResult = taskPath?.taskResult.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
-               let handOrder : [String] = handSelectionResult.findAnswerResult(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String] {
+               let handOrder : [String] = handSelectionResult.findAnswer(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String] {
                 return handOrder.compactMap{ MCTHandSelection(rawValue: $0) }
             }
         
@@ -114,7 +114,7 @@ extension MCTHandStepController {
         if let titleFormat = self.uiStep?.title {
             self.stepTitleLabel?.text = String.localizedStringWithFormat(titleFormat, direction)
         }
-        if let textFormat = self.uiStep?.text {
+        if let textFormat = self.uiStep?.subtitle {
             self.stepTextLabel?.text = String.localizedStringWithFormat(textFormat, direction)
         }
     }
