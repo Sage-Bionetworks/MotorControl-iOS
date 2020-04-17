@@ -16,7 +16,7 @@
                     "identifier":"instruction",
                     "type":"handInstruction",
                     "title":"Hold the phone with your %@ hand while pointing your index finger out.",
-                    "text":"The phone will vibrate when the test is done for this hand. If you have your volume up, it will tell you when the test is over too.",
+                    "subtitle":"The phone will vibrate when the test is done for this hand. If you have your volume up, it will tell you when the test is over too.",
                     "image":{
                         "type":"fetchable",
                         "imageName":"KineticHoldPhone-Left",
@@ -32,7 +32,7 @@
               {
                     "identifier":"countdown",
                     "type":"countdown",
-                    "text":"Begin in...",
+                    "subtitle":"Begin in...",
                     "duration":5,
                     "commands":["playSoundOnStart", "transitionAutomatically"]
               },

@@ -13,7 +13,7 @@
         "identifier": "turnAroundInstructions",
         "type": "instruction",
         "title": "Turn around, and then stand still",
-        "text": "You’ll turn around in a circle and stand still, with your feet shoulder-width apart.\n\nRest your arms by your side and try to avoid moving for 30 seconds.",
+        "subtitle": "You’ll turn around in a circle and stand still, with your feet shoulder-width apart.\n\nRest your arms by your side and try to avoid moving for 30 seconds.",
         "fullInstructionsOnly": true,
         "image": {
             "type": "animated",
@@ -36,7 +36,7 @@
         "identifier": "phoneInPocket",
         "type": "instruction",
         "title": "Put the phone in your pocket",
-        "text": "This test measures how well you balance and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
+        "subtitle": "This test measures how well you balance and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
         "fullInstructionsOnly": true,
         "image": {
             "type": "animated",
@@ -59,7 +59,7 @@
     {
         "identifier": "countdown",
         "type": "countdown",
-        "text": "Begin in...",
+        "subtitle": "Begin in...",
         "fullInstructionsOnly": true,
         "image": {
             "type": "fetchable",

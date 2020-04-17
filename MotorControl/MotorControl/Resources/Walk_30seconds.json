@@ -8,7 +8,7 @@
             "identifier":"introduction",
             "type":"overview",
             "title":"30 Second Walk",
-            "text":"In this activity, you will be walking continuously at your normal pace for 30 seconds.",
+            "subtitle":"In this activity, you will be walking continuously at your normal pace for 30 seconds.",
             "permissions":[
                 {
                     "permissionType":"motion",
@@ -55,7 +55,7 @@
             "identifier":"completion",
             "type":"completion",
             "title":"Great job!",
-            "text":"WALK_30_COMPLETION",
+            "subtitle":"WALK_30_COMPLETION",
             "image":{
                 "type":"fetchable",
                 "imageName":"Completion-WalkAndBalance",

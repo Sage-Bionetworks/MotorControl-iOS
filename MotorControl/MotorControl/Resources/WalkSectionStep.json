@@ -13,7 +13,7 @@
         "identifier": "walkInstructions",
         "type": "instruction",
         "title": "Walk for 30 seconds",
-        "text": "You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
+        "subtitle": "You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
         "fullInstructionsOnly": true,
         "image": {
             "type": "animated",
@@ -32,7 +32,7 @@
         "identifier": "volumeUp",
         "type": "instruction",
         "title": "Turn the volume up",
-        "text": "Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
+        "subtitle": "Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
         "image": {
             "type": "fetchable",
             "imageName": "TurnUpVolume",
@@ -49,7 +49,7 @@
         "identifier": "pantsWithPocket",
         "type": "instruction",
         "title": "Pants with front pockets",
-        "text": "Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets you can place the phone in the waistband of your pants.",
+        "subtitle": "Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets you can place the phone in the waistband of your pants.",
         "image": {
             "type": "fetchable",
             "imageName": "PantsWPocket",
@@ -77,7 +77,7 @@
             "type": "singleColor",
             "colorStyle": "white"
         },
-        "text": "This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
+        "subtitle": "This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
         "actions": {
             "goForward": {
                 "type": "default",
@@ -88,7 +88,7 @@
     {
         "identifier": "countdown",
         "type": "countdown",
-        "text": "Begin in...",
+        "subtitle": "Begin in...",
         "image": {
             "type": "fetchable",
             "imageName": "Walking-10",
