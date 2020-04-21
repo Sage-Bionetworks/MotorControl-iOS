@@ -35,6 +35,9 @@ import Foundation
 
 /// Create a tapping step that will instantiate the tapping result and can load the storyboard view controller.
 public class MCTTappingStepObject: MCTActiveStepObject {
+    public override class func defaultType() -> RSDStepType {
+        .tapping
+    }
     
     /// Returns a new instance of a `MCTTappingResultObject`.
     public override func instantiateStepResult() -> RSDResult {

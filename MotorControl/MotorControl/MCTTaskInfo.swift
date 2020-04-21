@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A list of all the tasks included in this module.
 public enum MCTTaskIdentifier : String, Codable, CaseIterable {
@@ -70,9 +71,9 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData, RSDTaskDesign {
     public let taskIdentifier: MCTTaskIdentifier
     
     /// The task built for this info.
-    public let task: RSDTaskObject
+    public let task: MCTTaskObject
     
-    private init(taskIdentifier: MCTTaskIdentifier, task: RSDTaskObject) {
+    private init(taskIdentifier: MCTTaskIdentifier, task: MCTTaskObject) {
         self.taskIdentifier = taskIdentifier
         self.task = task
     }
@@ -91,7 +92,7 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData, RSDTaskDesign {
         do {
             let mTask = try factory.decodeTask(with: taskIdentifier.resourceTransformer(),
                                                taskIdentifier: taskIdentifier.rawValue)
-            self.task = mTask as! RSDTaskObject
+            self.task = mTask as! MCTTaskObject
         } catch let err {
             fatalError("Failed to decode the task. \(err)")
         }
@@ -192,11 +193,11 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
     }
     
     /// The factory bundle points to this framework. (nil-resettable)
-    public var factoryBundle: RSDResourceBundle? {
+    public var factoryBundle: ResourceBundle? {
         get { return _bundle ?? Bundle(for: MCTFactory.self)}
         set { _bundle = newValue  }
     }
-    private var _bundle: RSDResourceBundle? = nil
+    private var _bundle: ResourceBundle? = nil
     
     // MARK: Not used.
     

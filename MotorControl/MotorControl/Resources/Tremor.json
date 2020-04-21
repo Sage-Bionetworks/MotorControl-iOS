@@ -100,6 +100,7 @@
                      "placementType":"topBackground"
                  },
                  "viewTheme":{
+                     "type": "default",
                      "viewIdentifier":"Completion",
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },

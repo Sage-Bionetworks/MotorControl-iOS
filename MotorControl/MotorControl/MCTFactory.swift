@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension RSDStepType {
     public static let handSelection: RSDStepType = "handSelection"
@@ -54,7 +55,7 @@ open class MCTFactory : RSDFactory {
     }()
     
     /// Override initialization to add the strings file to the localization bundles.
-    public override init() {
+    public required init() {
         super.init()
         
         if !_didLoad {
@@ -67,28 +68,24 @@ open class MCTFactory : RSDFactory {
             // Register authorization handlers
             RSDAuthorizationHandler.registerAdaptorIfNeeded(RSDMotionAuthorization.shared)
         }
-    }
         
-    /// Override the base factory to vend the MCT step objects.
-    override open func decodeStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
-        switch type { 
-        case .handSelection:
-            return try MCTHandSelectionStepObject(from: decoder)
-        case .handInstruction:
-            return try MCTHandInstructionStepObject(from: decoder)
-        case .countdown, .active:
-            return try MCTActiveStepObject(from: decoder)
-        case .tapping:
-            return try MCTTappingStepObject(from: decoder)
-        default:
-            return try super.decodeStep(from: decoder, with: type)
-        }
+        self.stepSerializer.add(MCTHandSelectionStepObject.serializationExample())
+        self.stepSerializer.add(MCTHandInstructionStepObject.serializationExample())
+        self.stepSerializer.add(MCTActiveStepObject.serializationExample())
+        self.stepSerializer.add(MCTCountdownStepObject.serializationExample())
+        self.stepSerializer.add(MCTTappingStepObject.serializationExample())
     }
     
     /// Override the task decoder to vend an `MCTTaskObject`.
-    override open func decodeTask(with data: Data, from decoder: RSDFactoryDecoder) throws -> RSDTask {
+    override open func decodeTask(with data: Data, from decoder: FactoryDecoder) throws -> RSDTask {
         let task = try decoder.decode(MCTTaskObject.self, from: data)
         try task.validate()
         return task
+    }
+}
+
+extension RSDUIStepObject {
+    fileprivate static func serializationExample() -> Self {
+        self.init(identifier: self.defaultType().rawValue)
     }
 }

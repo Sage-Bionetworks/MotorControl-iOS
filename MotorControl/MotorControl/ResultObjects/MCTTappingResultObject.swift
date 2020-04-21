@@ -35,6 +35,7 @@
 //
 
 import Foundation
+import JsonModel
 
 extension RSDResultType {
     
@@ -122,7 +123,7 @@ public struct MCTTappingResultObject : RSDResult, Encodable, RSDArchivable, RSDS
         }
     }
     
-    public func dataScore() throws -> RSDJSONSerializable? {
+    public func dataScore() throws -> JsonSerializable? {
         return tapCount
     }
 }
