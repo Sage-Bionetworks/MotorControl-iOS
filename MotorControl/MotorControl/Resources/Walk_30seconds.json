@@ -1,5 +1,6 @@
 {
     "identifier":"Walk30Seconds",
+    "type": "motorControlTask",
     "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":[],

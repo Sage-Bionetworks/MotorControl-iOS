@@ -74,6 +74,8 @@ open class MCTFactory : RSDFactory {
         self.stepSerializer.add(MCTActiveStepObject.serializationExample())
         self.stepSerializer.add(MCTCountdownStepObject.serializationExample())
         self.stepSerializer.add(MCTTappingStepObject.serializationExample())
+        
+        self.taskSerializer.add(MCTTaskObject.serializationExample())
     }
     
     /// Override the task decoder to vend an `MCTTaskObject`.
@@ -87,5 +89,11 @@ open class MCTFactory : RSDFactory {
 extension RSDUIStepObject {
     fileprivate static func serializationExample() -> Self {
         self.init(identifier: self.defaultType().rawValue)
+    }
+}
+
+extension MCTTaskObject {
+    fileprivate static func serializationExample() -> MCTTaskObject {
+        MCTTaskObject(identifier: MCTTaskObject.defaultType().rawValue, steps: [])
     }
 }

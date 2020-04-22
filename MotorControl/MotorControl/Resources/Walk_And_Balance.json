@@ -1,5 +1,6 @@
 {
     "identifier":"WalkAndBalance",
+    "type": "motorControlTask",
     "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":[],

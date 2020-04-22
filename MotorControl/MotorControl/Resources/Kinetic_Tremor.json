@@ -1,5 +1,6 @@
 {
     "identifier":"Kinetic Tremor",
+    "type": "motorControlTask",
     "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":[],

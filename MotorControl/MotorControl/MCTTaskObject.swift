@@ -34,9 +34,16 @@
 import Foundation
 import JsonModel
 
+extension RSDTaskType {
+    static let motorControlTask: RSDTaskType = "motorControlTask"
+}
+
 /// For the MotorControl tasks, the motion sensors are always required. Because of this, inherit from
 /// `RSDMotionTaskObject` to use the custom audio session controller on that task.
 public final class MCTTaskObject: RSDMotionTaskObject, RSDTaskDesign {
+    public override class func defaultType() -> RSDTaskType {
+        .motorControlTask
+    }
 
     internal var runCount: Int = 1
     
