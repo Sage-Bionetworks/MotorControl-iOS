@@ -32,9 +32,13 @@
 //
 
 import Foundation
+import JsonModel
 
 /// A Subclass of RSDFormUIStepObject which uses MCTHandSelectionDataSource.
 public class MCTHandSelectionStepObject : RSDUIStepObject, ChoiceQuestion, Question, Encodable {
+    public override class func defaultType() -> RSDStepType {
+        .handSelection
+    }
 
     public var baseType: JsonType { .string }
     public var inputUIHint: RSDFormUIHint { .list }
@@ -114,7 +118,7 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
             guard let dataManager = taskVM.dataManager,
                 (dataManager.shouldUsePreviousAnswers?(for: taskVM.identifier) ?? false),
                 let dictionary = taskVM.previousTaskData?.json as? [String : Any],
-                let value = dictionary[MCTHandSelectionDataSource.selectionKey] as? RSDJSONValue
+                let value = dictionary[MCTHandSelectionDataSource.selectionKey] as? JsonValue
                 else {
                     return nil
             }

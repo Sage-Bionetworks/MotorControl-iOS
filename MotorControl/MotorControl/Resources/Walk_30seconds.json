@@ -1,5 +1,6 @@
 {
     "identifier":"Walk30Seconds",
+    "type": "motorControlTask",
     "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":[],
@@ -62,6 +63,7 @@
                 "placementType":"topBackground"
             },
             "viewTheme":{
+                "type": "default",
                 "viewIdentifier":"Completion",
                 "storyboardIdentifier":"ActiveTaskSteps"
             },

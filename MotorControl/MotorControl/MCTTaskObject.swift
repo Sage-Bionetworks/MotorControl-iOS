@@ -32,24 +32,32 @@
 //
 
 import Foundation
+import JsonModel
+
+extension RSDTaskType {
+    static let motorControlTask: RSDTaskType = "motorControlTask"
+}
 
 /// For the MotorControl tasks, the motion sensors are always required. Because of this, inherit from
 /// `RSDMotionTaskObject` to use the custom audio session controller on that task.
-class MCTTaskObject: RSDMotionTaskObject, RSDTaskDesign {
+public final class MCTTaskObject: RSDMotionTaskObject, RSDTaskDesign {
+    public override class func defaultType() -> RSDTaskType {
+        .motorControlTask
+    }
 
     internal var runCount: Int = 1
     
     /// Override the task setup to allow setting the run count.
-    override func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
+    override public func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
         guard let dictionary = data?.json as? [String : Any] else { return }
         self.runCount = ((dictionary[RSDIdentifier.taskRunCount.stringValue] as? Int) ?? 0) + 1
     }
 
     /// Override the taskData builder to add the run count.
-    override func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
+    override public func taskData(for taskResult: RSDTaskResult) -> RSDTaskData? {
         let builder = RSDDefaultScoreBuilder()
-        var json: [String : RSDJSONSerializable] =
-            (builder.getScoringData(from: taskResult) as? [String : RSDJSONSerializable])
+        var json: [String : JsonSerializable] =
+            (builder.getScoringData(from: taskResult) as? [String : JsonSerializable])
                 ?? [:]
         json[RSDIdentifier.taskRunCount.stringValue] = runCount
         return TaskData(identifier: self.identifier, timestampDate: taskResult.endDate, json: json)
@@ -58,10 +66,10 @@ class MCTTaskObject: RSDMotionTaskObject, RSDTaskDesign {
     struct TaskData : RSDTaskData {
         let identifier: String
         let timestampDate: Date?
-        let json: RSDJSONSerializable
+        let json: JsonSerializable
     }
     
-    var designSystem: RSDDesignSystem {
+    public var designSystem: RSDDesignSystem {
         return MCTFactory.designSystem
     }
 }

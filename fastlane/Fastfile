@@ -84,6 +84,7 @@ platform :ios do
       output_name: "#{scheme}.ipa",
       export_method: "#{export_method}",
       destination: "generic/platform=iOS",
+      xcargs: "-showBuildSettings -UseModernBuildSystem=YES -resolvePackageDependencies"
     )
   end
 
@@ -106,9 +107,9 @@ platform :ios do
     commit_version_bump(xcodeproj: "#{project}", message: "[skip ci] Bump build for #{project} #{version_number} (#{next_build_number})")
 
     # Update the documentation
-    jazzy(config: "jazzy_config.yml")
-    git_add
-    git_commit(path: "Documentation/*", message: "[skip ci] Update #{framework}.framework documentation #{version_number} (#{next_build_number})")
+#    jazzy(config: "jazzy_config.yml")
+#    git_add
+#    git_commit(path: "Documentation/*", message: "[skip ci] Update #{framework}.framework documentation #{version_number} (#{next_build_number})")
 
     add_git_tag(tag: "v#{version_number}.#{next_build_number}")
     push_to_git_remote(remote_branch: ENV["TRAVIS_BRANCH"])
