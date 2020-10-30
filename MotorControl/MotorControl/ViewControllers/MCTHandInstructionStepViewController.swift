@@ -61,7 +61,7 @@ extension MCTHandStepController {
     public func handOrder() -> [MCTHandSelection]? {
         var taskPath: RSDPathComponent? = self.stepViewModel.parent
         repeat {
-            if let handSelectionResult = taskPath?.taskResult.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
+            if let handSelectionResult = taskPath?.taskResult.findResult(with: MCTHandSelectionDataSource.selectionKey) as? CollectionResult,
                let handOrder : [String] = handSelectionResult.findAnswer(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String] {
                 return handOrder.compactMap{ MCTHandSelection(rawValue: $0) }
             }

@@ -164,7 +164,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         tappingResult.samples = _samples
         tappingResult.tapCount = _hitButtonCount
         
-        if let collectionResult = previousResult as? RSDCollectionResult {
+        if let collectionResult = previousResult as? CollectionResult {
             // Add the tapping result to the collection result.
             var stepResult = collectionResult
             stepResult.appendInputResults(with: tappingResult)
@@ -180,10 +180,9 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         guard !_expired, _tappingStart != 0, let clock = self.clock else { return }
 
         // create the sample and add to queue.
-        
         let sample = MCTTappingSample(uptime: clock.relativeUptime(to: touch.timestamp),
                                       timestamp: touch.timestamp - _tappingStart,
-                                      stepPath: self.stepViewModel.stepPath,
+                                      stepPath: self.stepViewModel.fullPath,
                                       buttonIdentifier: button,
                                       location: touch.location(in: self.view),
                                       duration: 0)
