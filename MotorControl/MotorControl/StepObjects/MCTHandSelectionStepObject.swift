@@ -111,13 +111,13 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
         
         let previousValue: JsonElement? = {
             guard let taskVM = parent as? RSDTaskViewModel else { return nil }
-            if let previousResult = taskVM.previousResult(for: step) as? RSDCollectionResult,
+            if let previousResult = taskVM.previousResult(for: step) as? CollectionResult,
                 let answerResult = previousResult.findAnswer(with: MCTHandSelectionDataSource.selectionKey) {
                 return answerResult.jsonValue
             }
             guard let dataManager = taskVM.dataManager,
                 (dataManager.shouldUsePreviousAnswers?(for: taskVM.identifier) ?? false),
-                let dictionary = taskVM.previousTaskData?.json as? [String : Any],
+                let dictionary = taskVM.previousTaskData?.json as? [String : JsonSerializable],
                 let value = dictionary[MCTHandSelectionDataSource.selectionKey] as? JsonValue
                 else {
                     return nil
@@ -143,8 +143,8 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
                                                   answerType: AnswerTypeArray(baseType: .string))
         
         var collectionResult = RSDCollectionResultObject(identifier: step.identifier)
-        collectionResult.appendInputResults(with: self.handSelectionResult as! RSDResult)
-        collectionResult.appendInputResults(with: self.handOrderResult as! RSDResult)
+        collectionResult.appendInputResults(with: self.handSelectionResult)
+        collectionResult.appendInputResults(with: self.handOrderResult)
         parent?.taskResult.appendStepHistory(with: collectionResult)
         
         super.init(step: step, parent: parent)

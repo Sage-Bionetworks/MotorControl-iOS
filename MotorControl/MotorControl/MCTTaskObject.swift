@@ -49,7 +49,7 @@ public final class MCTTaskObject: RSDMotionTaskObject, RSDTaskDesign {
     
     /// Override the task setup to allow setting the run count.
     override public func setupTask(with data: RSDTaskData?, for path: RSDTaskPathComponent) {
-        guard let dictionary = data?.json as? [String : Any] else { return }
+        guard let dictionary = data?.json as? [String : JsonSerializable] else { return }
         self.runCount = ((dictionary[RSDIdentifier.taskRunCount.stringValue] as? Int) ?? 0) + 1
     }
 

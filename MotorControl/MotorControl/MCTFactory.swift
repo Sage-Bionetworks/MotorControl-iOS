@@ -67,6 +67,11 @@ open class MCTFactory : RSDFactory {
             
             // Register authorization handlers
             RSDAuthorizationHandler.registerAdaptorIfNeeded(RSDMotionAuthorization.shared)
+            
+            // Set up the resource loader if its nil.
+            if resourceLoader == nil {
+                resourceLoader = ResourceLoader()
+            }
         }
         
         self.stepSerializer.add(MCTHandSelectionStepObject.serializationExample())
