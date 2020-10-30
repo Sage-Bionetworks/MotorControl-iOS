@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,8 +18,7 @@
 		F82CEF19227AB1E0000485C8 /* TaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82CEF15227AB1E0000485C8 /* TaskTableViewController.swift */; };
 		F82CEF1D227AB462000485C8 /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82CEF1B227AB462000485C8 /* TaskArchivesTableViewController.swift */; };
 		F82CEF1E227AB462000485C8 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82CEF1C227AB462000485C8 /* ArchiveManager.swift */; };
-		F82CEF24227AB675000485C8 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82CEF23227AB675000485C8 /* MotorControl.framework */; };
-		F82CEF25227AB675000485C8 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82CEF23227AB675000485C8 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF1065E3254CAD8300B82E5F /* MotorControl in Frameworks */ = {isa = PBXBuildFile; productRef = FF1065E2254CAD8300B82E5F /* MotorControl */; };
 		FF98B2AA2331B90D00FA1EDB /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF98B2A92331B90D00FA1EDB /* ErrorViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,20 +31,6 @@
 			remoteInfo = MCTSampleApp;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		F82CEF2F227AB675000485C8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				F82CEF25227AB675000485C8 /* MotorControl.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		F82CEEEC227AB136000485C8 /* MCTSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MCTSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F82CEF24227AB675000485C8 /* MotorControl.framework in Frameworks */,
+				FF1065E3254CAD8300B82E5F /* MotorControl in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,13 +142,15 @@
 				F82CEEE8227AB136000485C8 /* Sources */,
 				F82CEEE9227AB136000485C8 /* Frameworks */,
 				F82CEEEA227AB136000485C8 /* Resources */,
-				F82CEF2F227AB675000485C8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = MCTSampleApp;
+			packageProductDependencies = (
+				FF1065E2254CAD8300B82E5F /* MotorControl */,
+			);
 			productName = MCTSampleApp;
 			productReference = F82CEEEC227AB136000485C8 /* MCTSampleApp.app */;
 			productType = "com.apple.product-type.application";
@@ -534,6 +521,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FF1065E2254CAD8300B82E5F /* MotorControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MotorControl;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F82CEEE4227AB136000485C8 /* Project object */;
 }

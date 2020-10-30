@@ -35,6 +35,7 @@ import UIKit
 import ResearchUI
 import Research
 import MotorControl
+import ResearchMotion
 
 /// The data storage manager in this case is used to show a sample usage. As such, the data will not be
 /// shared to user defaults but only in local memory.
@@ -157,8 +158,8 @@ class TaskPresentationViewController: UITableViewController, RSDTaskViewControll
     }
     
     func inspectTwoHandTaskResult(taskIdentifier: MCTTaskIdentifier, taskResult: RSDTaskResult) {
-        guard let handSelectionResult = taskResult.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
-            let handOrder = handSelectionResult.findAnswerResult(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String]
+        guard let handSelectionResult = taskResult.findResult(with: MCTHandSelectionDataSource.selectionKey) as? CollectionResult,
+            let handOrder = handSelectionResult.findAnswer(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String]
             else {
                 showError("Could not find expected hand selection result in \(taskResult)")
                 return
