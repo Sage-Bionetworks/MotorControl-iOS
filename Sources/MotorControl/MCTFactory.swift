@@ -71,7 +71,7 @@ open class MCTFactory : RSDFactory {
             // Register authorization handlers
             RSDAuthorizationHandler.registerAdaptorIfNeeded(RSDMotionAuthorization.shared)
             
-            // Set up the resource loader if its nil.
+            // Set up the resource loader if it's nil.
             if resourceLoader == nil {
                 resourceLoader = ResourceLoader()
             }
