@@ -34,6 +34,7 @@
 import UIKit
 import ResearchUI
 import Research
+import ResearchMotion
 import MotorControl
 
 /// The data storage manager in this case is used to show a sample usage. As such, the data will not be
