@@ -51,7 +51,7 @@ public class MCTTappingStepObject: MCTActiveStepObject {
     
     /// By default, returns the task view controller from the storyboard.
     public override func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
-        let bundle = Bundle(for: MCTTappingStepViewController.self)
+        let bundle = Bundle.module
         let storyboard = UIStoryboard(name: "ActiveTaskSteps", bundle: bundle)
         let vc = storyboard.instantiateViewController(withIdentifier: "Tapping") as? MCTTappingStepViewController
         vc?.stepViewModel = vc?.instantiateStepViewModel(for: self, with: parent)

@@ -1,8 +1,8 @@
 //
-//  MCTInstructionStepObject.swift
-//  MotorControl
+//  Bundle+module.swift
+//  Research
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,6 +33,14 @@
 
 import Foundation
 
-open class MCTInstructionStepObject : RSDInstructionStepObject {
+// Swift Packages have an internal static property defined on the Bundle to access
+// bundle resources. This code file is *not* included in the swift packages and can
+// allow building both a dynamic framework *or* a Swift Package using the same code
+// files. syoung 11/05/2020
 
+class BundleResource {
+}
+
+extension Bundle {
+    static let module = Bundle(for: BundleResource.self)
 }

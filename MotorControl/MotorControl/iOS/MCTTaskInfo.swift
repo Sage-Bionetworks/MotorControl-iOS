@@ -110,7 +110,7 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData, RSDTaskDesign {
 
         // Get the task icon for this taskIdentifier
         do {
-            self.icon = try RSDResourceImageDataObject(imageName: "\(taskIdentifier.stringValue)TaskIcon", bundle: Bundle(for: MCTFactory.self))
+            self.icon = try RSDResourceImageDataObject(imageName: "\(taskIdentifier.stringValue)TaskIcon", bundle: Bundle.module)
         } catch let err {
             print("Failed to load the task icon. \(err)")
         }
@@ -196,7 +196,7 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
     
     /// The factory bundle points to this framework. (nil-resettable)
     public var factoryBundle: ResourceBundle? {
-        get { return _bundle ?? Bundle(for: MCTFactory.self)}
+        get { return _bundle ?? Bundle.module }
         set { _bundle = newValue  }
     }
     private var _bundle: ResourceBundle? = nil
