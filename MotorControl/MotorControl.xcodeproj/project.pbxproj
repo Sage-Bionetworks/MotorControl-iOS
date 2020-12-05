@@ -193,14 +193,14 @@
 		F8E3B7F921BB45010004284E /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8E3B7FB21BB450B0004284E /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8E3B80721BB45630004284E /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8E3B80A21BB46590004284E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MotorControl/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		F8E3B80B21BB46590004284E /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = TappingSectionStep.json; path = MotorControl/Resources/TappingSectionStep.json; sourceTree = SOURCE_ROOT; };
-		F8E3B80C21BB46590004284E /* Tremor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Tremor.json; path = MotorControl/Resources/Tremor.json; sourceTree = SOURCE_ROOT; };
-		F8E3B80D21BB46590004284E /* ActiveTaskSteps.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ActiveTaskSteps.storyboard; path = MotorControl/Resources/ActiveTaskSteps.storyboard; sourceTree = SOURCE_ROOT; };
-		F8E3B80E21BB46590004284E /* MotorControl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = MotorControl.strings; path = MotorControl/Resources/MotorControl.strings; sourceTree = SOURCE_ROOT; };
-		F8E3B80F21BB46590004284E /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = TremorSectionStep.json; path = MotorControl/Resources/TremorSectionStep.json; sourceTree = SOURCE_ROOT; };
-		F8E3B81021BB46590004284E /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Walk_And_Balance.json; path = MotorControl/Resources/Walk_And_Balance.json; sourceTree = SOURCE_ROOT; };
-		F8E3B81121BB46590004284E /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Finger_Tapping.json; path = MotorControl/Resources/Finger_Tapping.json; sourceTree = SOURCE_ROOT; };
+		F8E3B80A21BB46590004284E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F8E3B80B21BB46590004284E /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TappingSectionStep.json; sourceTree = "<group>"; };
+		F8E3B80C21BB46590004284E /* Tremor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tremor.json; sourceTree = "<group>"; };
+		F8E3B80D21BB46590004284E /* ActiveTaskSteps.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ActiveTaskSteps.storyboard; sourceTree = "<group>"; };
+		F8E3B80E21BB46590004284E /* MotorControl.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
+		F8E3B80F21BB46590004284E /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TremorSectionStep.json; sourceTree = "<group>"; };
+		F8E3B81021BB46590004284E /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Walk_And_Balance.json; sourceTree = "<group>"; };
+		F8E3B81121BB46590004284E /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Finger_Tapping.json; sourceTree = "<group>"; };
 		F8E3B81B21BB46BA0004284E /* MCTTappingResultObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTappingResultObject.swift; sourceTree = "<group>"; };
 		F8E3B81F21BB46F00004284E /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
 		F8E3B82021BB46F00004284E /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
@@ -335,13 +335,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CB60DDCE22AB0EE500CD34C7 /* MP4 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MP4;
-			sourceTree = "<group>";
-		};
 		F813D6D721BB40D900795664 = {
 			isa = PBXGroup;
 			children = (
@@ -365,15 +358,8 @@
 			isa = PBXGroup;
 			children = (
 				F813D6E421BB40D900795664 /* MotorControl.h */,
-				F813D6FD21BB416C00795664 /* MCTFactory.swift */,
-				F813D6FC21BB416C00795664 /* MCTTaskInfo.swift */,
-				F8C36BCA223881A3000E42A7 /* MCTTaskObject.swift */,
 				F813D6E521BB40D900795664 /* Info.plist */,
-				F8E3B81D21BB46CD0004284E /* StepObjects */,
-				F8E3B81A21BB466D0004284E /* ResultObjects */,
-				F8E3B82621BB47030004284E /* ViewControllers */,
-				F8E3B83521BB47350004284E /* Views */,
-				F8E3B80921BB46250004284E /* Resources */,
+				FF174D2F257B1FAA00093461 /* iOS */,
 			);
 			path = MotorControl;
 			sourceTree = "<group>";
@@ -405,7 +391,6 @@
 			isa = PBXGroup;
 			children = (
 				FF89CC6023024FB9003676F8 /* Images */,
-				CB60DDCE22AB0EE500CD34C7 /* MP4 */,
 				F8E3B80D21BB46590004284E /* ActiveTaskSteps.storyboard */,
 				F8E3B80A21BB46590004284E /* Images.xcassets */,
 				F8E3B80E21BB46590004284E /* MotorControl.strings */,
@@ -462,6 +447,21 @@
 				F8E3B83621BB474F0004284E /* MCTTapButton.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		FF174D2F257B1FAA00093461 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F813D6FD21BB416C00795664 /* MCTFactory.swift */,
+				F813D6FC21BB416C00795664 /* MCTTaskInfo.swift */,
+				F8C36BCA223881A3000E42A7 /* MCTTaskObject.swift */,
+				F8E3B81D21BB46CD0004284E /* StepObjects */,
+				F8E3B81A21BB466D0004284E /* ResultObjects */,
+				F8E3B82621BB47030004284E /* ViewControllers */,
+				F8E3B83521BB47350004284E /* Views */,
+				F8E3B80921BB46250004284E /* Resources */,
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
 		FF89CC6023024FB9003676F8 /* Images */ = {
