@@ -33,6 +33,9 @@
 
 import Foundation
 import JsonModel
+import Research
+import ResearchMotion
+import ResearchUI
 
 extension RSDStepType {
     public static let handSelection: RSDStepType = "handSelection"
@@ -62,7 +65,7 @@ open class MCTFactory : RSDFactory {
             _didLoad = true
             
             // Add the localization bundle if this is a first init()
-            let localizationBundle = LocalizationBundle(Bundle(for: MCTFactory.self))
+            let localizationBundle = LocalizationBundle(Bundle.module)
             Localization.insert(bundle: localizationBundle, at: 1)
             
             // Register authorization handlers

@@ -1,8 +1,8 @@
 //
-//  MCTActiveStepObject.swift
-//  MotorControl
+//  Bundle+module.swift
+//  Research
 //
-//  Copyright © 2019 Sage Bionetworks. All rights reserved.
+//  Copyright © 2020 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -33,39 +33,14 @@
 
 import Foundation
 
-/// Create a subclass of the active step that always requires background audio and should end on interrupt.
-public class MCTActiveStepObject : RSDActiveUIStepObject {
-    
-    /// Returns `true`.
-    public override var shouldEndOnInterrupt: Bool {
-        get { return true }
-        set {} // ignored
-    }
-    
-    /// Returns `true`.
-    public override var requiresBackgroundAudio: Bool {
-        get { return true }
-        set {} // ignored
-    }
-    
-    #if os(iOS)
-    
-    public func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
-        return MCTActiveStepViewController(step: self, parent: parent)
-    }
-    
-    #endif
+// Swift Packages have an internal static property defined on the Bundle to access
+// bundle resources. This code file is *not* included in the swift packages and can
+// allow building both a dynamic framework *or* a Swift Package using the same code
+// files. syoung 11/05/2020
+
+class BundleResource {
 }
 
-public final class MCTCountdownStepObject : MCTActiveStepObject {
-    
-    public override class func defaultType() -> RSDStepType { .countdown }
-    
-    #if os(iOS)
-    
-    public override func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
-        return MCTCountdownStepViewController(step: self, parent: parent)
-    }
-    
-    #endif
+extension Bundle {
+    static let module = Bundle(for: BundleResource.self)
 }

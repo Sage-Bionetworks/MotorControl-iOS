@@ -1,5 +1,5 @@
 //
-//  MCTCompletionStepViewController.swift
+//  MCTActiveStepViewController.swift
 //  MotorControl
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,43 +31,36 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import UIKit
+import Research
+import ResearchUI
 
-public class MCTCompletionStepViewController : RSDStepViewController {
+extension MCTActiveStepObject : RSDStepViewControllerVendor {
+}
 
-    /// Override viewWillAppear to update the text label.
+open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandStepController {
+    
+    /// Retuns the imageView, in this case the image from the navigationHeader.
+    public var imageView: UIImageView? {
+        return self.navigationHeader?.imageView ?? self.navigationBody?.imageView
+    }
+
+    /// Override viewWillAppear to also set the unitLabel text.
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updateTextLabel()
-    }
-
-    /// Updates the text label to display the count of the number of times this task
-    /// has been completed.
-    public func updateTextLabel() {
-        // Check that there is a key into the strings table or else exist early
-        guard let textKey = (self.step as? RSDUIStep)?.subtitle else { return }
-        let defaultText = Localization.localizedString(textKey)
-        guard textKey != defaultText else { return }
-        
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .ordinal
-        if RSDStudyConfiguration.shared.isParticipantDevice,
-            let task = self.stepViewModel.rootPathComponent.task as? MCTTaskObject,
-            let ordinal = formatter.string(from: NSNumber(value: task.runCount)) {
-            let textFormat = "\(textKey)_%@"
-            self.stepTextLabel?.text = String.localizedStringWithFormat(Localization.localizedString(textFormat), ordinal)
-        }
-        else {
-            self.stepTextLabel?.text = defaultText
-        }
+        // Attempted to split the DataComponentsFormatter into a number and a unit label, however
+        // DateComponentsFormatter doesn't actually translate into other languages.
+        self.updateImage()
+        self.updateLabelText()
+        self.view.setNeedsLayout()
+        self.view.setNeedsUpdateConstraints()
     }
     
-    public override func defaultBackgroundColorTile(for placement: RSDColorPlacement) -> RSDColorTile {
-        if placement == .header {
-            return self.designSystem.colorRules.palette.successGreen.normal
-        }
-        else {
-            return self.designSystem.colorRules.backgroundLight
-        }
+    /// Override to return the instruction with the formatted text replaced.
+    override open func spokenInstruction(at duration: TimeInterval) -> String? {
+        guard let textFormat = super.spokenInstruction(at: duration) else { return nil }
+        guard let direction = self.whichHand()?.rawValue.uppercased() else { return textFormat }
+        // TODO: rkolmos 04/09/2018 localize and standardize with java implementation
+        return String.localizedStringWithFormat(textFormat, direction)
     }
 }

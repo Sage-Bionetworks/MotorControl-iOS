@@ -31,7 +31,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
+import UIKit
+import Research
+import ResearchUI
 
 public protocol MCTHandStepController : RSDStepController {
     

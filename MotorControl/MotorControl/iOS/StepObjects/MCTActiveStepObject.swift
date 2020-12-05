@@ -1,5 +1,5 @@
 //
-//  MCTTappingStepObject.swift
+//  MCTActiveStepObject.swift
 //  MotorControl
 //
 //  Copyright © 2019 Sage Bionetworks. All rights reserved.
@@ -32,27 +32,43 @@
 //
 
 import Foundation
+import UIKit
+import Research
+import ResearchUI
 
-/// Create a tapping step that will instantiate the tapping result and can load the storyboard view controller.
-public class MCTTappingStepObject: MCTActiveStepObject {
-    public override class func defaultType() -> RSDStepType {
-        .tapping
+
+/// Create a subclass of the active step that always requires background audio and should end on interrupt.
+public class MCTActiveStepObject : RSDActiveUIStepObject {
+    
+    /// Returns `true`.
+    public override var shouldEndOnInterrupt: Bool {
+        get { return true }
+        set {} // ignored
     }
     
-    /// Returns a new instance of a `MCTTappingResultObject`.
-    public override func instantiateStepResult() -> RSDResult {
-        return MCTTappingResultObject(identifier: self.identifier)
+    /// Returns `true`.
+    public override var requiresBackgroundAudio: Bool {
+        get { return true }
+        set {} // ignored
     }
     
     #if os(iOS)
     
-    /// By default, returns the task view controller from the storyboard.
+    public func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
+        return MCTActiveStepViewController(step: self, parent: parent)
+    }
+    
+    #endif
+}
+
+public final class MCTCountdownStepObject : MCTActiveStepObject {
+    
+    public override class func defaultType() -> RSDStepType { .countdown }
+    
+    #if os(iOS)
+    
     public override func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
-        let bundle = Bundle(for: MCTTappingStepViewController.self)
-        let storyboard = UIStoryboard(name: "ActiveTaskSteps", bundle: bundle)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Tapping") as? MCTTappingStepViewController
-        vc?.stepViewModel = vc?.instantiateStepViewModel(for: self, with: parent)
-        return vc
+        return MCTCountdownStepViewController(step: self, parent: parent)
     }
     
     #endif

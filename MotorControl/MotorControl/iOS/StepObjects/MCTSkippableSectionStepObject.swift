@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import Research
 
 /// Extend RSDSectionStepObject to implement navigation rules for each hand. These sections are
 /// intended to be used when a study has results from the left and right side of the body, and

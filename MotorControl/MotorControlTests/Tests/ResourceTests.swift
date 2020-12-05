@@ -33,6 +33,8 @@
 
 import XCTest
 @testable import MotorControl
+import Research
+import ResearchUI
 
 class ResourceTests: XCTestCase {
     
