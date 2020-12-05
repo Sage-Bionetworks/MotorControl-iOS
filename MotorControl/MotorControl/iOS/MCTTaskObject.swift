@@ -33,6 +33,9 @@
 
 import Foundation
 import JsonModel
+import Research
+import ResearchUI
+import ResearchMotion
 
 extension RSDTaskType {
     static let motorControlTask: RSDTaskType = "motorControlTask"

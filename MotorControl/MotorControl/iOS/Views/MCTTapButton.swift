@@ -32,6 +32,9 @@
 //
 
 import Foundation
+import UIKit
+import Research
+import ResearchUI
 
 @IBDesignable public final class MCTTapButton : UIButton, RSDViewDesignable {
 

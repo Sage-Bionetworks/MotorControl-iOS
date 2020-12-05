@@ -35,6 +35,8 @@
 //
 
 import UIKit
+import Research
+import ResearchUI
 
 
 /// The tapping step view controller sets up gesture listeners that are used to track the button taps.

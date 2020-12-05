@@ -33,6 +33,9 @@
 
 import Foundation
 import JsonModel
+import Research
+import ResearchMotion
+import ResearchUI
 
 extension RSDStepType {
     public static let handSelection: RSDStepType = "handSelection"

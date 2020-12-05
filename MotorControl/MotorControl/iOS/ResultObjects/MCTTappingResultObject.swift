@@ -35,7 +35,9 @@
 //
 
 import Foundation
+import UIKit
 import JsonModel
+import Research
 
 extension RSDResultType {
     
@@ -106,6 +108,10 @@ public struct MCTTappingResultObject : RSDResult, Encodable, RSDArchivable, RSDS
         let manifest = RSDFileManifest(filename: filename, timestamp: self.startDate, contentType: "application/json", identifier: self.identifier, stepPath: stepPath)
         let data = try self.rsd_jsonEncodedData()
         return (manifest, data)
+    }
+    
+    public init(from decoder: Decoder) throws {
+        fatalError("Not implemented")
     }
     
     public func encode(to encoder: Encoder) throws {

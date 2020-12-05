@@ -33,6 +33,8 @@
 
 import Foundation
 import JsonModel
+import Research
+import ResearchUI
 
 /// A list of all the tasks included in this module.
 public enum MCTTaskIdentifier : String, Codable, CaseIterable {

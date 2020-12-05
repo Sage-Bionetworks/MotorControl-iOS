@@ -32,6 +32,9 @@
 //
 
 import Foundation
+import UIKit
+import Research
+import ResearchUI
 
 /// Create a tapping step that will instantiate the tapping result and can load the storyboard view controller.
 public class MCTTappingStepObject: MCTActiveStepObject {

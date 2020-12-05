@@ -33,6 +33,7 @@
 
 import Foundation
 import JsonModel
+import Research
 
 /// A Subclass of RSDFormUIStepObject which uses MCTHandSelectionDataSource.
 public class MCTHandSelectionStepObject : RSDUIStepObject, ChoiceQuestion, Question, Encodable {
