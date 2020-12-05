@@ -182,7 +182,6 @@
 		F813D6F121BB40D900795664 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F813D6FC21BB416C00795664 /* MCTTaskInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTaskInfo.swift; sourceTree = "<group>"; };
 		F813D6FD21BB416C00795664 /* MCTFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTFactory.swift; sourceTree = "<group>"; };
-		F813D70B21BB419D00795664 /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F813D70C21BB419D00795664 /* NavigationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
 		F813D70D21BB419E00795664 /* ResourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
 		F82A4A212295EC9D00BEBE3C /* MCTActiveStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTActiveStepObject.swift; sourceTree = "<group>"; };
@@ -367,9 +366,7 @@
 		F813D6EE21BB40D900795664 /* MotorControlTests */ = {
 			isa = PBXGroup;
 			children = (
-				F813D70B21BB419D00795664 /* MotorControlTests-Bridging-Header.h */,
-				F813D70C21BB419D00795664 /* NavigationTests.swift */,
-				F813D70D21BB419E00795664 /* ResourceTests.swift */,
+				FF174D4F257B22E000093461 /* Tests */,
 				F813D6F121BB40D900795664 /* Info.plist */,
 			);
 			path = MotorControlTests;
@@ -462,6 +459,15 @@
 				F8E3B80921BB46250004284E /* Resources */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		FF174D4F257B22E000093461 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F813D70C21BB419D00795664 /* NavigationTests.swift */,
+				F813D70D21BB419E00795664 /* ResourceTests.swift */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		FF89CC6023024FB9003676F8 /* Images */ = {
@@ -1075,7 +1081,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1097,7 +1103,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

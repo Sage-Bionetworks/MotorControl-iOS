@@ -33,6 +33,8 @@
 
 @testable import MotorControl
 import XCTest
+import Research_UnitTest
+import Research
 
 class TestHandStepController: NSObject, MCTHandStepController {
 
