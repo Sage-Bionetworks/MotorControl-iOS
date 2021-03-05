@@ -32,6 +32,7 @@
 //
 
 import Foundation
+import JsonModel
 import Research
 
 /// Extend RSDSectionStepObject to implement navigation rules for each hand. These sections are

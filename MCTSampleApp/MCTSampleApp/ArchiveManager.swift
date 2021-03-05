@@ -33,6 +33,7 @@
 
 import Foundation
 import Research
+import JsonModel
 
 public class ArchiveManager : NSObject, RSDDataArchiveManager {
         
@@ -101,7 +102,7 @@ public class DataArchive : NSObject, RSDDataArchive {
         return true
     }
     
-    public func archivableData(for result: RSDResult, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable? {
+    public func archivableData(for result: ResultData, sectionIdentifier: String?, stepPath: String?) -> RSDArchivable? {
         return result as? RSDArchivable
     }
     

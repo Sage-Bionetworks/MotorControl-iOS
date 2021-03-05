@@ -35,6 +35,7 @@ import Foundation
 import UIKit
 import Research
 import ResearchUI
+import JsonModel
 
 /// Create a tapping step that will instantiate the tapping result and can load the storyboard view controller.
 public class MCTTappingStepObject: MCTActiveStepObject {
@@ -43,7 +44,7 @@ public class MCTTappingStepObject: MCTActiveStepObject {
     }
     
     /// Returns a new instance of a `MCTTappingResultObject`.
-    public override func instantiateStepResult() -> RSDResult {
+    public override func instantiateStepResult() -> ResultData {
         return MCTTappingResultObject(identifier: self.identifier)
     }
     

@@ -34,6 +34,7 @@
 @testable import MotorControl
 import XCTest
 import Research_UnitTest
+import JsonModel
 import Research
 
 class TestHandStepController: NSObject, MCTHandStepController {

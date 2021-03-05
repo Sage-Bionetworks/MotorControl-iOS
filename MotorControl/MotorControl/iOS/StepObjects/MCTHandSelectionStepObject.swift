@@ -66,7 +66,7 @@ public class MCTHandSelectionStepObject : RSDUIStepObject, ChoiceQuestion, Quest
         AnswerResultObject(identifier: MCTHandSelectionDataSource.selectionKey, answerType: self.answerType)
     }
     
-    public override func instantiateStepResult() -> RSDResult {
+    public override func instantiateStepResult() -> ResultData {
         RSDCollectionResultObject(identifier: self.identifier)
     }
     

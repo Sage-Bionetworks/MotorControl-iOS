@@ -33,6 +33,7 @@
 
 import UIKit
 import ResearchUI
+import JsonModel
 import Research
 import ResearchMotion
 import MotorControl
@@ -57,7 +58,7 @@ class DataStorageManager : NSObject, RSDDataStorageManager {
 class TaskPresentationViewController: UITableViewController, RSDTaskViewControllerDelegate {
     
     var taskInfo: RSDTaskInfo!
-    var result: RSDResult?
+    var result: ResultData?
     let archiveManager = ArchiveManager()
     var firstAppearance: Bool = true
     
@@ -158,8 +159,8 @@ class TaskPresentationViewController: UITableViewController, RSDTaskViewControll
     }
     
     func inspectTwoHandTaskResult(taskIdentifier: MCTTaskIdentifier, taskResult: RSDTaskResult) {
-        guard let handSelectionResult = taskResult.findResult(with: MCTHandSelectionDataSource.selectionKey) as? RSDCollectionResult,
-            let handOrder = handSelectionResult.findAnswerResult(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String]
+        guard let handSelectionResult = taskResult.findResult(with: MCTHandSelectionDataSource.selectionKey) as? CollectionResult,
+            let handOrder = handSelectionResult.findAnswer(with: MCTHandSelectionDataSource.handOrderKey)?.value as? [String]
             else {
                 showError("Could not find expected hand selection result in \(taskResult)")
                 return
@@ -179,7 +180,7 @@ class TaskPresentationViewController: UITableViewController, RSDTaskViewControll
                     showError("Missing section result for \(identifier) in \(taskResult)")
                     return
             }
-            guard let motionResult = sectionResult.asyncResults?.first(where: { $0.identifier == "motion" }) as? RSDFileResult
+            guard let motionResult = sectionResult.asyncResults?.first(where: { $0.identifier == "motion" }) as? FileResult
                 else {
                     showError("Missing motion result for \(sectionResult.identifier) in \(sectionResult)")
                     return
