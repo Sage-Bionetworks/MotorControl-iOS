@@ -2,7 +2,7 @@ notifications:
   email:
   - apple.builds@sagebase.org
 language: objective-c
-osx_image: xcode11.2
+osx_image: xcode12.4
 xcode_workspace: MotorConntrol.xcworkspace
 xcode_scheme: MCTSampleApp
 cache:
