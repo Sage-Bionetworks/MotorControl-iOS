@@ -36,6 +36,7 @@
 
 import UIKit
 import Research
+import JsonModel
 import ResearchUI
 
 
