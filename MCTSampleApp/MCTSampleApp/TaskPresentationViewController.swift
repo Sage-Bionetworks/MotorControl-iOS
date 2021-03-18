@@ -35,7 +35,7 @@ import UIKit
 import ResearchUI
 import JsonModel
 import Research
-import ResearchMotion
+import MotionSensor
 import MotorControl
 
 /// The data storage manager in this case is used to show a sample usage. As such, the data will not be
@@ -193,7 +193,7 @@ class TaskPresentationViewController: UITableViewController, RSDTaskViewControll
             do {
                 let jsonDecoder = MCTFactory.shared.createJSONDecoder()
                 let data = try Data(contentsOf: url)
-                let records = try jsonDecoder.decode([RSDMotionRecord].self, from: data)
+                let records = try jsonDecoder.decode([MotionRecord].self, from: data)
                 guard let startTime = records.first?.timestamp, let endTime = records.last?.timestamp
                     else {
                         showError("The motion result for \(sectionResult.identifier) was empty")
