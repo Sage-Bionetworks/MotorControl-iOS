@@ -34,8 +34,9 @@
 import Foundation
 import JsonModel
 import Research
-import ResearchMotion
 import ResearchUI
+import MobilePassiveData
+import MotionSensor
 
 extension RSDStepType {
     public static let handSelection: RSDStepType = "handSelection"
@@ -69,7 +70,7 @@ open class MCTFactory : RSDFactory {
             Localization.insert(bundle: localizationBundle, at: 1)
             
             // Register authorization handlers
-            RSDAuthorizationHandler.registerAdaptorIfNeeded(RSDMotionAuthorization.shared)
+            PermissionAuthorizationHandler.registerAdaptorIfNeeded(MotionAuthorization.shared)
             
             // Set up the resource loader if its nil.
             if resourceLoader == nil {

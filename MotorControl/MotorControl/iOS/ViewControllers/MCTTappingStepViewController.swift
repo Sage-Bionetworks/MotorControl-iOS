@@ -38,6 +38,7 @@ import UIKit
 import Research
 import JsonModel
 import ResearchUI
+import MobilePassiveData
 
 
 /// The tapping step view controller sets up gesture listeners that are used to track the button taps.
@@ -257,7 +258,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         if _tappingStart == 0 {
             _hitButtonCount = 0
             _tappingStart = touch.timestamp
-            self.clock = RSDClock()
+            self.clock = SystemClock()
             updateTappingResult()
             start()
         }

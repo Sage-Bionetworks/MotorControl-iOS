@@ -18,16 +18,10 @@
 		F82CEF19227AB1E0000485C8 /* TaskTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82CEF15227AB1E0000485C8 /* TaskTableViewController.swift */; };
 		F82CEF1D227AB462000485C8 /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82CEF1B227AB462000485C8 /* TaskArchivesTableViewController.swift */; };
 		F82CEF1E227AB462000485C8 /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82CEF1C227AB462000485C8 /* ArchiveManager.swift */; };
-		F82CEF24227AB675000485C8 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82CEF23227AB675000485C8 /* MotorControl.framework */; };
-		F82CEF25227AB675000485C8 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82CEF23227AB675000485C8 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF174D34257B20F900093461 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D31257B20F900093461 /* Research.framework */; };
 		FF174D35257B20F900093461 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D31257B20F900093461 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FF174D36257B20F900093461 /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D32257B20F900093461 /* ResearchMotion.framework */; };
-		FF174D37257B20F900093461 /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D32257B20F900093461 /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF174D38257B20F900093461 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D33257B20F900093461 /* ResearchUI.framework */; };
 		FF174D39257B20F900093461 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D33257B20F900093461 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FF174D4A257B21C700093461 /* ExceptionHandler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D48257B21C700093461 /* ExceptionHandler.framework */; };
-		FF174D4B257B21C700093461 /* ExceptionHandler.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D48257B21C700093461 /* ExceptionHandler.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF174D4C257B21C700093461 /* Formatters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D49257B21C700093461 /* Formatters.framework */; };
 		FF174D4D257B21C700093461 /* Formatters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D49257B21C700093461 /* Formatters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF98B2AA2331B90D00FA1EDB /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF98B2A92331B90D00FA1EDB /* ErrorViewController.swift */; };
@@ -50,10 +44,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FF174D37257B20F900093461 /* ResearchMotion.framework in Embed Frameworks */,
 				FF174D4D257B21C700093461 /* Formatters.framework in Embed Frameworks */,
-				FF174D4B257B21C700093461 /* ExceptionHandler.framework in Embed Frameworks */,
-				F82CEF25227AB675000485C8 /* MotorControl.framework in Embed Frameworks */,
 				FF174D35257B20F900093461 /* Research.framework in Embed Frameworks */,
 				FF174D39257B20F900093461 /* ResearchUI.framework in Embed Frameworks */,
 			);
@@ -95,10 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF174D36257B20F900093461 /* ResearchMotion.framework in Frameworks */,
 				FF174D4C257B21C700093461 /* Formatters.framework in Frameworks */,
-				FF174D4A257B21C700093461 /* ExceptionHandler.framework in Frameworks */,
-				F82CEF24227AB675000485C8 /* MotorControl.framework in Frameworks */,
 				FF174D34257B20F900093461 /* Research.framework in Frameworks */,
 				FF174D38257B20F900093461 /* ResearchUI.framework in Frameworks */,
 			);
