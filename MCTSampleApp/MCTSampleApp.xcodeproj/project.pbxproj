@@ -25,6 +25,8 @@
 		FF174D4C257B21C700093461 /* Formatters.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D49257B21C700093461 /* Formatters.framework */; };
 		FF174D4D257B21C700093461 /* Formatters.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF174D49257B21C700093461 /* Formatters.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF98B2AA2331B90D00FA1EDB /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF98B2A92331B90D00FA1EDB /* ErrorViewController.swift */; };
+		FFD1503C273B4D4B00F11468 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD1503B273B4D4B00F11468 /* MotorControl.framework */; };
+		FFD1503D273B4D4B00F11468 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFD1503B273B4D4B00F11468 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FFD1503D273B4D4B00F11468 /* MotorControl.framework in Embed Frameworks */,
 				FF174D4D257B21C700093461 /* Formatters.framework in Embed Frameworks */,
 				FF174D35257B20F900093461 /* Research.framework in Embed Frameworks */,
 				FF174D39257B20F900093461 /* ResearchUI.framework in Embed Frameworks */,
@@ -79,6 +82,7 @@
 		FF174D48257B21C700093461 /* ExceptionHandler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ExceptionHandler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF174D49257B21C700093461 /* Formatters.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Formatters.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF98B2A92331B90D00FA1EDB /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
+		FFD1503B273B4D4B00F11468 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFD1503C273B4D4B00F11468 /* MotorControl.framework in Frameworks */,
 				FF174D4C257B21C700093461 /* Formatters.framework in Frameworks */,
 				FF174D34257B20F900093461 /* Research.framework in Frameworks */,
 				FF174D38257B20F900093461 /* ResearchUI.framework in Frameworks */,
@@ -152,6 +157,7 @@
 		F82CEF22227AB61A000485C8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FFD1503B273B4D4B00F11468 /* MotorControl.framework */,
 				FF174D48257B21C700093461 /* ExceptionHandler.framework */,
 				FF174D49257B21C700093461 /* Formatters.framework */,
 				FF174D31257B20F900093461 /* Research.framework */,
