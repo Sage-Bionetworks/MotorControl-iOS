@@ -56,10 +56,7 @@ let package = Package(
                 "MotorControl",
                 .product(name: "Research_UnitTest", package: "SageResearch"),
             ],
-            path: "MotorControl/MotorControlTests/Tests",
-            resources: [
-                .process("Resources"),
-            ]),
+            path: "MotorControl/MotorControlTests/Tests"),
         
     ]
 )
