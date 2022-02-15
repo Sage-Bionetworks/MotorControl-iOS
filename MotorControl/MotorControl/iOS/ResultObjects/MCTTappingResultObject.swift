@@ -35,7 +35,7 @@
 //
 
 import Foundation
-import UIKit
+import SwiftUI
 import JsonModel
 import Research
 import MobilePassiveData

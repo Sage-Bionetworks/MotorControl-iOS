@@ -31,6 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#if canImport(Research_UnitTest)
+
 @testable import MotorControl
 import XCTest
 import Research_UnitTest
@@ -309,3 +311,5 @@ class NavigationTests: XCTestCase {
         XCTAssertEqual(stepTo!.identifier, "completion")
     }
 }
+
+#endif

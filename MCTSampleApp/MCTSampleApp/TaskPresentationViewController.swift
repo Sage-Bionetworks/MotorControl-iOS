@@ -37,6 +37,7 @@ import JsonModel
 import Research
 import MotionSensor
 import MotorControl
+import MobilePassiveData
 
 /// The data storage manager in this case is used to show a sample usage. As such, the data will not be
 /// shared to user defaults but only in local memory.

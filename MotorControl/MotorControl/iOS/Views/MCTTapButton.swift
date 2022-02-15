@@ -31,6 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#if os(iOS)
+
 import Foundation
 import UIKit
 import Research
@@ -92,3 +94,5 @@ import ResearchUI
         titleLabel?.font = designSystem.fontRules.buttonFont(for: .primary, state: .normal)
     }
 }
+
+#endif

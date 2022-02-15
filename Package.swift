@@ -23,13 +23,14 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 from: "1.2.0"),
+                 from: "1.3.4"),
         .package(name: "SageResearch",
                  url: "https://github.com/Sage-Bionetworks/SageResearch.git",
-                 from: "4.1.0"),
+                 from: "4.3.1"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.0.0"),
+                 from: "1.2.2"),
+        .package(name: "MCTResources", path: "MotorControl/MotorControl/MCTResources/")
     ],
     targets: [
 
@@ -40,21 +41,18 @@ let package = Package(
             name: "MotorControl",
             dependencies: ["JsonModel",
                            .product(name: "Research", package: "SageResearch"),
-                           .product(name: "ResearchUI", package: "SageResearch"),
+                           .product(name: "ResearchUI", package: "SageResearch", condition: .when(platforms: [.iOS])),
+                           .product(name: "MCTResources", package: "MCTResources", condition: .when(platforms: [.iOS])),
                            .product(name: "MobilePassiveData", package: "MobilePassiveData"),
                            .product(name: "MotionSensor", package: "MobilePassiveData"),
             ],
-            path: "MotorControl/MotorControl/iOS",
-            resources: [
-                .process("Resources"),
-            ]
-            ),
+            path: "MotorControl/MotorControl/iOS"),
 
         .testTarget(
             name: "MotorControlTests",
             dependencies: [
                 "MotorControl",
-                .product(name: "Research_UnitTest", package: "SageResearch"),
+                .product(name: "Research_UnitTest", package: "SageResearch", condition: .when(platforms: [.iOS])),
             ],
             path: "MotorControl/MotorControlTests/Tests"),
         

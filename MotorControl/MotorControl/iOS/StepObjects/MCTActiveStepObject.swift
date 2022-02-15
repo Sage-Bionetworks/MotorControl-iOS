@@ -32,10 +32,12 @@
 //
 
 import Foundation
-import UIKit
 import Research
-import ResearchUI
 
+#if os(iOS)
+import UIKit
+import ResearchUI
+#endif
 
 /// Create a subclass of the active step that always requires background audio and should end on interrupt.
 public class MCTActiveStepObject : RSDActiveUIStepObject {

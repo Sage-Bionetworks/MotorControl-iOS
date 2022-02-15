@@ -34,7 +34,10 @@
 import Foundation
 import JsonModel
 import Research
+
+#if canImport(ResearchUI)
 import ResearchUI
+#endif
 
 extension RSDTaskType {
     static let motorControlTask: RSDTaskType = "motorControlTask"
@@ -42,7 +45,7 @@ extension RSDTaskType {
 
 /// For the MotorControl tasks, the motion sensors are always required. Because of this, inherit from
 /// `RSDMotionTaskObject` to use the custom audio session controller on that task.
-public final class MCTTaskObject: AssessmentTaskObject, RSDTaskDesign {
+public final class MCTTaskObject: AssessmentTaskObject {
     public override class func defaultType() -> RSDTaskType {
         .motorControlTask
     }
@@ -70,8 +73,13 @@ public final class MCTTaskObject: AssessmentTaskObject, RSDTaskDesign {
         let timestampDate: Date?
         let json: JsonSerializable
     }
+}
+
+#if canImport(ResearchUI)
+extension MCTTaskObject : RSDTaskDesign {
     
     public var designSystem: RSDDesignSystem {
         return MCTFactory.designSystem
     }
 }
+#endif
