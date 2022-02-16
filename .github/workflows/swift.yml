@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
     - name: Repository checkout
       uses: actions/checkout@v2
@@ -16,8 +16,6 @@ jobs:
       run: swift build -v
     - name: Run tests in Swift Package (macOS)
       run: swift test -v
-    - name: Force Xcode 13.2
-      run: sudo xcode-select -switch /Applications/Xcode_13.2.app
     - name: Build Swift Package (iOS)
       run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme MotorControl -destination "platform=iOS Simulator,OS=15.2,name=iPhone 12" | xcpretty
     - name: Run tests in Swift Package (iOS)
