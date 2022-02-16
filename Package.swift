@@ -30,7 +30,7 @@ let package = Package(
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
                  from: "1.2.2"),
-        .package(name: "MCTResources", path: "MotorControl/MotorControl/MCTResources/")
+        .package(name: "MCTResources", path: "./MotorControl/MotorControl/MCTResources/")
     ],
     targets: [
 
