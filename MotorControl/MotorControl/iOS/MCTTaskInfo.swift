@@ -34,7 +34,11 @@
 import Foundation
 import JsonModel
 import Research
+
+#if canImport(ResearchUI)
 import ResearchUI
+import MCTResources
+#endif
 
 /// A list of all the tasks included in this module.
 public enum MCTTaskIdentifier : String, Codable, CaseIterable {
@@ -67,7 +71,7 @@ public enum MCTTaskIdentifier : String, Codable, CaseIterable {
 }
 
 /// A task info object for the tasks included in this submodule.
-public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData, RSDTaskDesign {
+public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData {
 
     /// The task identifier for this task.
     public let taskIdentifier: MCTTaskIdentifier
@@ -108,12 +112,14 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData, RSDTaskDesign {
             self.detail = step.detail
         }
 
+        #if canImport(ResearchUI)
         // Get the task icon for this taskIdentifier
         do {
-            self.icon = try RSDResourceImageDataObject(imageName: "\(taskIdentifier.stringValue)TaskIcon", bundle: Bundle.module)
+            self.icon = try RSDResourceImageDataObject(imageName: "\(taskIdentifier.stringValue)TaskIcon", bundle: MCTResources.bundle)
         } catch let err {
             print("Failed to load the task icon. \(err)")
         }
+        #endif
     }
     
     /// The identifier is the task identifier for this task.
@@ -156,11 +162,16 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData, RSDTaskDesign {
         copy.schemaInfo = self.schemaInfo
         return copy
     }
+}
+
+#if canImport(ResearchUI)
+extension MCTTaskInfo : RSDTaskDesign {
     
     public var designSystem: RSDDesignSystem {
         return MCTFactory.designSystem
     }
 }
+#endif
 
 /// A task transformer for the resources included in this module.
 public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
@@ -196,8 +207,16 @@ public struct MCTTaskTransformer : RSDResourceTransformer, Decodable {
     
     /// The factory bundle points to this framework. (nil-resettable)
     public var factoryBundle: ResourceBundle? {
-        get { return _bundle ?? Bundle.module }
-        set { _bundle = newValue  }
+        get {
+            #if canImport(ResearchUI)
+                return _bundle ?? MCTResources.bundle
+            #else
+                return _bundle
+            #endif
+        }
+        set {
+            _bundle = newValue
+        }
     }
     private var _bundle: ResourceBundle? = nil
     

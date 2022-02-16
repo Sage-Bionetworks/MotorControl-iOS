@@ -31,6 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#if os(iOS)
+
 import UIKit
 import Research
 import JsonModel
@@ -141,3 +143,5 @@ open class MCTHandInstructionStepViewController : RSDInstructionStepViewControll
         self.updateImage()
     }
 }
+
+#endif

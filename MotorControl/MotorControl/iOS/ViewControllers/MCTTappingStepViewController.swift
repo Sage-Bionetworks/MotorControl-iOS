@@ -34,6 +34,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#if os(iOS)
+
 import UIKit
 import Research
 import JsonModel
@@ -303,3 +305,5 @@ extension MCTTappingStepViewController: UIGestureRecognizerDelegate {
         return false
     }
 }
+
+#endif

@@ -34,9 +34,13 @@
 import Foundation
 import JsonModel
 import Research
-import ResearchUI
 import MobilePassiveData
 import MotionSensor
+
+#if canImport(ResearchUI)
+import ResearchUI
+import MCTResources
+#endif
 
 extension RSDStepType {
     public static let handSelection: RSDStepType = "handSelection"
@@ -48,6 +52,7 @@ fileprivate var _didLoad: Bool = false
 
 open class MCTFactory : RSDFactory {
     
+    #if canImport(ResearchUI)
     /// The default color palette for this module is Royal 300, Butterscotch 300, Turquoise 300
     /// The design system is set as version 1.
     public static let designSystem: RSDDesignSystem = {
@@ -57,6 +62,7 @@ open class MCTFactory : RSDFactory {
         let palette = RSDColorPalette(version: 1, primary: primary, secondary: secondary, accent: accent)
         return RSDDesignSystem(palette: palette)
     }()
+    #endif
     
     /// Override initialization to add the strings file to the localization bundles.
     public required init() {
@@ -65,8 +71,10 @@ open class MCTFactory : RSDFactory {
         if !_didLoad {
             _didLoad = true
             
+            #if canImport(ResearchUI)
+            
             // Add the localization bundle if this is a first init()
-            let localizationBundle = LocalizationBundle(Bundle.module)
+            let localizationBundle = LocalizationBundle(MCTResources.bundle)
             Localization.insert(bundle: localizationBundle, at: 1)
             
             // Register authorization handlers
@@ -76,6 +84,8 @@ open class MCTFactory : RSDFactory {
             if resourceLoader == nil {
                 resourceLoader = ResourceLoader()
             }
+            
+            #endif
         }
         
         self.stepSerializer.add(MCTHandSelectionStepObject.serializationExample())
@@ -85,6 +95,8 @@ open class MCTFactory : RSDFactory {
         self.stepSerializer.add(MCTTappingStepObject.serializationExample())
         
         self.taskSerializer.add(MCTTaskObject.serializationExample())
+        
+        self.resultSerializer.add(MCTTappingResultObject())
     }
     
     /// Override the task decoder to vend an `MCTTaskObject`.

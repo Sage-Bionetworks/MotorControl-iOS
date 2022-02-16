@@ -62,12 +62,12 @@ public class MCTHandSelectionStepObject : RSDUIStepObject, ChoiceQuestion, Quest
         }
     }
     
-    public func instantiateAnswerResult() -> AnswerResult {
-        AnswerResultObject(identifier: MCTHandSelectionDataSource.selectionKey, answerType: self.answerType)
-    }
-    
     public override func instantiateStepResult() -> ResultData {
         RSDCollectionResultObject(identifier: self.identifier)
+    }
+    
+    public func instantiateAnswerResult() -> AnswerResult {
+        AnswerResultObject(identifier: MCTHandSelectionDataSource.selectionKey, answerType: self.answerType)
     }
     
     override public func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
@@ -160,7 +160,7 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
     public func allAnswersValid() -> Bool {
         itemGroup.isAnswerValid
     }
-    
+
     public func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
         indexPath.section == itemGroup.sectionIndex ? itemGroup : nil
     }
@@ -196,3 +196,4 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
         }
     }
 }
+

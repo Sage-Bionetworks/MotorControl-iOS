@@ -31,6 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#if os(iOS)
+
 import UIKit
 import Research
 import ResearchUI
@@ -64,3 +66,5 @@ open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandSte
         return String.localizedStringWithFormat(textFormat, direction)
     }
 }
+
+#endif

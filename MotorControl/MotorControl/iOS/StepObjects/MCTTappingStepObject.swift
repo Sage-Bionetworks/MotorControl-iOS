@@ -32,10 +32,14 @@
 //
 
 import Foundation
-import UIKit
 import Research
-import ResearchUI
 import JsonModel
+
+#if os(iOS)
+import UIKit
+import ResearchUI
+import MCTResources
+#endif
 
 /// Create a tapping step that will instantiate the tapping result and can load the storyboard view controller.
 public class MCTTappingStepObject: MCTActiveStepObject {
@@ -52,7 +56,7 @@ public class MCTTappingStepObject: MCTActiveStepObject {
     
     /// By default, returns the task view controller from the storyboard.
     public override func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
-        let bundle = Bundle.module
+        let bundle = MCTResources.bundle
         let storyboard = UIStoryboard(name: "ActiveTaskSteps", bundle: bundle)
         let vc = storyboard.instantiateViewController(withIdentifier: "Tapping") as? MCTTappingStepViewController
         vc?.stepViewModel = vc?.instantiateStepViewModel(for: self, with: parent)
