@@ -10,4 +10,7 @@
    <FileRef
       location = "group:Carthage/Checkouts/SageResearch/Research/Research.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:">
+   </FileRef>
 </Workspace>

@@ -18,6 +18,15 @@
           "revision": "5ad30a87b3d4caa98d358207bf4d92d57b03f019",
           "version": "1.2.2"
         }
+      },
+      {
+        "package": "SageResearch",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/SageResearch.git",
+        "state": {
+          "branch": null,
+          "revision": "b4a3b609d0cc18c97f61049fe39d2e0023adb307",
+          "version": "4.3.4"
+        }
       }
     ]
   },
