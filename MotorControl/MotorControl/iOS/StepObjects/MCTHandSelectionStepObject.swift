@@ -160,18 +160,18 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
     public func allAnswersValid() -> Bool {
         itemGroup.isAnswerValid
     }
-    
-    public func itemGroup(at indexPath: Research.IndexPath) -> RSDTableItemGroup? {
+
+    public func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
         indexPath.section == itemGroup.sectionIndex ? itemGroup : nil
     }
     
-    public func saveAnswer(_ answer: Any, at indexPath: Research.IndexPath) throws {
+    public func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
         guard indexPath.section == itemGroup.sectionIndex else { return }
         try itemGroup.saveAnswer(answer, at: indexPath.item)
         delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
     }
     
-    public func selectAnswer(item: RSDTableItem, at indexPath: Research.IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
+    public func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard indexPath.section == itemGroup.sectionIndex else {
             return (false, false)
         }
