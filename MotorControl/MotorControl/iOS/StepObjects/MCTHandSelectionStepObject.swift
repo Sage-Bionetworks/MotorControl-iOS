@@ -62,12 +62,12 @@ public class MCTHandSelectionStepObject : RSDUIStepObject, ChoiceQuestion, Quest
         }
     }
     
-    public func instantiateAnswerResult() -> AnswerResult {
-        AnswerResultObject(identifier: MCTHandSelectionDataSource.selectionKey, answerType: self.answerType)
-    }
-    
     public override func instantiateStepResult() -> ResultData {
         RSDCollectionResultObject(identifier: self.identifier)
+    }
+    
+    public func instantiateAnswerResult() -> AnswerResult {
+        AnswerResultObject(identifier: MCTHandSelectionDataSource.selectionKey, answerType: self.answerType)
     }
     
     override public func instantiateDataSource(with parent: RSDPathComponent?, for supportedHints: Set<RSDFormUIHint>) -> RSDTableDataSource? {
@@ -161,17 +161,17 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
         itemGroup.isAnswerValid
     }
     
-    public func itemGroup(at indexPath: IndexPath) -> RSDTableItemGroup? {
+    public func itemGroup(at indexPath: Research.IndexPath) -> RSDTableItemGroup? {
         indexPath.section == itemGroup.sectionIndex ? itemGroup : nil
     }
     
-    public func saveAnswer(_ answer: Any, at indexPath: IndexPath) throws {
+    public func saveAnswer(_ answer: Any, at indexPath: Research.IndexPath) throws {
         guard indexPath.section == itemGroup.sectionIndex else { return }
         try itemGroup.saveAnswer(answer, at: indexPath.item)
         delegate?.tableDataSource(self, didChangeAnswersIn: indexPath.section)
     }
     
-    public func selectAnswer(item: RSDTableItem, at indexPath: IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
+    public func selectAnswer(item: RSDTableItem, at indexPath: Research.IndexPath) throws -> (isSelected: Bool, reloadSection: Bool) {
         guard indexPath.section == itemGroup.sectionIndex else {
             return (false, false)
         }
@@ -196,3 +196,4 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
         }
     }
 }
+

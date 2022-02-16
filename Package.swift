@@ -26,7 +26,7 @@ let package = Package(
                  from: "1.3.4"),
         .package(name: "SageResearch",
                  url: "https://github.com/Sage-Bionetworks/SageResearch.git",
-                 from: "4.3.1"),
+                 from: "4.3.2"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
                  from: "1.2.2"),
