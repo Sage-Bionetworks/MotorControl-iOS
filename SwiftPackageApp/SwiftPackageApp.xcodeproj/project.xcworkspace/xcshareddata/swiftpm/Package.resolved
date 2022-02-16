@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/Sage-Bionetworks/SageResearch.git",
         "state": {
           "branch": null,
-          "revision": "90cdbcf803b3937d2b02a085bb76ae82e0c865f5",
-          "version": "4.3.1"
+          "revision": "b4a3b609d0cc18c97f61049fe39d2e0023adb307",
+          "version": "4.3.4"
         }
       }
     ]
