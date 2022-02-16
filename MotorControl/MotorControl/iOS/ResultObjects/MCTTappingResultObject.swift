@@ -243,7 +243,7 @@ public struct MCTTappingSample : SampleRecord, Codable, Equatable {
         case stepPath, timestamp, uptime, buttonIdentifier, location, duration
     }
     
-    /// Clock time for the sample.
+    /// System clock time for the sample. This will be the same timestamp marker across different files.
     public let uptime: TimeInterval
     
     /// A relative timestamp indicating the time of the tap event.
@@ -269,7 +269,7 @@ public struct MCTTappingSample : SampleRecord, Codable, Equatable {
     
     /// A duration of the tap event.
     ///
-    /// The duration store time interval between touch down and touch release events.
+    /// The time interval (in seconds) between touch down and touch release events.
     public internal(set) var duration: TimeInterval
     
     /// Ignored.
@@ -361,13 +361,13 @@ extension MCTTappingSample : DocumentableStruct {
                             "A relative timestamp indicating the time of the tap event where `.zero` is the start of the recording.")
         case .uptime:
             return .init(propertyType: .primitive(.number), propertyDescription:
-                            "Clock time for the sample.")
+                            "System clock time for the sample. This will be the same timestamp marker across different files.")
         case .buttonIdentifier:
             return .init(propertyType: .reference(MCTTappingButtonIdentifier.documentableType()), propertyDescription:
                             "An enumerated value that indicates which button was tapped, if any.")
         case .duration:
             return .init(propertyType: .primitive(.number), propertyDescription:
-                            "The duration store time interval between touch down and touch release events.")
+                            "The time interval (in seconds) between touch down and touch release events.")
         case .location:
             return .init(propertyType: .primitiveArray(.number), propertyDescription:
                             "The (x,y) coordinates on the screen of the touch point.")
