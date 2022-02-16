@@ -95,6 +95,8 @@ open class MCTFactory : RSDFactory {
         self.stepSerializer.add(MCTTappingStepObject.serializationExample())
         
         self.taskSerializer.add(MCTTaskObject.serializationExample())
+        
+        self.resultSerializer.add(MCTTappingResultObject())
     }
     
     /// Override the task decoder to vend an `MCTTaskObject`.
