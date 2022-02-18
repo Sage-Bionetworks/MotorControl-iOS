@@ -115,6 +115,6 @@ extension RSDUIStepObject {
 
 extension MCTTaskObject {
     fileprivate static func serializationExample() -> MCTTaskObject {
-        MCTTaskObject(identifier: MCTTaskObject.defaultType().rawValue, steps: [])
+        MCTTaskObject()
     }
 }
