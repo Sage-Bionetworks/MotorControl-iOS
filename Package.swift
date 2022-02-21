@@ -23,30 +23,32 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 from: "1.3.4"),
+                 from: "1.3.5"),
         .package(name: "SageResearch",
                  url: "https://github.com/Sage-Bionetworks/SageResearch.git",
-                 from: "4.3.3"),
+                 from: "4.3.5"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.2.2"),
-        .package(name: "MCTResources", path: "./MotorControl/MotorControl/MCTResources/")
+                 from: "1.2.3"),
     ],
     targets: [
-
-        // Research is the main target included in this repo. The "Formatters" and
-        // "ExceptionHandler" targets are developed in Obj-c so they require a
-        // separate target.
+        
         .target(
             name: "MotorControl",
             dependencies: ["JsonModel",
                            .product(name: "Research", package: "SageResearch"),
                            .product(name: "ResearchUI", package: "SageResearch", condition: .when(platforms: [.iOS])),
-                           .product(name: "MCTResources", package: "MCTResources", condition: .when(platforms: [.iOS])),
                            .product(name: "MobilePassiveData", package: "MobilePassiveData"),
                            .product(name: "MotionSensor", package: "MobilePassiveData"),
+                           .target(name: "MCTResources", condition: .when(platforms: [.iOS])),
             ],
             path: "MotorControl/MotorControl/iOS"),
+        
+        .target(name: "MCTResources",
+                path: "MotorControl/MotorControl/MCTResources/",
+                resources: [
+                    .process("Resources")
+                ]),
 
         .testTarget(
             name: "MotorControlTests",

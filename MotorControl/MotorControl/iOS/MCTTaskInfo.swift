@@ -41,7 +41,7 @@ import MCTResources
 #endif
 
 /// A list of all the tasks included in this module.
-public enum MCTTaskIdentifier : String, Codable, CaseIterable {
+public enum MCTTaskIdentifier : String, Codable, StringEnumSet, DocumentableStringEnum {
     
     /// The walk and balance test.
     case walkAndBalance = "WalkAndBalance"
@@ -93,12 +93,13 @@ public struct MCTTaskInfo : RSDTaskInfo, RSDEmbeddedIconData {
         self.taskIdentifier = taskIdentifier
         
         // Pull the title, subtitle, and detail from the first step in the task resource.
-        let factory = (RSDFactory.shared as? MCTFactory) ?? MCTFactory()
+        let factory = MCTFactory()
         
         do {
-            let mTask = try factory.decodeTask(with: taskIdentifier.resourceTransformer(),
-                                               taskIdentifier: taskIdentifier.rawValue)
-            self.task = mTask as! MCTTaskObject
+            let transformer = taskIdentifier.resourceTransformer()
+            let (data, _) = try transformer.resourceData(ofType: .json)
+            let decoder = factory.createJSONDecoder(resourceInfo: transformer)
+            self.task = try decoder.decode(MCTTaskObject.self, from: data)
         } catch let err {
             fatalError("Failed to decode the task. \(err)")
         }
