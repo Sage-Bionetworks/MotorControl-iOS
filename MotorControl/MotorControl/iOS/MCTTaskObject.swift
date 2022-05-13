@@ -69,7 +69,7 @@ public final class MCTTaskObject : AbstractTaskObject, RSDActiveTask {
         case steps
     }
     
-    public required init() {
+    public override init() {
         super.init(identifier: MCTTaskIdentifier.tapping.stringValue, steps: [])
     }
 
