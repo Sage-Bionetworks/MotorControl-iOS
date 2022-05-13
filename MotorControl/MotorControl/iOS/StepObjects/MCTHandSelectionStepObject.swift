@@ -63,7 +63,7 @@ public class MCTHandSelectionStepObject : RSDUIStepObject, ChoiceQuestion, Quest
     }
     
     public override func instantiateStepResult() -> ResultData {
-        RSDCollectionResultObject(identifier: self.identifier)
+        CollectionResultObject(identifier: self.identifier)
     }
     
     public func instantiateAnswerResult() -> AnswerResult {
@@ -143,7 +143,7 @@ public class MCTHandSelectionDataSource : RSDStepViewModel, RSDTableDataSource {
         self.handOrderResult = AnswerResultObject(identifier: MCTHandSelectionDataSource.handOrderKey,
                                                   answerType: AnswerTypeArray(baseType: .string))
         
-        var collectionResult = RSDCollectionResultObject(identifier: step.identifier)
+        let collectionResult = CollectionResultObject(identifier: step.identifier)
         collectionResult.appendInputResults(with: self.handSelectionResult)
         collectionResult.appendInputResults(with: self.handOrderResult)
         parent?.taskResult.appendStepHistory(with: collectionResult)

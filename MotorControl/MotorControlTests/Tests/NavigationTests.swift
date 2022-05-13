@@ -115,7 +115,7 @@ class NavigationTests: XCTestCase {
     }
     
     private func _insertHandSelectionResult(for taskController: TestTaskController) {
-        var collectionResult = RSDCollectionResultObject(identifier: "handSelection")
+        let collectionResult = CollectionResultObject(identifier: "handSelection")
         
         let answerResult = AnswerResultObject(identifier: "handSelection", answerType: AnswerTypeString())
         if self.handSelection.count == 2 {

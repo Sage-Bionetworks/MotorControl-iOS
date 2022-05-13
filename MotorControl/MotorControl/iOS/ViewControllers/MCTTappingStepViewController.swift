@@ -172,9 +172,8 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         
         if let collectionResult = previousResult as? CollectionResult {
             // Add the tapping result to the collection result.
-            var stepResult = collectionResult
-            stepResult.appendInputResults(with: tappingResult)
-            self.stepViewModel.taskResult.appendStepHistory(with: stepResult)
+            collectionResult.appendInputResults(with: tappingResult)
+            self.stepViewModel.taskResult.appendStepHistory(with: collectionResult)
         } else {
             // Set the tapping result to the step history.
             self.stepViewModel.taskResult.appendStepHistory(with: tappingResult)
