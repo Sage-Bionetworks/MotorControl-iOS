@@ -238,7 +238,7 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
 
         // update the results
         _expired = true
-        if let startSystemUptime = self.clock?.startSystemUptime {
+        if let startSystemUptime = self.clock?.startTime {
             let timestamp = startSystemUptime + duration
             updateLastSample(timestamp, on: .left)
             updateLastSample(timestamp, on: .right)

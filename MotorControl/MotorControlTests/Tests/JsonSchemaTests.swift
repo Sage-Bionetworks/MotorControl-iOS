@@ -30,7 +30,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-@testable import MotorControl
+@testable import MotorControlV1
 import XCTest
 import JsonModel
 

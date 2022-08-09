@@ -33,7 +33,7 @@
 
 import UIKit
 import Research
-import MotorControl
+import MotorControlV1
 
 class TaskTableViewController: UITableViewController {
     

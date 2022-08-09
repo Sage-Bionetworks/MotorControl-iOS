@@ -33,7 +33,7 @@
 
 #if canImport(Research_UnitTest)
 
-@testable import MotorControl
+@testable import MotorControlV1
 import XCTest
 import Research_UnitTest
 import JsonModel

@@ -8,33 +8,34 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         // Add support for all platforms starting from a specific version.
-        .macOS(.v10_15),
-        .iOS(.v11),
-        .watchOS(.v4),
-        .tvOS(.v11)
+        .macOS(.v11),
+        .iOS(.v14),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MotorControl",
-            targets: ["MotorControl"]),
+            targets: ["MotorControlV1"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "JsonModel",
-                 url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 from: "1.4.5"),
         .package(name: "SageResearch",
                  url: "https://github.com/Sage-Bionetworks/SageResearch.git",
-                 from: "4.4.0"),
+                 from: "4.6.1"),
+        .package(name: "JsonModel",
+                 url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
+                 from: "1.4.9"),
+        .package(name: "AssessmentModel",
+                 url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
+                 from: "0.7.5"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.2.3"),
+                 from: "1.3.1"),
     ],
     targets: [
         
         .target(
-            name: "MotorControl",
+            name: "MotorControlV1",
             dependencies: ["JsonModel",
                            .product(name: "Research", package: "SageResearch"),
                            .product(name: "ResearchUI", package: "SageResearch", condition: .when(platforms: [.iOS])),
@@ -51,9 +52,9 @@ let package = Package(
                 ]),
 
         .testTarget(
-            name: "MotorControlTests",
+            name: "MotorControlV1Tests",
             dependencies: [
-                "MotorControl",
+                "MotorControlV1",
                 .product(name: "Research_UnitTest", package: "SageResearch", condition: .when(platforms: [.iOS])),
             ],
             path: "MotorControl/MotorControlTests/Tests"),

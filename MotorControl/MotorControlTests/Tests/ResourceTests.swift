@@ -34,7 +34,7 @@
 #if os(iOS)
 
 import XCTest
-@testable import MotorControl
+@testable import MotorControlV1
 import Research
 import ResearchUI
 
