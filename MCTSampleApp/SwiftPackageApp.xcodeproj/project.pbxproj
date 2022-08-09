@@ -120,7 +120,7 @@
 				FFCB21702746ECF7005219FB /* TaskArchivesTableViewController.swift */,
 			);
 			name = MCTSampleApp;
-			path = ../../MCTSampleApp/MCTSampleApp;
+			path = ../MCTSampleApp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
