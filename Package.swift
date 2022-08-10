@@ -15,7 +15,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MotorControl",
-            targets: ["MotorControlV1"]),
+            targets: ["MotorControlV1", "MotorControl"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -26,13 +26,32 @@ let package = Package(
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
                  from: "1.4.9"),
         .package(name: "AssessmentModel",
-                 url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
-                 from: "0.7.5"),
+                 path: "../AssessmentModelKMM"),
+//                 url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
+//                 from: "0.7.5"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
                  from: "1.3.1"),
     ],
     targets: [
+        
+        .target(
+            name: "MotorControl",
+            dependencies: [
+                .product(name: "JsonModel", package: "JsonModel"),
+                .product(name: "AssessmentModel", package: "AssessmentModel"),
+                .product(name: "AssessmentModelUI", package: "AssessmentModel"),
+                .product(name: "MobilePassiveData", package: "MobilePassiveData"),
+                .product(name: "MotionSensor", package: "MobilePassiveData"),
+            ],
+            resources: [
+                .process("Resources")
+            ]
+        ),
+        
+        .testTarget(
+            name: "MotorControlTests",
+            dependencies: ["MotorControl"]),
         
         .target(
             name: "MotorControlV1",

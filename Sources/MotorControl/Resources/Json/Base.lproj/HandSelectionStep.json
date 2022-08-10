@@ -1,0 +1,18 @@
+ {
+    "identifier": "handSelection",
+    "type": "choiceQuestion",
+    "title": "Which hands are you capable of doing this activity with?",
+    "choices": [{
+            "text": "I can only perform this activity with my RIGHT hand.",
+            "value": "right"
+        },
+        {
+            "text": "I can only perform this activity with my LEFT hand.",
+            "value": "left"
+        },
+        {
+            "text": "I can perform this activity with BOTH hands.",
+            "value": "both"
+        }
+    ]
+ }

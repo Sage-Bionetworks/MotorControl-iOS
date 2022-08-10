@@ -1,0 +1,48 @@
+{
+     "identifier":"tremor",
+     "type":"section",
+     "steps":[
+                {
+                    "identifier":"instruction",
+                    "type":"handInstruction",
+                    "title":"Hold the phone with your %@ hand while pointing your index finger out.",
+                    "subtitle":"The phone will vibrate when the test is done for this hand. If you have your volume up, it will tell you when the test is over too.",
+                    "image":{
+                        "type":"fetchable",
+                        "imageName":"KineticHoldPhone-Left",
+                        "placementType":"topBackground"
+                    },
+                    "actions":{
+                        "goForward":{
+                            "type":"default",
+                            "buttonTitle":"Start"
+                        }
+                    }
+              },
+              {
+                    "identifier":"countdown",
+                    "type":"countdown",
+                    "subtitle":"Begin in...",
+                    "duration":5,
+                    "commands":["playSoundOnStart", "transitionAutomatically"]
+              },
+              {
+                  "identifier":"tremor",
+                  "type":"tremor",
+                  "duration":30,
+                  "image":{
+                      "type":"fetchable",
+                      "imageName":"KineticHoldPhone-Left",
+                      "placementType":"fullsizeBackground"
+                  },
+                  "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
+                  "title": "Touch your nose with your %@ index finger",
+                  "spokenInstructions":{
+                      "start":"Touch your nose with your %@ index finger",
+                      "halfway":"Halfway done.",
+                      "23":"Almost done.",
+                      "end":"Great job! You’re done with this hand."
+                  }
+               }
+            ]
+ }
