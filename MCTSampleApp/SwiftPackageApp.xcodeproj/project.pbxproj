@@ -19,6 +19,11 @@
 		FFCB217A2746ECF7005219FB /* ArchiveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCB216E2746ECF7005219FB /* ArchiveManager.swift */; };
 		FFCB217C2746ECF7005219FB /* TaskArchivesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCB21702746ECF7005219FB /* TaskArchivesTableViewController.swift */; };
 		FFCB217F2746ED66005219FB /* MotorControl in Frameworks */ = {isa = PBXBuildFile; productRef = FFCB217E2746ED66005219FB /* MotorControl */; };
+		FFEE2B7528A42DE1000B28DF /* MobilePassiveData in Frameworks */ = {isa = PBXBuildFile; productRef = FFEE2B7428A42DE1000B28DF /* MobilePassiveData */; };
+		FFEE2B7728A42DE1000B28DF /* MotionSensor in Frameworks */ = {isa = PBXBuildFile; productRef = FFEE2B7628A42DE1000B28DF /* MotionSensor */; };
+		FFEE2B7F28A42E17000B28DF /* JsonModel in Frameworks */ = {isa = PBXBuildFile; productRef = FFEE2B7E28A42E17000B28DF /* JsonModel */; };
+		FFEE2B8728A42F4F000B28DF /* Research in Frameworks */ = {isa = PBXBuildFile; productRef = FFEE2B8628A42F4F000B28DF /* Research */; };
+		FFEE2B8928A42F4F000B28DF /* ResearchUI in Frameworks */ = {isa = PBXBuildFile; productRef = FFEE2B8828A42F4F000B28DF /* ResearchUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +58,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFEE2B7528A42DE1000B28DF /* MobilePassiveData in Frameworks */,
 				FFCB217F2746ED66005219FB /* MotorControl in Frameworks */,
+				FFEE2B8728A42F4F000B28DF /* Research in Frameworks */,
+				FFEE2B7F28A42E17000B28DF /* JsonModel in Frameworks */,
+				FFEE2B7728A42DE1000B28DF /* MotionSensor in Frameworks */,
+				FFEE2B8928A42F4F000B28DF /* ResearchUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +151,11 @@
 			name = SwiftPackageApp;
 			packageProductDependencies = (
 				FFCB217E2746ED66005219FB /* MotorControl */,
+				FFEE2B7428A42DE1000B28DF /* MobilePassiveData */,
+				FFEE2B7628A42DE1000B28DF /* MotionSensor */,
+				FFEE2B7E28A42E17000B28DF /* JsonModel */,
+				FFEE2B8628A42F4F000B28DF /* Research */,
+				FFEE2B8828A42F4F000B28DF /* ResearchUI */,
 			);
 			productName = MCTSampleApp;
 			productReference = F82CEEEC227AB136000485C8 /* SwiftPackageApp.app */;
@@ -175,6 +190,11 @@
 				Base,
 			);
 			mainGroup = F82CEEE3227AB136000485C8;
+			packageReferences = (
+				FFEE2B7328A42DE1000B28DF /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */,
+				FFEE2B7D28A42E17000B28DF /* XCRemoteSwiftPackageReference "JsonModel-Swift" */,
+				FFEE2B8528A42F4F000B28DF /* XCRemoteSwiftPackageReference "SageResearch" */,
+			);
 			productRefGroup = F82CEEED227AB136000485C8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -418,10 +438,62 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		FFEE2B7328A42DE1000B28DF /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.1;
+			};
+		};
+		FFEE2B7D28A42E17000B28DF /* XCRemoteSwiftPackageReference "JsonModel-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Sage-Bionetworks/JsonModel-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
+		FFEE2B8528A42F4F000B28DF /* XCRemoteSwiftPackageReference "SageResearch" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Sage-Bionetworks/SageResearch";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		FFCB217E2746ED66005219FB /* MotorControl */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MotorControl;
+		};
+		FFEE2B7428A42DE1000B28DF /* MobilePassiveData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFEE2B7328A42DE1000B28DF /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = MobilePassiveData;
+		};
+		FFEE2B7628A42DE1000B28DF /* MotionSensor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFEE2B7328A42DE1000B28DF /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = MotionSensor;
+		};
+		FFEE2B7E28A42E17000B28DF /* JsonModel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFEE2B7D28A42E17000B28DF /* XCRemoteSwiftPackageReference "JsonModel-Swift" */;
+			productName = JsonModel;
+		};
+		FFEE2B8628A42F4F000B28DF /* Research */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFEE2B8528A42F4F000B28DF /* XCRemoteSwiftPackageReference "SageResearch" */;
+			productName = Research;
+		};
+		FFEE2B8828A42F4F000B28DF /* ResearchUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FFEE2B8528A42F4F000B28DF /* XCRemoteSwiftPackageReference "SageResearch" */;
+			productName = ResearchUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
