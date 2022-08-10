@@ -35,6 +35,7 @@ import AssessmentModel
 import AssessmentModelUI
 import JsonModel
 import MobilePassiveData
+import SharedResources
 
 public enum MotorControlIdentifier : String, Codable, StringEnumSet, DocumentableStringEnum {
     
@@ -49,7 +50,7 @@ public enum MotorControlIdentifier : String, Codable, StringEnumSet, Documentabl
 
     public func instantiateAssessmentState() throws -> AssessmentState {
         let filename = self.rawValue
-        guard let url = Bundle.module.url(forResource: filename, withExtension: "json")
+        guard let url = SharedResources.bundle.url(forResource: filename, withExtension: "json")
         else {
             throw ValidationError.unexpectedNullObject("Could not find JSON file \(filename).")
         }
@@ -74,16 +75,16 @@ class MotorControlFactory : AssessmentFactory {
     }
     
     override func resourceBundle(for bundleInfo: DecodableBundleInfo, from decoder: Decoder) -> ResourceBundle? {
-        Bundle.module
+        SharedResources.bundle
     }
     
     override func createJSONDecoder(resourceInfo: ResourceInfo? = nil) -> JSONDecoder {
-        super.createJSONDecoder(resourceInfo: MotorControlResourceInfo())
+        super.createJSONDecoder(resourceInfo: SharedResources.shared)
     }
 }
 
 struct MotorControlResourceInfo : ResourceInfo {
-    var factoryBundle: ResourceBundle? { Bundle.module }
+    var factoryBundle: ResourceBundle? { SharedResources.bundle }
     var packageName: String? { nil }
     var bundleIdentifier: String? { nil }
 }

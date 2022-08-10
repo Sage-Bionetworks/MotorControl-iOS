@@ -83,16 +83,11 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "subtitle":"TREMOR_COMPLETION",
+                 "subtitle":"You have completed the Tremor Test activity.",
                  "image":{
                      "type":"fetchable",
                      "imageName":"Completion-Tremor",
                      "placementType":"topBackground"
-                 },
-                 "viewTheme":{
-                     "type": "default",
-                     "viewIdentifier":"Completion",
-                     "storyboardIdentifier":"ActiveTaskSteps"
                  },
                  "actions": {
                      "goForward":{

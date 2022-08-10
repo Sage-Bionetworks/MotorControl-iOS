@@ -121,7 +121,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "subtitle":"FINGER_TO_NOSE_COMPLETION",
+                 "subtitle":"You have completed the Finger-to-Nose activity.",
                  "image":{
                      "type":"fetchable",
                      "imageName":"Completion-Tremor",

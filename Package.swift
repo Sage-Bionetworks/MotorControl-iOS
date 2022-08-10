@@ -37,16 +37,20 @@ let package = Package(
         .target(
             name: "MotorControl",
             dependencies: [
+                "SharedResources",
                 .product(name: "JsonModel", package: "JsonModel"),
                 .product(name: "AssessmentModel", package: "AssessmentModel"),
                 .product(name: "AssessmentModelUI", package: "AssessmentModel"),
                 .product(name: "MobilePassiveData", package: "MobilePassiveData"),
                 .product(name: "MotionSensor", package: "MobilePassiveData"),
-            ],
-            resources: [
-                .process("Resources")
             ]
         ),
+        
+        .target(name: "SharedResources",
+                dependencies: [
+                    .product(name: "JsonModel", package: "JsonModel"),
+                ],
+                path: "shared_resources"),
         
         .testTarget(
             name: "MotorControlTests",
