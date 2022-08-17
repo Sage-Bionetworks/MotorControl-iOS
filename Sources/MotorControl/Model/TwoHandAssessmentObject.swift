@@ -59,13 +59,15 @@ final class TwoHandNavigator : Navigator {
     
     public let identifier: String
     public let nodes: [Node]
-    
+    public let handOrder: [HandSelection]
+
     public init(identifier: String, nodes: [Node]) {
         guard Set(nodes.map { $0.identifier }).count == nodes.count else {
             fatalError("identifiers not unique")
         }
         self.identifier = identifier
         self.nodes = nodes
+        self.handOrder = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
     }
     
     func node(identifier: String) -> Node? {
@@ -87,20 +89,21 @@ final class TwoHandNavigator : Navigator {
         let stepHistory = branchResult.stepHistory.map{
             $0.identifier
         }
-        let handOrder: [HandSelection] = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
 
         if !selectedBothHands, currentOrNextNodeIsHand {
             if  selection == nodeNext?.identifier || nodeNext?.identifier == completed {
                 return .init(node: nodeNext, direction: .forward)
             }
             return .init(node: nextNode(identifier: nodeNext?.identifier), direction: .forward)
-        } else if selectedBothHands, currentOrNextNodeIsHand {
+        }
+        else if selectedBothHands, currentOrNextNodeIsHand {
             if !stepHistory.contains(HandSelection.left.rawValue), !stepHistory.contains(HandSelection.right.rawValue) {
                 return .init(node: node(identifier: handOrder[0].rawValue), direction: .forward)
             }
             else if !stepHistory.contains(HandSelection.left.rawValue) || !stepHistory.contains( HandSelection.right.rawValue) {
                 return .init(node: node(identifier: handOrder[1].rawValue), direction: .forward)
-            } else {
+            }
+            else {
                 return .init(node: node(identifier: completed), direction: .forward)
             }
         }
