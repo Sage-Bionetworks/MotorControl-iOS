@@ -34,6 +34,7 @@
 import Foundation
 import AssessmentModel
 import JsonModel
+import SwiftUI
 
 extension SerializableNodeType {
     static let twoHandAssessment: SerializableNodeType = "twoHandAssessment"
@@ -78,8 +79,23 @@ final class TwoHandNavigator : Navigator {
     }
     
     func nodeAfter(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
-        return .init(node: nextNode(identifier: currentNode?.identifier), direction: .forward)
+        let completed = "completion"
+        let selection = currentHandSelection(for: branchResult)?.rawValue
+        let selectedBothHands = selection == HandSelection.both.rawValue
+        let currentNodeIsHand = currentNode?.identifier == HandSelection.left.rawValue || currentNode?.identifier == HandSelection.right.rawValue
+        let nodeNext = nextNode(identifier: currentNode?.identifier)
+
+        if !selectedBothHands, (currentNodeIsHand || nodeNext?.identifier == HandSelection.left.rawValue || nodeNext?.identifier == HandSelection.right.rawValue) {
+            if  selection == nodeNext?.identifier || nodeNext?.identifier == completed {
+                return .init(node: nodeNext, direction: .forward)
+            }
+            return .init(node: nextNode(identifier: nodeNext?.identifier), direction: .forward)
+        } else if selectedBothHands {
+            
+        }
+        return .init(node: nodeNext, direction: .forward)
     }
+    
     
     func nodeBefore(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
         return .init(node: previousNode(currentNode: currentNode), direction: .backward)
@@ -105,9 +121,22 @@ final class TwoHandNavigator : Navigator {
         return isCompleted(currentNode: currentNode)
     }
     
-    func currentHandSelection(for branchResult: BranchNodeResult) -> HandSelection? {
-        return HandSelection.right
+    private func currentHandSelection(for branchResult: BranchNodeResult) -> HandSelection? {
+        let handSelection = "handSelection"
+        guard let answer = branchResult.findAnswer(with: handSelection),
+              let jsonValue = answer.jsonValue,
+              case .string(let rawValue) = jsonValue
+        else {
+            return nil
+        }
+        return .init(rawValue: rawValue)
     }
+    
+    private func randomHand() -> [HandSelection] {
+        let handOrder: [HandSelection] = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
+        return handOrder
+    }
+    
     
     private func isCompleted(currentNode: Node) -> Bool {
         return currentNode.identifier == nodes.last?.identifier && currentNode is CompletionStep

@@ -148,13 +148,17 @@ final class MotorControlNavigationTests: XCTestCase {
         }
         XCTAssertFalse(resultIdentifiers.contains("left"))
     }
-    
-    func testTwoHandTremorCurrentHandSelection_right() throws {
-        let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
-        
-        let _ = try navigateForward(state, to: "sitDownInstruction", handSelection: "right")
-//        XCTAssertTrue(state.navigator.currentHandSelection(for: state.assessmentResult))
-    }
+//
+//    func testTwoHandTremorCurrentHandSelection_right() throws {
+//        let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
+//
+//        let _ = try navigateForward(state, to: "sitDownInstruction", handSelection: "right")
+//        guard let nav: TwoHandNavigator = state.navigator
+//        else {
+//
+//        }
+//        nav.currentHandSelection(for: <#T##BranchNodeResult#>)
+//    }
     
     func testTwoHandTremorHandSelection_both() throws {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
@@ -189,17 +193,10 @@ final class MotorControlNavigationTests: XCTestCase {
     enum TestError: Error {
         case nilValue
     }
-//    private func addBothToStepHistory(state: TestNavigationState, direction: PathMarker.Direction = .forward, hands: [ResultData] = []) {
-//        let shuffledHands = hands.shuffled()
-//        for hand in shuffledHands {
-//            state.assessmentResult.appendStepHistory(with: hand, direction: direction)
-//        }
-//    }
     
     func navigateForward(_ state: TestNavigationState, to identifier: String, handSelection: String? = "both") throws -> Node {
         var loopCount = 0
         var point: NavigationPoint = .init(node: nil, direction: .forward)
-//        var hands: [ResultData] = []
         repeat {
             point = state.navigator.nodeAfter(currentNode: state.currentNode, branchResult: state.assessmentResult)
             state.currentNode = point.node
@@ -211,20 +208,6 @@ final class MotorControlNavigationTests: XCTestCase {
                     }
                 }
                 state.assessmentResult.appendStepHistory(with: result, direction: point.direction)
-//                if result.identifier == "left" || result.identifier == "right" {
-//                    if handSelection == result.identifier {
-//                        state.assessmentResult.appendStepHistory(with: result, direction: point.direction)
-//                    }
-//                    else if handSelection == "both" {
-//                        hands.append(result)
-//                    }
-//                    if hands.count >= 2 {
-//                        addBothToStepHistory(state: state, direction: point.direction, hands: hands)
-//                    }
-//                }
-//                else {
-//                    state.assessmentResult.appendStepHistory(with: result, direction: point.direction)
-//                }
             }
             loopCount += 1
         } while state.currentNode != nil && state.currentNode!.identifier != identifier && loopCount < 100
