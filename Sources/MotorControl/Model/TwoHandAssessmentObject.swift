@@ -82,16 +82,27 @@ final class TwoHandNavigator : Navigator {
         let completed = "completion"
         let selection = currentHandSelection(for: branchResult)?.rawValue
         let selectedBothHands = selection == HandSelection.both.rawValue
-        let currentNodeIsHand = currentNode?.identifier == HandSelection.left.rawValue || currentNode?.identifier == HandSelection.right.rawValue
         let nodeNext = nextNode(identifier: currentNode?.identifier)
+        let currentOrNextNodeIsHand = currentNode?.identifier == HandSelection.left.rawValue || currentNode?.identifier == HandSelection.right.rawValue || nodeNext?.identifier == HandSelection.left.rawValue || nodeNext?.identifier == HandSelection.right.rawValue
+        let stepHistory = branchResult.stepHistory.map{
+            $0.identifier
+        }
+        let handOrder: [HandSelection] = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
 
-        if !selectedBothHands, (currentNodeIsHand || nodeNext?.identifier == HandSelection.left.rawValue || nodeNext?.identifier == HandSelection.right.rawValue) {
+        if !selectedBothHands, currentOrNextNodeIsHand {
             if  selection == nodeNext?.identifier || nodeNext?.identifier == completed {
                 return .init(node: nodeNext, direction: .forward)
             }
             return .init(node: nextNode(identifier: nodeNext?.identifier), direction: .forward)
-        } else if selectedBothHands {
-            
+        } else if selectedBothHands, currentOrNextNodeIsHand {
+            if !stepHistory.contains(HandSelection.left.rawValue), !stepHistory.contains(HandSelection.right.rawValue) {
+                return .init(node: node(identifier: handOrder[0].rawValue), direction: .forward)
+            }
+            else if !stepHistory.contains(HandSelection.left.rawValue) || !stepHistory.contains( HandSelection.right.rawValue) {
+                return .init(node: node(identifier: handOrder[1].rawValue), direction: .forward)
+            } else {
+                return .init(node: node(identifier: completed), direction: .forward)
+            }
         }
         return .init(node: nodeNext, direction: .forward)
     }
@@ -131,12 +142,6 @@ final class TwoHandNavigator : Navigator {
         }
         return .init(rawValue: rawValue)
     }
-    
-    private func randomHand() -> [HandSelection] {
-        let handOrder: [HandSelection] = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
-        return handOrder
-    }
-    
     
     private func isCompleted(currentNode: Node) -> Bool {
         return currentNode.identifier == nodes.last?.identifier && currentNode is CompletionStep
