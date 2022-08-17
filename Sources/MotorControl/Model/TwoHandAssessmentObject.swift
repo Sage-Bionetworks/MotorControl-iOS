@@ -48,5 +48,98 @@ final class TwoHandAssessmentObject : AbstractAssessmentObject {
     convenience init() {
         self.init(identifier: "example", children: [])
     }
+    
+    override func instantiateNavigator(state: NavigationState) throws -> Navigator {
+        TwoHandNavigator(identifier: identifier, nodes: children)
+    }
 }
 
+final class TwoHandNavigator : Navigator {
+    
+    public let identifier: String
+    public let nodes: [Node]
+    
+    public init(identifier: String, nodes: [Node]) {
+        guard Set(nodes.map { $0.identifier }).count == nodes.count else {
+            fatalError("identifiers not unique")
+        }
+        self.identifier = identifier
+        self.nodes = nodes
+    }
+    
+    func node(identifier: String) -> Node? {
+        return nodes.first(where: {
+            $0.identifier == identifier
+        })
+    }
+    
+    func firstNode() -> Node? {
+        return nodes.first
+    }
+    
+    func nodeAfter(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
+        return .init(node: nextNode(identifier: currentNode?.identifier), direction: .forward)
+    }
+    
+    func nodeBefore(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
+        return .init(node: previousNode(currentNode: currentNode), direction: .backward)
+    }
+    
+    func hasNodeAfter(currentNode: Node, branchResult: BranchNodeResult) -> Bool {
+        return nextNode(identifier: currentNode.identifier) != nil
+    }
+    
+    func allowBackNavigation(currentNode: Node, branchResult: BranchNodeResult) -> Bool {
+        return previousNode(currentNode: currentNode) != nil
+    }
+    
+    func canPauseAssessment(currentNode: Node, branchResult: BranchNodeResult) -> Bool {
+        return true
+    }
+    
+    func progress(currentNode: Node, branchResult: BranchNodeResult) -> AssessmentModel.Progress? {
+        return nil
+    }
+    
+    func isCompleted(currentNode: Node, branchResult: BranchNodeResult) -> Bool {
+        return isCompleted(currentNode: currentNode)
+    }
+    
+    func currentHandSelection(for branchResult: BranchNodeResult) -> HandSelection? {
+        return HandSelection.right
+    }
+    
+    private func isCompleted(currentNode: Node) -> Bool {
+        return currentNode.identifier == nodes.last?.identifier && currentNode is CompletionStep
+    }
+    
+    private func nextNode(identifier: String?) -> Node? {
+        guard let identifier = identifier
+        else {
+            return firstNode()
+        }
+        guard let index = nodes.firstIndex(where: {
+            $0.identifier == identifier
+        }), index + 1 < nodes.count
+        else {
+            return nil
+        }
+        return nodes[index + 1]
+    }
+    
+    private func previousNode(currentNode: Node?) -> Node? {
+        
+        guard let index = nodes.firstIndex(where: {
+            $0.identifier == currentNode?.identifier
+        }), index > 0, !isCompleted(currentNode: currentNode!), !(currentNode is BranchNode)
+        else {
+            return nil
+        }
+        
+        return nodes[index - 1]
+    }
+    
+    enum HandSelection: String, Codable, CaseIterable {
+        case left, right, both
+    }
+}

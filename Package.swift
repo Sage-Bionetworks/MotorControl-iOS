@@ -15,13 +15,16 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MotorControl",
-            targets: ["MotorControlV1", "MotorControl"]),
+            targets: [
+//                "MotorControlV1",
+                "MotorControl"
+            ]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "SageResearch",
-                 url: "https://github.com/Sage-Bionetworks/SageResearch.git",
-                 from: "4.6.1"),
+//        .package(name: "SageResearch",
+//                 url: "https://github.com/Sage-Bionetworks/SageResearch.git",
+//                 from: "4.6.1"),
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
                  from: "1.4.9"),
@@ -56,30 +59,31 @@ let package = Package(
             name: "MotorControlTests",
             dependencies: ["MotorControl"]),
         
-        .target(
-            name: "MotorControlV1",
-            dependencies: ["JsonModel",
-                           .product(name: "Research", package: "SageResearch"),
-                           .product(name: "ResearchUI", package: "SageResearch", condition: .when(platforms: [.iOS])),
-                           .product(name: "MobilePassiveData", package: "MobilePassiveData"),
-                           .product(name: "MotionSensor", package: "MobilePassiveData"),
-                           .target(name: "MCTResources", condition: .when(platforms: [.iOS])),
-            ],
-            path: "MotorControl/MotorControl/iOS"),
+//        .target(
+//            name: "MotorControlV1",
+//            dependencies: ["JsonModel",
+//                           .product(name: "Research", package: "SageResearch"),
+//                           .product(name: "ResearchUI", package: "SageResearch", condition: .when(platforms: [.iOS])),
+//                           .product(name: "MobilePassiveData", package: "MobilePassiveData"),
+//                           .product(name: "MotionSensor", package: "MobilePassiveData"),
+//                           .target(name: "MCTResources", condition: .when(platforms: [.iOS])),
+//            ],
+//            path: "MotorControl/MotorControl/iOS"),
         
-        .target(name: "MCTResources",
-                path: "MotorControl/MotorControl/MCTResources/",
-                resources: [
-                    .process("Resources")
-                ]),
+//        .target(name: "MCTResources",
+//                path: "MotorControl/MotorControl/MCTResources/",
+//                resources: [
+//                    .process("Resources")
+//                ]),
 
-        .testTarget(
-            name: "MotorControlV1Tests",
-            dependencies: [
-                "MotorControlV1",
-                .product(name: "Research_UnitTest", package: "SageResearch", condition: .when(platforms: [.iOS])),
-            ],
-            path: "MotorControl/MotorControlTests/Tests"),
+// TODO: Aaron Rabara 8/10/2022 
+//        .testTarget(
+//            name: "MotorControlV1Tests",
+//            dependencies: [
+//                "MotorControlV1",
+//                .product(name: "Research_UnitTest", package: "SageResearch", condition: .when(platforms: [.iOS])),
+//            ],
+//            path: "MotorControl/MotorControlTests/Tests"),
         
     ]
 )
