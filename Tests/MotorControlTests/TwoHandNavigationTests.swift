@@ -162,7 +162,7 @@ final class MotorControlNavigationTests: XCTestCase {
     
     func testTwoHandTremorHandSelectionRandomization() throws {
         var resultIdentifierList: [[String]] = []
-        for _ in 0...10 {
+        for _ in 0...20 {
             let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
             let _ = try navigateForward(state, to: "completion", handSelection: "both")
             let resultIdentifiers = state.assessmentResult.stepHistory.map{
@@ -173,7 +173,7 @@ final class MotorControlNavigationTests: XCTestCase {
         
         var allListsAreSame = true
         let firstList = resultIdentifierList[0]
-        for ii in 1...10 {
+        for ii in 1...20 {
             if firstList != resultIdentifierList[ii] {
                 allListsAreSame = false
                 break

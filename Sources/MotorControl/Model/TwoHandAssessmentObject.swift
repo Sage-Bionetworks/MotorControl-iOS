@@ -81,26 +81,30 @@ final class TwoHandNavigator : Navigator {
     }
     
     func nodeAfter(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
-        let completed = "completion"
-        let selection = currentHandSelection(for: branchResult)?.rawValue
-        let selectedBothHands = selection == HandSelection.both.rawValue
-        let nodeNext = nextNode(identifier: currentNode?.identifier)
-        let currentOrNextNodeIsHand = currentNode?.identifier == HandSelection.left.rawValue || currentNode?.identifier == HandSelection.right.rawValue || nodeNext?.identifier == HandSelection.left.rawValue || nodeNext?.identifier == HandSelection.right.rawValue
-        let stepHistory = branchResult.stepHistory.map{
+        guard let nodeNext = nextNode(identifier: currentNode?.identifier)
+        else {
+            return .init(node: nil, direction: .forward)
+        }
+        
+        let currentHand = currentNode?.hand()
+        let nextHand = nodeNext.hand()
+        guard currentHand != nil || nextHand != nil
+        else {
+            return .init(node: nodeNext, direction: .forward)
+        }
+        
+        
+        let selection = currentHandSelection(for: branchResult)
+        let selectedBothHands = selection == .both
+        let stepHistory = branchResult.stepHistory.map {
             $0.identifier
         }
         let leftHandInHistory = stepHistory.contains(HandSelection.left.rawValue)
         let rightHandInHistory = stepHistory.contains(HandSelection.right.rawValue)
-
-        if !selectedBothHands, currentOrNextNodeIsHand {
-            if  selection == nodeNext?.identifier || nodeNext?.identifier == completed {
-                return .init(node: nodeNext, direction: .forward)
-            }
-            return .init(node: nextNode(identifier: nodeNext?.identifier), direction: .forward)
-        }
-        else if selectedBothHands, currentOrNextNodeIsHand {
+        
+        if selectedBothHands {
             if leftHandInHistory, rightHandInHistory {
-                return .init(node: node(identifier: completed), direction: .forward)
+                return .init(node: nextNode(identifier: HandSelection.right.rawValue), direction: .forward)
             }
             else if leftHandInHistory || rightHandInHistory {
                 return .init(node: node(identifier: handOrder[1].rawValue), direction: .forward)
@@ -109,7 +113,12 @@ final class TwoHandNavigator : Navigator {
                 return .init(node: node(identifier: handOrder[0].rawValue), direction: .forward)
             }
         }
-        return .init(node: nodeNext, direction: .forward)
+        else {
+            if  selection == nextHand || nodeNext is CompletionStep {
+                return .init(node: nodeNext, direction: .forward)
+            }
+            return .init(node: nextNode(identifier: nodeNext.identifier), direction: .forward)
+        }
     }
     
     
@@ -178,7 +187,15 @@ final class TwoHandNavigator : Navigator {
         return nodes[index - 1]
     }
     
-    enum HandSelection: String, Codable, CaseIterable {
-        case left, right, both
+    
+}
+
+enum HandSelection: String, Codable, CaseIterable {
+    case left, right, both
+}
+
+extension Node {
+    func hand() -> HandSelection? {
+        .init(rawValue: identifier)
     }
 }
