@@ -89,6 +89,8 @@ final class TwoHandNavigator : Navigator {
         let stepHistory = branchResult.stepHistory.map{
             $0.identifier
         }
+        let leftHandInHistory = stepHistory.contains(HandSelection.left.rawValue)
+        let rightHandInHistory = stepHistory.contains(HandSelection.right.rawValue)
 
         if !selectedBothHands, currentOrNextNodeIsHand {
             if  selection == nodeNext?.identifier || nodeNext?.identifier == completed {
@@ -97,14 +99,14 @@ final class TwoHandNavigator : Navigator {
             return .init(node: nextNode(identifier: nodeNext?.identifier), direction: .forward)
         }
         else if selectedBothHands, currentOrNextNodeIsHand {
-            if !stepHistory.contains(HandSelection.left.rawValue), !stepHistory.contains(HandSelection.right.rawValue) {
-                return .init(node: node(identifier: handOrder[0].rawValue), direction: .forward)
+            if leftHandInHistory, rightHandInHistory {
+                return .init(node: node(identifier: completed), direction: .forward)
             }
-            else if !stepHistory.contains(HandSelection.left.rawValue) || !stepHistory.contains( HandSelection.right.rawValue) {
+            else if leftHandInHistory || rightHandInHistory {
                 return .init(node: node(identifier: handOrder[1].rawValue), direction: .forward)
             }
             else {
-                return .init(node: node(identifier: completed), direction: .forward)
+                return .init(node: node(identifier: handOrder[0].rawValue), direction: .forward)
             }
         }
         return .init(node: nodeNext, direction: .forward)
