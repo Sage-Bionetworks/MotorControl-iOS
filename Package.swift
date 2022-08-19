@@ -36,7 +36,6 @@ let package = Package(
                  from: "1.3.1"),
     ],
     targets: [
-        
         .target(
             name: "MotorControl",
             dependencies: [
@@ -48,7 +47,13 @@ let package = Package(
                 .product(name: "MotionSensor", package: "MobilePassiveData"),
             ]
         ),
-        
+        .target(name: "MotorControlUI",
+                dependencies: [
+                    "MotorControl",
+                    "SharedResources",
+                    .product(name: "AssessmentModel", package: "AssessmentModel"),
+                    .product(name: "AssessmentModelUI", package: "AssessmentModel"),
+                ]),
         .target(name: "SharedResources",
                 dependencies: [
                     .product(name: "JsonModel", package: "JsonModel"),
