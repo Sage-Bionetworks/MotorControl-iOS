@@ -17,7 +17,7 @@ public struct InstructionView: View {
     @ObservedObject var nodeState: ContentNodeState
     let alignment: Alignment
     
-    public init(_ nodeState: ContentNodeState, alignment: Alignment = .leading) {
+    public init(_ nodeState: ContentNodeState, alignment: Alignment = .center) {
         self.nodeState = nodeState
         self.alignment = alignment
     }
@@ -25,7 +25,7 @@ public struct InstructionView: View {
     public var body: some View {
         VStack {
             StepHeaderView(nodeState)
-            ContentNodeView(nodeState.contentNode, alignment: alignment)
+            InstructionNodeView(nodeState.contentNode, alignment: alignment)
             SurveyNavigationView()
         }
     }
@@ -35,8 +35,9 @@ struct InstructionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             InstructionView(InstructionState(example2, parentId: nil))
+                .padding()
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
-            .environmentObject(AssessmentState(AssessmentObject(previewStep: example2)))
+                .environmentObject(AssessmentState(AssessmentObject(previewStep: example2)))
             InstructionView(InstructionState(example1, parentId: nil), alignment: .center)
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example1)))

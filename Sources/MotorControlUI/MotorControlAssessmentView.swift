@@ -92,6 +92,7 @@ public struct MotorControlAssessmentView : View {
             else if let nodeState = state as? ContentNodeState {
                 InstructionView(nodeState, alignment: .center)
                     .surveyTintColor(.sageBlack)
+                    
             }
             else {
                 VStack {
@@ -142,6 +143,7 @@ struct MotorControlAssessmentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             MotorControlAssessmentPreview(.tremor)
+                .previewInterfaceOrientation(.portrait)
             MotorControlAssessmentPreview(.tremor)
                 .preferredColorScheme(.dark)
         }
