@@ -90,8 +90,19 @@ public struct MotorControlAssessmentView : View {
                 CountdownStepView(state)
             }
             else if let nodeState = state as? ContentNodeState {
-                InstructionView(nodeState, alignment: .center)
-                    .surveyTintColor(.sageBlack)
+                if nodeState.step is InstructionStep {
+                    InstructionView(nodeState, alignment: .center)
+                        .surveyTintColor(.sageBlack)
+                }
+                else {
+                    VStack {
+                        StepHeaderView(state)
+                        Spacer()
+                        Text(state.id)
+                        Spacer()
+                        SurveyNavigationView()
+                    }
+                }
             }
             else {
                 VStack {
