@@ -9,6 +9,7 @@ import SwiftUI
 import AssessmentModel
 import AssessmentModelUI
 import SharedMobileUI
+import SharedResources
 
 struct InstructionNodeView: View {
 
@@ -22,13 +23,12 @@ struct InstructionNodeView: View {
     
     var body: some View {
         GeometryReader { scrollViewGeometry in
-            let bottomOffset = -scrollViewGeometry.size.height/12
             let spacing: CGFloat = 20
             ScrollView {
                 VStack(alignment: alignment.horizontal, spacing: spacing) {
-                    if let imageInfo = contentInfo.imageInfo, imageInfo.placement == .iconBefore {
+                    if let imageInfo = contentInfo.imageInfo {
                         ContentImage(imageInfo)
-                        
+                            .background(Color.teal.opacity(0.5))
                     }
                     Text(contentInfo.title ?? "")
                         .font(.largeTitle)
@@ -36,28 +36,27 @@ struct InstructionNodeView: View {
                     if let subtitle = contentInfo.subtitle {
                         Text(subtitle)
                             .foregroundColor(.textForeground)
-
                     }
                     if let detail = contentInfo.detail {
                         Text(detail)
                             .foregroundColor(.textForeground)
                     }
                 }
-                .padding(spacing)
+                .padding([.horizontal], spacing)
                 .frame(maxWidth: scrollViewGeometry.size.width)
-                .offset(y: bottomOffset)
             }
         }
     }
 }
 
+
 enum ImagePlacement : String, Codable, CaseIterable {
-    case iconBefore, iconAfter
+    case topBackground
 }
 
 extension ImageInfo {
     var placement: ImagePlacement {
-        (self as? ImagePlacementInfo)?.placementHint.flatMap { .init(rawValue: $0) } ?? .iconBefore
+        (self as? ImagePlacementInfo)?.placementHint.flatMap { .init(rawValue: $0) } ?? .topBackground
     }
 }
 
@@ -65,15 +64,16 @@ struct InstructionNodeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             InstructionNodeView(exampleStep, alignment: .leading)
-                .padding(0.0)
+                .ignoresSafeArea()
             InstructionNodeView(exampleStep, alignment: .center)
+                .ignoresSafeArea()
         }
     }
 }
 
-fileprivate let exampleStep = OverviewStepObject(
+fileprivate let exampleStep = InstructionStepObject(
     identifier: "overview",
     title: "Example Survey A",
     subtitle: "This is the subtitle",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
-    imageInfo: SageResourceImage(.default))
+    imageInfo: FetchableImage(imageName: "HoldPhone-Left", bundle: SharedResources.bundle, placementHint: "topBackground"))

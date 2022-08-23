@@ -24,7 +24,7 @@ public struct InstructionView: View {
     
     public var body: some View {
         VStack {
-            ZStack(alignment: .topTrailing) {
+            ZStack(alignment: .top) {
                 InstructionNodeView(nodeState.contentNode, alignment: alignment)
                 StepHeaderView(nodeState)
             }
@@ -37,7 +37,7 @@ struct InstructionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             InstructionView(InstructionState(example2, parentId: nil))
-                .padding()
+                .ignoresSafeArea()
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example2)))
             InstructionView(InstructionState(example1, parentId: nil), alignment: .center)
