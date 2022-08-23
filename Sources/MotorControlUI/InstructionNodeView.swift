@@ -15,6 +15,7 @@ struct InstructionNodeView: View {
 
     let contentInfo: ContentNode
     let alignment: Alignment
+    @Namespace var subtitle
     
     public init(_ contentInfo: ContentNode, alignment: Alignment = .center) {
         self.contentInfo = contentInfo
@@ -24,26 +25,36 @@ struct InstructionNodeView: View {
     var body: some View {
         GeometryReader { scrollViewGeometry in
             let spacing: CGFloat = 20
-            ScrollView {
-                VStack(alignment: alignment.horizontal, spacing: spacing) {
-                    if let imageInfo = contentInfo.imageInfo {
-                        ContentImage(imageInfo)
-                            .background(Color.teal.opacity(0.5))
-                    }
-                    Text(contentInfo.title ?? "")
-                        .font(.largeTitle)
-                        .foregroundColor(.textForeground)
-                    if let subtitle = contentInfo.subtitle {
-                        Text(subtitle)
+            let fontSize: CGFloat = 18
+            
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: alignment.horizontal, spacing: spacing) {
+                        if let imageInfo = contentInfo.imageInfo {
+                            ContentImage(imageInfo)
+                                .background(Color.teal.opacity(0.5))
+                        }
+                        Text(contentInfo.title ?? "")
+                            .font(.largeTitle)
                             .foregroundColor(.textForeground)
+                        if let subtitle = contentInfo.subtitle {
+                            Text(subtitle)
+                                .foregroundColor(.textForeground)
+                                .font(.latoFont(fontSize))
+                                .id(subtitle)
+                                .onAppear{
+                                    proxy.scrollTo(subtitle)
+                                }
+                        }
+                        if let detail = contentInfo.detail {
+                            Text(detail)
+                                .foregroundColor(.textForeground)
+                                .font(.latoFont(fontSize))
+                        }
                     }
-                    if let detail = contentInfo.detail {
-                        Text(detail)
-                            .foregroundColor(.textForeground)
-                    }
+                    .padding([.horizontal], spacing)
+                    .frame(maxWidth: scrollViewGeometry.size.width)
                 }
-                .padding([.horizontal], spacing)
-                .frame(maxWidth: scrollViewGeometry.size.width)
             }
         }
     }
@@ -63,7 +74,7 @@ extension ImageInfo {
 struct InstructionNodeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            InstructionNodeView(exampleStep, alignment: .leading)
+            InstructionNodeView(exampleStep, alignment: .center)
                 .ignoresSafeArea()
             InstructionNodeView(exampleStep, alignment: .center)
                 .ignoresSafeArea()

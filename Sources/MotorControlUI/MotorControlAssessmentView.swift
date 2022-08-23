@@ -71,7 +71,6 @@ public struct MotorControlAssessmentView : View {
         
         var body: some View {
             stepView()
-                .ignoresSafeArea()
                 .onAppear {
                     // Always hide the progress view
                     pagedNavigation.progressHidden = true
@@ -93,8 +92,6 @@ public struct MotorControlAssessmentView : View {
             else if let nodeState = state as? ContentNodeState {
                 InstructionView(nodeState, alignment: .center)
                     .surveyTintColor(.sageBlack)
-                    .ignoresSafeArea()
-                
             }
             else {
                 VStack {
