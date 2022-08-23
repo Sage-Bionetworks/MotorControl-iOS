@@ -15,36 +15,38 @@ struct InstructionNodeView: View {
     let contentInfo: ContentNode
     let alignment: Alignment
     
-    
     public init(_ contentInfo: ContentNode, alignment: Alignment = .center) {
         self.contentInfo = contentInfo
         self.alignment = alignment
     }
     
     var body: some View {
-        ScrollView {
-            if let imageInfo = contentInfo.imageInfo, imageInfo.placement == .iconBefore {
-                ContentImage(imageInfo)
-            }
-            Text(contentInfo.title ?? "")
-//                    .font(.stepTitle)
-                .font(.largeTitle)
-                .foregroundColor(.textForeground)
-            if let subtitle = contentInfo.subtitle {
-                Text(subtitle)
-//                        .font(.stepSubtitle)
-                    .font(.body)
-                    .foregroundColor(.textForeground)
-                    .padding([.leading, .trailing], 20)
+        GeometryReader { scrollViewGeometry in
+            let bottomOffset = -scrollViewGeometry.size.height/12
+            let spacing: CGFloat = 20
+            ScrollView {
+                VStack(alignment: alignment.horizontal, spacing: spacing) {
+                    if let imageInfo = contentInfo.imageInfo, imageInfo.placement == .iconBefore {
+                        ContentImage(imageInfo)
+                        
+                    }
+                    Text(contentInfo.title ?? "")
+                        .font(.largeTitle)
+                        .foregroundColor(.textForeground)
+                    if let subtitle = contentInfo.subtitle {
+                        Text(subtitle)
+                            .foregroundColor(.textForeground)
 
+                    }
+                    if let detail = contentInfo.detail {
+                        Text(detail)
+                            .foregroundColor(.textForeground)
+                    }
+                }
+                .padding(spacing)
+                .frame(maxWidth: scrollViewGeometry.size.width)
+                .offset(y: bottomOffset)
             }
-            if let detail = contentInfo.detail {
-                Text(detail)
-//                        .font(.stepDetail)
-                    .foregroundColor(.textForeground)
-                    .padding([.leading, .trailing], 20)
-            }
-
         }
     }
 }

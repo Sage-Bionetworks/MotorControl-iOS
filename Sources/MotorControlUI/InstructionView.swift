@@ -24,8 +24,10 @@ public struct InstructionView: View {
     
     public var body: some View {
         VStack {
-            StepHeaderView(nodeState)
-            InstructionNodeView(nodeState.contentNode, alignment: alignment)
+            ZStack(alignment: .topTrailing) {
+                InstructionNodeView(nodeState.contentNode, alignment: alignment)
+                StepHeaderView(nodeState)
+            }
             SurveyNavigationView()
         }
     }
