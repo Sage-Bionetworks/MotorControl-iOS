@@ -11,7 +11,7 @@ import AssessmentModelUI
 import SharedMobileUI
 import SharedResources
 
-struct InstructionNodeView: View {
+struct OverviewNodeView: View {
 
     let contentInfo: ContentNode
     let alignment: Alignment
@@ -60,20 +60,19 @@ struct InstructionNodeView: View {
     }
 }
 
-
-struct InstructionNodeView_Previews: PreviewProvider {
+struct OverviewNodeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            InstructionNodeView(exampleStep, alignment: .center)
+            OverviewNodeView(exampleStep, alignment: .center)
                 .ignoresSafeArea()
                 .previewInterfaceOrientation(.portrait)
-            InstructionNodeView(exampleStep, alignment: .center)
+            OverviewNodeView(exampleStep, alignment: .center)
                 .ignoresSafeArea()
         }
     }
 }
 
-fileprivate let exampleStep = InstructionStepObject(
+fileprivate let exampleStep = OverviewStepObject(
     identifier: "overview",
     title: "Example Survey A",
     subtitle: "This is the subtitle",

@@ -90,18 +90,13 @@ public struct MotorControlAssessmentView : View {
                 CountdownStepView(state)
             }
             else if let nodeState = state as? ContentNodeState {
-                if nodeState.step is InstructionStep {
-                    InstructionView(nodeState, alignment: .center)
+                if nodeState.step is OverviewStep {
+                    OverviewView(nodeState, alignment: .center)
                         .surveyTintColor(.sageBlack)
                 }
                 else {
-                    VStack {
-                        StepHeaderView(state)
-                        Spacer()
-                        Text(state.id)
-                        Spacer()
-                        SurveyNavigationView()
-                    }
+                    InstructionView(nodeState, alignment: .center)
+                        .surveyTintColor(.sageBlack)
                 }
             }
             else {
@@ -163,5 +158,16 @@ struct MotorControlAssessmentView_Previews: PreviewProvider {
 extension AssessmentObject {
     convenience init(previewStep: Step) {
         self.init(identifier: previewStep.identifier, children: [previewStep])
+    }
+}
+
+
+enum ImagePlacement : String, Codable, CaseIterable {
+    case topBackground
+}
+
+extension ImageInfo {
+    var placement: ImagePlacement {
+        (self as? ImagePlacementInfo)?.placementHint.flatMap { .init(rawValue: $0) } ?? .topBackground
     }
 }

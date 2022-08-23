@@ -14,7 +14,7 @@ import MotorControl
 import SharedResources
 
 
-public struct InstructionView: View {
+public struct OverviewView: View {
     @ObservedObject var nodeState: ContentNodeState
     let alignment: Alignment
     
@@ -26,7 +26,7 @@ public struct InstructionView: View {
     public var body: some View {
         VStack {
             ZStack(alignment: .top) {
-                InstructionNodeView(nodeState.contentNode, alignment: alignment)
+                OverviewNodeView(nodeState.contentNode, alignment: alignment)
                     .ignoresSafeArea(edges: [.top])
                 StepHeaderView(nodeState)
             }
@@ -35,26 +35,26 @@ public struct InstructionView: View {
     }
 }
 
-struct InstructionView_Previews: PreviewProvider {
+struct OverviewView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            InstructionView(InstructionState(example2, parentId: nil))
+            OverviewView(InstructionState(example2, parentId: nil))
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example2)))
-            InstructionView(InstructionState(example1, parentId: nil), alignment: .center)
+            OverviewView(InstructionState(example1, parentId: nil), alignment: .center)
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example1)))
         }
     }
 }
 
-fileprivate let example1 = InstructionStepObject(
+fileprivate let example1 = OverviewStepObject(
     identifier: "example",
     title: "Example Survey A",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
     imageInfo: FetchableImage(imageName: "TapLeft1", bundle: SharedResources.bundle, placementHint: "topBackground"))
 
-fileprivate let example2 = InstructionStepObject(
+fileprivate let example2 = OverviewStepObject(
     identifier: "example",
     title: "Example Survey A",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
