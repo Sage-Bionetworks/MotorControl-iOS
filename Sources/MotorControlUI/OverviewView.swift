@@ -14,20 +14,13 @@ import MotorControl
 import SharedResources
 
 
-public struct OverviewView: View {
-    @ObservedObject var nodeState: ContentNodeState
-    let alignment: Alignment
+struct OverviewView: View {
+    @ObservedObject var nodeState: StepState
     
-    public init(_ nodeState: ContentNodeState, alignment: Alignment = .center) {
-        self.nodeState = nodeState
-        self.alignment = alignment
-    }
-    
-    public var body: some View {
+    var body: some View {
         VStack {
             ZStack(alignment: .top) {
-                OverviewNodeView(nodeState, alignment: alignment)
-                    .ignoresSafeArea(edges: [.top])
+                OverviewNodeView(overview: nodeState.step as! OverviewStepObject)
                 StepHeaderView(nodeState)
             }
             SurveyNavigationView()
@@ -38,24 +31,67 @@ public struct OverviewView: View {
 struct OverviewView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OverviewView(ContentNodeState(step: example2, parentId: nil))
+            OverviewView(nodeState: ContentNodeState(step: exampleStep, parentId: nil))
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
-                .environmentObject(AssessmentState(AssessmentObject(previewStep: example2)))
-            OverviewView(ContentNodeState(step: example1, parentId: nil), alignment: .center)
-                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
-                .environmentObject(AssessmentState(AssessmentObject(previewStep: example1)))
+                .environmentObject(AssessmentState(AssessmentObject(previewStep: exampleStep)))
         }
     }
 }
 
-fileprivate let example1 = OverviewStepObject(
-    identifier: "example",
-    title: "Example Survey A",
-    detail: "You will be shown a series of example questions. This survey has no additional instructions.",
-    imageInfo: FetchableImage(imageName: "TapLeft1", bundle: SharedResources.bundle, placementHint: "topBackground"))
+struct OverviewNodeView: View {
 
-fileprivate let example2 = OverviewStepObject(
-    identifier: "example",
+    let overview: OverviewStepObject
+    let bottomID = "bottom"
+    
+    var body: some View {
+        GeometryReader { scrollViewGeometry in
+            let spacing: CGFloat = 20
+            let fontSize: CGFloat = 18
+            
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: .center, spacing: spacing) {
+                        if let imageInfo = overview.imageInfo {
+                            ContentImage(imageInfo)
+                                .background(Color.teal.opacity(0.5))
+                        }
+                        Text(overview.title ?? "")
+                            .font(.largeTitle)
+                            .foregroundColor(.textForeground)
+                        if let subtitle = overview.subtitle {
+                            Text(subtitle)
+                                .foregroundColor(.textForeground)
+                                .font(.latoFont(fontSize))
+                        }
+                        if let detail = overview.detail {
+                            Text(detail)
+                                .foregroundColor(.textForeground)
+                                .font(.latoFont(fontSize))
+                        }
+                        
+                        
+                        
+                    }
+                    .id(bottomID)
+                    .onAppear{
+                        proxy.scrollTo(bottomID, anchor: .bottom)
+                    }
+                    .padding([.horizontal], spacing)
+                    .frame(maxWidth: scrollViewGeometry.size.width)
+                }
+            }
+        }
+        .ignoresSafeArea(edges: [.top])
+    }
+}
+
+
+fileprivate let exampleStep = OverviewStepObject(
+    identifier: "overview",
     title: "Example Survey A",
+    subtitle: "This is the subtitle",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
-    imageInfo: FetchableImage(imageName: "HoldPhone-Left", bundle: SharedResources.bundle, placementHint: "topBackground"))
+    imageInfo: FetchableImage(imageName: "HoldPhone-Left", bundle: SharedResources.bundle, placementHint: "topBackground"),
+    icons: [ .init(icon: "ComfortablePlaceToSit", title: "COMFORTABLE PLACE TO SIT")
+      ]
+)

@@ -89,13 +89,11 @@ public struct MotorControlAssessmentView : View {
             else if state.step is CountdownStep {
                 CountdownStepView(state)
             }
+            else if state.step is OverviewStep {
+                OverviewView(nodeState: state)
+            }
             else if let nodeState = state as? ContentNodeState {
-                if nodeState.step is OverviewStep {
-                    OverviewView(nodeState, alignment: .center)
-                }
-                else {
-                    InstructionView(nodeState, alignment: .center)
-                }
+                InstructionView(nodeState)
             }
             else {
                 VStack {
