@@ -13,12 +13,12 @@ import SharedResources
 
 struct OverviewNodeView: View {
 
-    let contentInfo: ContentNode
+    let contentNodeState: ContentNodeState
     let alignment: Alignment
     @Namespace var subtitle
     
-    public init(_ contentInfo: ContentNode, alignment: Alignment = .center) {
-        self.contentInfo = contentInfo
+    public init(_ contentNodeState: ContentNodeState, alignment: Alignment = .center) {
+        self.contentNodeState = contentNodeState
         self.alignment = alignment
     }
     
@@ -30,14 +30,14 @@ struct OverviewNodeView: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment: alignment.horizontal, spacing: spacing) {
-                        if let imageInfo = contentInfo.imageInfo {
+                        if let imageInfo = contentNodeState.contentNode.imageInfo {
                             ContentImage(imageInfo)
                                 .background(Color.teal.opacity(0.5))
                         }
-                        Text(contentInfo.title ?? "")
+                        Text(contentNodeState.contentNode.title ?? "")
                             .font(.largeTitle)
                             .foregroundColor(.textForeground)
-                        if let subtitle = contentInfo.subtitle {
+                        if let subtitle = contentNodeState.contentNode.subtitle {
                             Text(subtitle)
                                 .foregroundColor(.textForeground)
                                 .font(.latoFont(fontSize))
@@ -46,7 +46,7 @@ struct OverviewNodeView: View {
                                     proxy.scrollTo(subtitle)
                                 }
                         }
-                        if let detail = contentInfo.detail {
+                        if let detail = contentNodeState.contentNode.detail {
                             Text(detail)
                                 .foregroundColor(.textForeground)
                                 .font(.latoFont(fontSize))
@@ -60,17 +60,19 @@ struct OverviewNodeView: View {
     }
 }
 
+
 struct OverviewNodeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OverviewNodeView(exampleStep, alignment: .center)
+            OverviewNodeView(exampleNodeState, alignment: .center)
                 .ignoresSafeArea()
                 .previewInterfaceOrientation(.portrait)
-            OverviewNodeView(exampleStep, alignment: .center)
+            OverviewNodeView(exampleNodeState, alignment: .center)
                 .ignoresSafeArea()
         }
     }
 }
+
 
 fileprivate let exampleStep = OverviewStepObject(
     identifier: "overview",
@@ -78,3 +80,5 @@ fileprivate let exampleStep = OverviewStepObject(
     subtitle: "This is the subtitle",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
     imageInfo: FetchableImage(imageName: "HoldPhone-Left", bundle: SharedResources.bundle, placementHint: "topBackground"))
+
+fileprivate let exampleNodeState = ContentNodeState(step: exampleStep)

@@ -26,13 +26,14 @@ struct InstructionNodeView: View {
         GeometryReader { scrollViewGeometry in
             let spacing: CGFloat = 20
             let fontSize: CGFloat = 18
+            let backgroundColor: Color = Color.teal.opacity(0.5)
             
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment: alignment.horizontal, spacing: spacing) {
                         if let imageInfo = contentInfo.imageInfo {
                             ContentImage(imageInfo)
-                                .background(Color.teal.opacity(0.5))
+                                .background(backgroundColor)
                         }
                         Text(contentInfo.title ?? "")
                             .font(.largeTitle)

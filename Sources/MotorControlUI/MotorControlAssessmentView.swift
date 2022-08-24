@@ -92,11 +92,9 @@ public struct MotorControlAssessmentView : View {
             else if let nodeState = state as? ContentNodeState {
                 if nodeState.step is OverviewStep {
                     OverviewView(nodeState, alignment: .center)
-                        .surveyTintColor(.sageBlack)
                 }
                 else {
                     InstructionView(nodeState, alignment: .center)
-                        .surveyTintColor(.sageBlack)
                 }
             }
             else {

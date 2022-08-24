@@ -26,7 +26,7 @@ public struct OverviewView: View {
     public var body: some View {
         VStack {
             ZStack(alignment: .top) {
-                OverviewNodeView(nodeState.contentNode, alignment: alignment)
+                OverviewNodeView(nodeState, alignment: alignment)
                     .ignoresSafeArea(edges: [.top])
                 StepHeaderView(nodeState)
             }
@@ -38,10 +38,10 @@ public struct OverviewView: View {
 struct OverviewView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OverviewView(InstructionState(example2, parentId: nil))
+            OverviewView(ContentNodeState(step: example2, parentId: nil))
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example2)))
-            OverviewView(InstructionState(example1, parentId: nil), alignment: .center)
+            OverviewView(ContentNodeState(step: example1, parentId: nil), alignment: .center)
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example1)))
         }
@@ -58,4 +58,4 @@ fileprivate let example2 = OverviewStepObject(
     identifier: "example",
     title: "Example Survey A",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
-    imageInfo: FetchableImage(imageName: "TapLeft1", bundle: SharedResources.bundle, placementHint: "topBackground"))
+    imageInfo: FetchableImage(imageName: "HoldPhone-Left", bundle: SharedResources.bundle, placementHint: "topBackground"))
