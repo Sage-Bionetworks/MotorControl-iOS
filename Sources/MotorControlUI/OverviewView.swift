@@ -43,6 +43,7 @@ struct OverviewNodeView: View {
     let overview: OverviewStepObject
     let bottomID = "bottom"
     
+    
     var body: some View {
         GeometryReader { scrollViewGeometry in
             let spacing: CGFloat = 20
@@ -62,15 +63,32 @@ struct OverviewNodeView: View {
                             Text(subtitle)
                                 .foregroundColor(.textForeground)
                                 .font(.latoFont(fontSize))
+                                .multilineTextAlignment(.center)
                         }
                         if let detail = overview.detail {
                             Text(detail)
                                 .foregroundColor(.textForeground)
                                 .font(.latoFont(fontSize))
+                                .multilineTextAlignment(.center)
                         }
                         
+                        Text("This is what you'll need")
+                            .bold()
+                            .font(.latoFont(fontSize))
                         
-                        
+                        if let icons = overview.icons {
+                            HStack(alignment: .center, spacing: spacing) {
+                                ForEach(0..<icons.count, id: \.self) { ii in
+                                    let imageInfo = FetchableImage(imageName: icons[ii].icon, bundle: SharedResources.bundle)
+                                    VStack(alignment: .center, spacing: spacing) {
+                                        ContentImage(imageInfo)
+                                        Text(icons[ii].title)
+                                            .multilineTextAlignment(.center)
+                                            .font(.latoFont(fontSize))
+                                    }
+                                }
+                            }
+                        }
                     }
                     .id(bottomID)
                     .onAppear{
