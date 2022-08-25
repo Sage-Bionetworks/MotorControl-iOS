@@ -43,7 +43,6 @@ struct OverviewNodeView: View {
     let overview: OverviewStepObject
     let bottomID = "bottom"
     
-    
     var body: some View {
         GeometryReader { scrollViewGeometry in
             let spacing: CGFloat = 20

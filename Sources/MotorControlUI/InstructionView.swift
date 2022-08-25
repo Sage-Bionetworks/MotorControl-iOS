@@ -14,19 +14,13 @@ import MotorControl
 import SharedResources
 
 
-public struct InstructionView: View {
+struct InstructionView: View {
     @ObservedObject var nodeState: ContentNodeState
-    let alignment: Alignment
     
-    public init(_ nodeState: ContentNodeState, alignment: Alignment = .center) {
-        self.nodeState = nodeState
-        self.alignment = alignment
-    }
-    
-    public var body: some View {
+    var body: some View {
         VStack {
             ZStack(alignment: .top) {
-                InstructionNodeView(nodeState.contentNode)
+                InstructionNodeView(contentInfo: nodeState.contentNode)
                 StepHeaderView(nodeState)
             }
             SurveyNavigationView()
@@ -37,7 +31,7 @@ public struct InstructionView: View {
 struct InstructionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            InstructionView(InstructionState(example1, parentId: nil))
+            InstructionView(nodeState: InstructionState(example1, parentId: nil))
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example1)))
         }
@@ -54,10 +48,6 @@ fileprivate let example1 = InstructionStepObject(
 struct InstructionNodeView: View {
 
     let contentInfo: ContentNode
-    
-    public init(_ contentInfo: ContentNode) {
-        self.contentInfo = contentInfo
-    }
     
     var body: some View {
         GeometryReader { scrollViewGeometry in

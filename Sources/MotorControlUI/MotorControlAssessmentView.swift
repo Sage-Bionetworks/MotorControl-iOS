@@ -93,7 +93,7 @@ public struct MotorControlAssessmentView : View {
                 OverviewView(nodeState: state)
             }
             else if let nodeState = state as? ContentNodeState {
-                InstructionView(nodeState)
+                InstructionView(nodeState: nodeState)
             }
             else {
                 VStack {
