@@ -56,35 +56,33 @@ struct OverviewNodeView: View {
                             ContentImage(imageInfo)
                                 .background(Color.teal.opacity(0.5))
                         }
-                        Text(overview.title ?? "")
-                            .font(.largeTitle)
-                            .foregroundColor(.textForeground)
+                        if let title = overview.title {
+                            Text(title)
+                                .font(.largeTitle)
+                        }
                         if let subtitle = overview.subtitle {
                             Text(subtitle)
-                                .foregroundColor(.textForeground)
                                 .font(.latoFont(fontSize))
                                 .multilineTextAlignment(.center)
                         }
                         if let detail = overview.detail {
                             Text(detail)
-                                .foregroundColor(.textForeground)
                                 .font(.latoFont(fontSize))
                                 .multilineTextAlignment(.center)
                         }
-                        
-                        Text("This is what you'll need")
-                            .bold()
-                            .font(.latoFont(fontSize))
-                        
                         if let icons = overview.icons {
+                            Text("This is what you'll need")
+                                .bold()
+                                .font(.latoFont(fontSize))
                             HStack(alignment: .center, spacing: spacing) {
                                 ForEach(0..<icons.count, id: \.self) { ii in
                                     let imageInfo = FetchableImage(imageName: icons[ii].icon, bundle: SharedResources.bundle)
                                     VStack(alignment: .center, spacing: spacing) {
                                         ContentImage(imageInfo)
                                         Text(icons[ii].title)
+                                            .font(.latoFont(fontSize - 2))
                                             .multilineTextAlignment(.center)
-                                            .font(.latoFont(fontSize))
+                                            Spacer()
                                     }
                                 }
                             }
@@ -103,6 +101,10 @@ struct OverviewNodeView: View {
     }
 }
 
+fileprivate let icon1: OverviewIcon = .init(icon: "ComfortablePlaceToSit", title: "COMFORTABLE PLACE TO SIT")
+fileprivate let icon2: OverviewIcon = .init(icon: "FlatSurface", title: "FLAT SURFACE")
+fileprivate let icon3: OverviewIcon = .init(icon: "SpaceToMoveYourArms", title: "SPACE TO MOVE YOUR ARMS")
+
 
 fileprivate let exampleStep = OverviewStepObject(
     identifier: "overview",
@@ -110,6 +112,5 @@ fileprivate let exampleStep = OverviewStepObject(
     subtitle: "This is the subtitle",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
     imageInfo: FetchableImage(imageName: "HoldPhone-Left", bundle: SharedResources.bundle, placementHint: "topBackground"),
-    icons: [ .init(icon: "ComfortablePlaceToSit", title: "COMFORTABLE PLACE TO SIT")
-      ]
+    icons: [ icon1, icon2, icon3 ]
 )

@@ -72,17 +72,16 @@ struct InstructionNodeView: View {
                             ContentImage(imageInfo)
                                 .background(backgroundColor)
                         }
-                        Text(contentInfo.title ?? "")
-                            .font(.largeTitle)
-                            .foregroundColor(.textForeground)
+                        if let title = contentInfo.title {
+                            Text(title)
+                                .font(.largeTitle)
+                        }
                         if let subtitle = contentInfo.subtitle {
                             Text(subtitle)
-                                .foregroundColor(.textForeground)
                                 .font(.latoFont(fontSize))
                         }
                         if let detail = contentInfo.detail {
                             Text(detail)
-                                .foregroundColor(.textForeground)
                                 .font(.latoFont(fontSize))
                         }
                     }
