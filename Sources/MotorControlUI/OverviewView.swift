@@ -81,7 +81,7 @@ struct OverviewNodeView: View {
                                         Text(icons[ii].title)
                                             .font(.latoFont(fontSize - 2))
                                             .multilineTextAlignment(.center)
-                                            Spacer()
+                                            .fixedSize(horizontal: false, vertical: true)
                                     }
                                 }
                             }
