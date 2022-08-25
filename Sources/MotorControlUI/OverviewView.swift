@@ -40,6 +40,8 @@ struct OverviewView_Previews: PreviewProvider {
 
 struct OverviewNodeView: View {
 
+    @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
+
     let overview: OverviewStepObject
     let bottomID = "bottom"
     
@@ -53,33 +55,37 @@ struct OverviewNodeView: View {
                     VStack(alignment: .center, spacing: spacing) {
                         if let imageInfo = overview.imageInfo {
                             ContentImage(imageInfo)
-                                .background(Color.teal.opacity(0.5))
+                                .background(surveyTint)
                         }
                         if let title = overview.title {
                             Text(title)
                                 .font(.largeTitle)
+                                .foregroundColor(.textForeground)
                         }
                         if let subtitle = overview.subtitle {
                             Text(subtitle)
                                 .font(.latoFont(fontSize))
+                                .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
                         }
                         if let detail = overview.detail {
                             Text(detail)
                                 .font(.latoFont(fontSize))
+                                .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
                         }
                         if let icons = overview.icons {
                             Text("This is what you'll need")
                                 .bold()
                                 .font(.latoFont(fontSize))
-                            HStack(alignment: .center, spacing: spacing) {
-                                ForEach(0..<icons.count, id: \.self) { ii in
-                                    let imageInfo = FetchableImage(imageName: icons[ii].icon, bundle: SharedResources.bundle)
+                                .foregroundColor(.textForeground)
+                            HStack(alignment: .top, spacing: spacing) {
+                                ForEach(icons) { iconInfo in
                                     VStack(alignment: .center, spacing: spacing) {
-                                        ContentImage(imageInfo)
-                                        Text(icons[ii].title)
+                                        Image(iconInfo.icon, bundle: SharedResources.bundle)
+                                        Text(iconInfo.title)
                                             .font(.latoFont(fontSize - 2))
+                                            .foregroundColor(.textForeground)
                                             .multilineTextAlignment(.center)
                                             .fixedSize(horizontal: false, vertical: true)
                                     }
@@ -97,6 +103,12 @@ struct OverviewNodeView: View {
             }
         }
         .ignoresSafeArea(edges: [.top])
+    }
+}
+
+extension OverviewIcon : Identifiable {
+    public var id: String {
+        icon
     }
 }
 
