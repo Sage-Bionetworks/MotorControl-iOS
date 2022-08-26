@@ -67,7 +67,19 @@ final class TwoHandNavigator : Navigator {
         }
         self.identifier = identifier
         self.handOrder = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
-        self.nodes = nodes
+        var temporaryNodes = nodes
+        var firstHandIndex = 0
+        for index in 0..<nodes.count {
+            if nodes[index].identifier == HandSelection.left.rawValue ||
+                nodes[index].identifier == HandSelection.right.rawValue {
+                firstHandIndex = index
+                break
+            }
+        }
+        if temporaryNodes[firstHandIndex].identifier == handOrder[1].rawValue {
+            temporaryNodes.swapAt(firstHandIndex, firstHandIndex + 1)
+        }
+        self.nodes = temporaryNodes
     }
     
     func node(identifier: String) -> Node? {
