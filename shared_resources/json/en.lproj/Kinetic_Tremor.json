@@ -7,7 +7,7 @@
                 "identifier":"introduction",
                 "type":"overview",
                 "title":"Finger-to-Nose",
-                "subtitle":"In this activity, you’ll hold your phone beside you at arm’s length. You’ll hold your phone with your pointer finger sticking out sideways. Then touch the tip of your nose with the tip of your finger. You will do this repeatedly for 30 seconds. Our goal is to measure your hand movement during the arm swing and then during the precise movement when you touch finger-to-nose.",
+                "detail":"In this activity, you’ll hold your phone beside you at arm’s length. You’ll hold your phone with your pointer finger sticking out sideways. Then touch the tip of your nose with the tip of your finger. You will do this repeatedly for 30 seconds. Our goal is to measure your hand movement during the arm swing and then during the precise movement when you touch finger-to-nose.",
                 "image":{
                     "type":"animated",
                     "imageNames":["KineticHoldPhone-Left", "FingerToNose4", "FingerToNose5"],
@@ -35,7 +35,7 @@
                  "identifier":"eachHandInstructions",
                  "type":"instruction",
                  "title":"Each hand for 30 seconds",
-                 "subtitle":"We will do this finger-to-nose motion repeatedly for 30 seconds with one hand, and then for 30 seconds with your other hand.",
+                 "detail":"We will do this finger-to-nose motion repeatedly for 30 seconds with one hand, and then for 30 seconds with your other hand.",
                  "fullInstructionsOnly": true,
                  "image":{
                      "type":"animated",
@@ -59,7 +59,7 @@
                 "identifier":"sitDownInstruction",
                 "type":"instruction",
                 "title":"Sit down",
-                "subtitle":"Find a spot to sit where you can have your feet resting flat on the floor.",
+                "detail":"Find a spot to sit where you can have your feet resting flat on the floor.",
                 "image":{
                     "type":"fetchable",
                     "imageName":"FingerToNose1",
@@ -76,7 +76,7 @@
                  "identifier":"holdPhoneInstructions",
                  "type":"instruction",
                  "title":"Hold phone with index finger pointing out",
-                 "subtitle":"Hold your phone with your pointer finger sticking out sideways from the phone.",
+                 "detail":"Hold your phone with your pointer finger sticking out sideways from the phone.",
                  "image":{
                      "type":"fetchable",
                      "imageName": "FingerToNose2",
@@ -93,7 +93,7 @@
                  "identifier":"howToTouchNoseInstructions",
                  "type":"instruction",
                  "title":"How to touch your nose",
-                 "subtitle":"Hold your arm straight out beside you, then bend your elbow to bring the tip of your finger to the tip of your nose. Try to touch precisely if you can.",
+                 "detail":"Hold your arm straight out beside you, then bend your elbow to bring the tip of your finger to the tip of your nose. Try to touch precisely if you can.",
                  "image":{
                      "type":"animated",
                      "imageNames":["KineticHoldPhone-Left", "FingerToNose4", "FingerToNose5"],
@@ -121,7 +121,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "subtitle":"You have completed the Finger-to-Nose activity.",
+                 "detail":"You have completed the Finger-to-Nose activity.",
                  "image":{
                      "type":"fetchable",
                      "imageName":"Completion-Tremor",

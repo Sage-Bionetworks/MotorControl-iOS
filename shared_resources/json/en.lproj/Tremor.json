@@ -7,8 +7,8 @@
                 "identifier":"introduction",
                 "type":"overview",
                 "title":"Tremor Test",
-                "subtitle":"In this activity you will be holding the phone in your lap for 30 seconds. You will do this with each hand. The goal is to measure your tremors in your hand.",
-                 "image":{
+                "detail":"In this activity you will be holding the phone in your lap for 30 seconds. You will do this with each hand. The goal is to measure your tremors in your hand.",
+                "image":{
                      "type":"fetchable",
                      "imageName":"HoldPhone-Left",
                      "placementType":"topBackground"
@@ -39,7 +39,7 @@
                 "identifier":"holdPhoneInstructions",
                 "type":"instruction",
                 "title":"Hold the phone still",
-                "subtitle":"While sitting down with your feet resting flat on the floor, you will be holding the phone still in your lap for 30 seconds. You will do this first with one hand and then with your other hand.",
+                "detail":"While sitting down with your feet resting flat on the floor, you will be holding the phone still in your lap for 30 seconds. You will do this first with one hand and then with your other hand.",
                 "image":{
                     "type":"fetchable",
                     "imageName": "TremorHoldPhone",
@@ -56,7 +56,7 @@
                 "identifier":"sitDownInstruction",
                 "type":"instruction",
                 "title":"Sit down",
-                "subtitle":"Find a spot to sit where you can have your feet resting flat on the floor.",
+                "detail":"Find a spot to sit where you can have your feet resting flat on the floor.",
                 "image":{
                     "type":"fetchable",
                     "imageName":"Sitting",
@@ -83,7 +83,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "subtitle":"You have completed the Tremor Test activity.",
+                 "detail":"You have completed the Tremor Test activity.",
                  "image":{
                      "type":"fetchable",
                      "imageName":"Completion-Tremor",
