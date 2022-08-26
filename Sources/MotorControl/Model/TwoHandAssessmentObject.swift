@@ -66,8 +66,8 @@ final class TwoHandNavigator : Navigator {
             fatalError("identifiers not unique")
         }
         self.identifier = identifier
-        self.nodes = nodes
         self.handOrder = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
+        self.nodes = nodes
     }
     
     func node(identifier: String) -> Node? {

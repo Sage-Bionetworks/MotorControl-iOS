@@ -49,7 +49,7 @@ extension MotorControlAssessmentView : AssessmentDisplayView {
 
 /// Displays an assessment built using the views and model objects defined within this library.
 public struct MotorControlAssessmentView : View {
-    @StateObject var viewModel: AssessmentViewModel = .init()
+    @StateObject var viewModel: MotorControlAssessmentViewModel = .init()
     @ObservedObject var assessmentState: AssessmentState
     @State var didResignActive = false
     
@@ -92,7 +92,7 @@ public struct MotorControlAssessmentView : View {
             else if state.step is OverviewStep {
                 OverviewView(nodeState: state)
             }
-            else if let nodeState = state as? ContentNodeState {
+            else if let nodeState = state as? InstructionState {
                 InstructionView(nodeState: nodeState)
             }
             else {
@@ -107,26 +107,27 @@ public struct MotorControlAssessmentView : View {
     }
 }
 
-struct AppBackgroundListener : ViewModifier {
-    @EnvironmentObject var assessmentState: AssessmentState
-    @State var didResignActive = false
-
-    func body(content: Content) -> some View {
-        content
-            .alert(isPresented: $didResignActive) {
-                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: .module),
-                      message: nil,
-                      dismissButton: .default(Text("OK", bundle: .module), action: {
-                    assessmentState.status = .continueLater
-                }))
-            }
-        #if os(iOS)
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                didResignActive = true
-            }
-        #endif
-    }
-}
+//TODO: Decide whether or not we want this Aaron Rabara 8/25/22
+//struct AppBackgroundListener : ViewModifier {
+//    @EnvironmentObject var assessmentState: AssessmentState
+//    @State var didResignActive = false
+//
+//    func body(content: Content) -> some View {
+//        content
+//            .alert(isPresented: $didResignActive) {
+//                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: .module),
+//                      message: nil,
+//                      dismissButton: .default(Text("OK", bundle: .module), action: {
+//                    assessmentState.status = .continueLater
+//                }))
+//            }
+//        #if os(iOS)
+//            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+//                didResignActive = true
+//            }
+//        #endif
+//    }
+//}
 
 struct MotorControlAssessmentPreview : View {
     let assessmentState: AssessmentState
@@ -144,7 +145,6 @@ struct MotorControlAssessmentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             MotorControlAssessmentPreview(.tremor)
-                .previewInterfaceOrientation(.portrait)
             MotorControlAssessmentPreview(.tremor)
                 .preferredColorScheme(.dark)
         }

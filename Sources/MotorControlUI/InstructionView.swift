@@ -15,12 +15,12 @@ import SharedResources
 
 
 struct InstructionView: View {
-    @ObservedObject var nodeState: ContentNodeState
+    @ObservedObject var nodeState: InstructionState
     
     var body: some View {
         VStack {
             ZStack(alignment: .top) {
-                InstructionNodeView(contentInfo: nodeState.contentNode)
+                InstructionNodeView(contentInfo: nodeState)
                 StepHeaderView(nodeState)
             }
             SurveyNavigationView()
@@ -46,21 +46,21 @@ fileprivate let example1 = InstructionStepObject(
 
 
 struct InstructionNodeView: View {
+    
+    @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
 
-    let contentInfo: ContentNode
+    let contentInfo: InstructionState
     
     var body: some View {
         GeometryReader { scrollViewGeometry in
             let spacing: CGFloat = 20
             let fontSize: CGFloat = 18
-            let backgroundColor: Color = Color.teal.opacity(0.5)
             
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment: .center, spacing: spacing) {
-                        if let imageInfo = contentInfo.imageInfo {
-                            ContentImage(imageInfo)
-                                .background(backgroundColor)
+                        if let image = contentInfo.image {
+                            image.background(surveyTint)
                         }
                         if let title = contentInfo.title {
                             Text(title)
@@ -83,3 +83,19 @@ struct InstructionNodeView: View {
         .ignoresSafeArea(edges: [.top])
     }
 }
+
+//
+//protocol InstructionViewState {
+//    var image: Image? { get }
+//    var title: String? { get }
+//    var subtitle: String? { get }
+//    var detail: String? { get }
+//}
+//
+//extension InstructionState : InstructionViewState {
+//
+//}
+
+//extension TwoHandInstructionState : InstructionViewState {
+//
+//}
