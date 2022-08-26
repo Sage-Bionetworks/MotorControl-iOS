@@ -248,5 +248,4 @@ final class MotorControlNavigationTests: XCTestCase {
             self.navigator = try! assessmentState.assessment.instantiateNavigator(state: self)
         }
     }
-
 }

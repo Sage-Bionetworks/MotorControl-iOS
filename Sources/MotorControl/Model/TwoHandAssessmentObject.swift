@@ -35,6 +35,7 @@ import Foundation
 import AssessmentModel
 import JsonModel
 import SwiftUI
+import AVFAudio
 
 extension SerializableNodeType {
     static let twoHandAssessment: SerializableNodeType = "twoHandAssessment"
@@ -97,40 +98,11 @@ final class TwoHandNavigator : Navigator {
         else {
             return .init(node: nil, direction: .forward)
         }
-        
-        let currentHand = currentNode?.hand()
-        let nextHand = nodeNext.hand()
-        guard currentHand != nil || nextHand != nil
-        else {
+        let selection = currentHandSelection(for: branchResult)
+        if nodeNext.hand() == nil || nodeNext.hand() == selection || selection == .both {
             return .init(node: nodeNext, direction: .forward)
         }
-        
-        
-        let selection = currentHandSelection(for: branchResult)
-        let selectedBothHands = selection == .both
-        let stepHistory = branchResult.stepHistory.map {
-            $0.identifier
-        }
-        let leftHandInHistory = stepHistory.contains(HandSelection.left.rawValue)
-        let rightHandInHistory = stepHistory.contains(HandSelection.right.rawValue)
-        
-        if selectedBothHands {
-            if leftHandInHistory, rightHandInHistory {
-                return .init(node: nextNode(identifier: HandSelection.right.rawValue), direction: .forward)
-            }
-            else if leftHandInHistory || rightHandInHistory {
-                return .init(node: node(identifier: handOrder[1].rawValue), direction: .forward)
-            }
-            else {
-                return .init(node: node(identifier: handOrder[0].rawValue), direction: .forward)
-            }
-        }
-        else {
-            if  selection == nextHand || nodeNext is CompletionStep {
-                return .init(node: nodeNext, direction: .forward)
-            }
-            return .init(node: nextNode(identifier: nodeNext.identifier), direction: .forward)
-        }
+        return .init(node: nextNode(identifier: nodeNext.identifier), direction: .forward)
     }
     
     
@@ -195,11 +167,8 @@ final class TwoHandNavigator : Navigator {
         else {
             return nil
         }
-        
         return nodes[index - 1]
     }
-    
-    
 }
 
 enum HandSelection: String, Codable, CaseIterable {
