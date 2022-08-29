@@ -112,9 +112,9 @@ extension OverviewIcon : Identifiable {
     }
 }
 
-fileprivate let icon1: OverviewIcon = .init(icon: "ComfortablePlaceToSit", title: "COMFORTABLE PLACE TO SIT")
-fileprivate let icon2: OverviewIcon = .init(icon: "FlatSurface", title: "FLAT SURFACE")
-fileprivate let icon3: OverviewIcon = .init(icon: "SpaceToMoveYourArms", title: "SPACE TO MOVE YOUR ARMS")
+fileprivate let icon1: OverviewIcon = .init(icon: "comfortable_place_to_sit", title: "COMFORTABLE PLACE TO SIT")
+fileprivate let icon2: OverviewIcon = .init(icon: "flat_surface", title: "FLAT SURFACE")
+fileprivate let icon3: OverviewIcon = .init(icon: "space_to_move_your_arms", title: "SPACE TO MOVE YOUR ARMS")
 
 
 fileprivate let exampleStep = OverviewStepObject(
@@ -122,6 +122,6 @@ fileprivate let exampleStep = OverviewStepObject(
     title: "Example Survey A",
     subtitle: "This is the subtitle",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
-    imageInfo: FetchableImage(imageName: "HoldPhone-Left", bundle: SharedResources.bundle, placementHint: "topBackground"),
+    imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle, placementHint: "topBackground"),
     icons: [ icon1, icon2, icon3 ]
 )

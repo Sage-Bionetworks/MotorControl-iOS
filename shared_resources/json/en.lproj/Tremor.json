@@ -10,12 +10,12 @@
                 "detail":"In this activity you will be holding the phone in your lap for 30 seconds. You will do this with each hand. The goal is to measure your tremors in your hand.",
                 "image":{
                      "type":"fetchable",
-                     "imageName":"HoldPhone-Left",
+                     "imageName":"hold_phone_left",
                      "placementType":"topBackground"
                  },
                 "icons": [
                           {
-                            "icon":"ComfortablePlaceToSit",
+                            "icon":"comfortable_place_to_sit",
                             "title": "COMFORTABLE PLACE TO SIT"
                           }
                         ],
@@ -42,7 +42,7 @@
                 "detail":"While sitting down with your feet resting flat on the floor, you will be holding the phone still in your lap for 30 seconds. You will do this first with one hand and then with your other hand.",
                 "image":{
                     "type":"fetchable",
-                    "imageName": "TremorHoldPhone",
+                    "imageName": "tremor_hold_phone",
                     "placementType":"topBackground"
                 },
                 "actions":{
@@ -59,7 +59,7 @@
                 "detail":"Find a spot to sit where you can have your feet resting flat on the floor.",
                 "image":{
                     "type":"fetchable",
-                    "imageName":"Sitting",
+                    "imageName":"sitting",
                     "placementType":"topBackground"
                 },
                 "actions":{
@@ -86,7 +86,7 @@
                  "detail":"You have completed the Tremor Test activity.",
                  "image":{
                      "type":"fetchable",
-                     "imageName":"Completion-Tremor",
+                     "imageName":"completion_tremor",
                      "placementType":"topBackground"
                  },
                  "actions": {

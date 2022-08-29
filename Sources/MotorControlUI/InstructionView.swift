@@ -42,7 +42,7 @@ fileprivate let example1 = InstructionStepObject(
     identifier: "example",
     title: "Example Survey A",
     detail: "You will be shown a series of example questions. This survey has no additional instructions.",
-    imageInfo: FetchableImage(imageName: "TapLeft1", bundle: SharedResources.bundle, placementHint: "topBackground"))
+    imageInfo: FetchableImage(imageName: "tap_left_1", bundle: SharedResources.bundle, placementHint: "topBackground"))
 
 
 struct InstructionNodeView: View {

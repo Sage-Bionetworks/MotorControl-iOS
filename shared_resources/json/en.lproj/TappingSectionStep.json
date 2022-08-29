@@ -9,7 +9,7 @@
                   "duration":30,
                   "image":{
                       "type":"fetchable",
-                      "imageName":"TapLeft1",
+                      "imageName":"tap_left_1",
                       "placementType":"fullsizeBackground"
                   },
                   "commands":["shouldDisableIdleTimer", "playSound"],
