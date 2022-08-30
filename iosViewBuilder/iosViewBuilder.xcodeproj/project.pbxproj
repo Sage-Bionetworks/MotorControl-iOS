@@ -15,6 +15,7 @@
 		8004DF3928B000600001A1F8 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF3828B000600001A1F8 /* InstructionView.swift */; };
 		8004DF3B28B003E50001A1F8 /* MotorControlAssessmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */; };
 		801430D828B574AC004982FA /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801430D728B574AC004982FA /* OverviewView.swift */; };
+		80CBB8A228BE7A33007EDCF1 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CBB8A128BE7A33007EDCF1 /* GlobalProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		8004DF3828B000600001A1F8 /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControlAssessmentView.swift; sourceTree = "<group>"; };
 		801430D728B574AC004982FA /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
+		80CBB8A128BE7A33007EDCF1 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */,
 				8004DF3828B000600001A1F8 /* InstructionView.swift */,
 				801430D728B574AC004982FA /* OverviewView.swift */,
+				80CBB8A128BE7A33007EDCF1 /* GlobalProperties.swift */,
 			);
 			name = MotorControlUI;
 			path = ../../Sources/MotorControlUI;
@@ -175,6 +178,7 @@
 				8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */,
 				8004DF0A28AFFE1D0001A1F8 /* iosViewBuilderApp.swift in Sources */,
 				8004DF3928B000600001A1F8 /* InstructionView.swift in Sources */,
+				80CBB8A228BE7A33007EDCF1 /* GlobalProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -55,7 +55,7 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
                 instructionState.image = Image(imageInfo.imageName, bundle: SharedResources.bundle)
             }
         }
-            //TODO: Aaron Rabara 8/25/22
+            //TODO: Aaron Rabara 8/25/22 add logic here to switch hand text
         
         return nodeState
     }
