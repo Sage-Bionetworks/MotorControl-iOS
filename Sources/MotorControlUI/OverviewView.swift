@@ -33,7 +33,6 @@
 import SwiftUI
 import AssessmentModel
 import AssessmentModelUI
-import JsonModel
 import SharedMobileUI
 import MotorControl
 import SharedResources

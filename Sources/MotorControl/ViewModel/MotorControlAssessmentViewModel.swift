@@ -53,13 +53,15 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
                 instructionState.title = instructionState.title?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
                 instructionState.subtitle = instructionState.subtitle?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
                 instructionState.detail = instructionState.detail?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
+                if whichHand.rawValue == HandSelection.right.rawValue, let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage, let uiImage = UIImage(named: imageInfo.imageName, in: SharedResources.bundle, compatibleWith: nil) {
+                    let mirroredUIImage = uiImage.withHorizontallyFlippedOrientation()
+                    instructionState.image = Image(uiImage: mirroredUIImage)
+                }
             }
-            else if let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage {
-                instructionState.image = Image(imageInfo.imageName, bundle: SharedResources.bundle)
-            }
+//            else if let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage {
+//                instructionState.image = Image(imageInfo.imageName, bundle: SharedResources.bundle)
+//            }
         }
-            //TODO: Aaron Rabara 8/25/22 add logic here to switch hand text
-        
         return nodeState
     }
 }
@@ -69,7 +71,6 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
 //    @Published public var title: String?
 //    @Published public var subtitle: String?
 //    @Published public var detail: String?
-//    let whichHand : HandSelection
 //
 //    public init(_ instruction: ContentStep, whichHand: HandSelection, parentId: String? = nil) {
 //        self.title = instruction.title

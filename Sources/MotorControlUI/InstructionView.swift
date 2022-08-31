@@ -33,10 +33,10 @@
 import SwiftUI
 import AssessmentModel
 import AssessmentModelUI
-import JsonModel
 import SharedMobileUI
 import MotorControl
 import SharedResources
+import MotorControlV1
 
 
 struct InstructionView: View {
@@ -83,7 +83,9 @@ struct InstructionNodeView: View {
                 ScrollView {
                     VStack(alignment: .center, spacing: spacing) {
                         if let image = contentInfo.image {
-                            image.background(surveyTint)
+                            image
+                                .background(surveyTint)
+//                                .rotation3DEffect(.degrees(180), axis: (x: CGFloat(0), y: CGFloat(1), z: CGFloat(0)))
                         }
                         if let title = contentInfo.title {
                             Text(title)
@@ -106,6 +108,8 @@ struct InstructionNodeView: View {
         .ignoresSafeArea(edges: [.top])
     }
 }
+
+
 
 //
 //protocol InstructionViewState {
