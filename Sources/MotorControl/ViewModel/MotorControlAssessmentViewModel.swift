@@ -49,7 +49,10 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
         let nodeState = super.nodeState(for: node)
         if let instructionState = nodeState as? InstructionState {
             if let whichHand = HandSelection(rawValue: currentBranchState.node.identifier) {
-                
+                let handPlaceHolder = "%@"
+                instructionState.title = instructionState.title?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
+                instructionState.subtitle = instructionState.subtitle?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
+                instructionState.detail = instructionState.detail?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
             }
             else if let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage {
                 instructionState.image = Image(imageInfo.imageName, bundle: SharedResources.bundle)

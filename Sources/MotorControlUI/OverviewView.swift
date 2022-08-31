@@ -66,15 +66,12 @@ struct OverviewView_Previews: PreviewProvider {
 struct OverviewNodeView: View {
 
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
-
-    let overview: OverviewStepObject
+    @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     let bottomID = "bottom"
+    let overview: OverviewStepObject
     
     var body: some View {
         GeometryReader { scrollViewGeometry in
-            let spacing: CGFloat = 20
-            let fontSize: CGFloat = 18
-            
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment: .center, spacing: spacing) {
@@ -84,32 +81,31 @@ struct OverviewNodeView: View {
                         }
                         if let title = overview.title {
                             Text(title)
-                                .font(.largeTitle)
+                                .font(.stepTitle)
                                 .foregroundColor(.textForeground)
                         }
                         if let subtitle = overview.subtitle {
                             Text(subtitle)
-                                .font(.latoFont(fontSize))
+                                .font(.stepSubtitle)
                                 .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
                         }
                         if let detail = overview.detail {
                             Text(detail)
-                                .font(.latoFont(fontSize))
+                                .font(.stepDetail)
                                 .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
                         }
                         if let icons = overview.icons {
                             Text("This is what you'll need")
-                                .bold()
-                                .font(.latoFont(fontSize))
+                                .font(.stepIconHeader)
                                 .foregroundColor(.textForeground)
                             HStack(alignment: .top, spacing: spacing) {
                                 ForEach(icons) { iconInfo in
                                     VStack(alignment: .center, spacing: spacing) {
                                         Image(iconInfo.icon, bundle: SharedResources.bundle)
                                         Text(iconInfo.title)
-                                            .font(.latoFont(fontSize - 2))
+                                            .font(.stepIconText)
                                             .foregroundColor(.textForeground)
                                             .multilineTextAlignment(.center)
                                             .fixedSize(horizontal: false, vertical: true)

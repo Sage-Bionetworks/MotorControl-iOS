@@ -73,13 +73,11 @@ fileprivate let example1 = InstructionStepObject(
 struct InstructionNodeView: View {
     
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
-
+    @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     let contentInfo: InstructionState
     
     var body: some View {
         GeometryReader { scrollViewGeometry in
-            let spacing: CGFloat = 20
-            let fontSize: CGFloat = 18
             
             ScrollViewReader { proxy in
                 ScrollView {
@@ -89,15 +87,15 @@ struct InstructionNodeView: View {
                         }
                         if let title = contentInfo.title {
                             Text(title)
-                                .font(.largeTitle)
+                                .font(.stepTitle)
                         }
                         if let subtitle = contentInfo.subtitle {
                             Text(subtitle)
-                                .font(.latoFont(fontSize))
+                                .font(.stepSubtitle)
                         }
                         if let detail = contentInfo.detail {
                             Text(detail)
-                                .font(.latoFont(fontSize))
+                                .font(.stepDetail)
                         }
                     }
                     .padding([.horizontal], spacing)

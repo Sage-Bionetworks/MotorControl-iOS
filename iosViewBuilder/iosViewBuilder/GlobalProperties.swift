@@ -29,3 +29,36 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+
+import SwiftUI
+import SharedMobileUI
+
+let bodyFontSize: CGFloat = 18
+let titleFontSize: CGFloat = 32
+let stepIconFontSize: CGFloat = 16
+
+extension Font {
+    static let textField: Font = .latoFont(fixedSize: bodyFontSize)
+    static let stepTitle: Font = .latoFont(titleFontSize, relativeTo: .title)
+    static let stepSubtitle: Font = .latoFont(bodyFontSize, relativeTo: .subheadline)
+    static let stepDetail: Font = .latoFont(bodyFontSize, relativeTo: .footnote)
+    static let stepIconHeader: Font = .latoFont(bodyFontSize, weight: .bold)
+    static let stepIconText: Font = .latoFont(fixedSize: stepIconFontSize)
+}
+
+struct SpacingEnvironmentKey: EnvironmentKey {
+    static let defaultValue: CGFloat = 20
+}
+
+extension EnvironmentValues {
+    var spacing: CGFloat {
+        get { self[SpacingEnvironmentKey.self] }
+        set { self[SpacingEnvironmentKey.self] = newValue }
+    }
+}
+
+extension View {
+    func spacing(_ newValue: CGFloat) -> some View {
+        environment(\.spacing, newValue)
+    }
+}
