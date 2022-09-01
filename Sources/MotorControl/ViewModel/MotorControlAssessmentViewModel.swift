@@ -45,25 +45,46 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
 //            return super.nodeState(for: node)
 //        }
 //    }
+    private var timer = Timer()
+    private var animatedImageIndex = 0
+    
     override public func nodeState(for node: Node) -> NodeState? {
         let nodeState = super.nodeState(for: node)
         if let instructionState = nodeState as? InstructionState {
-            if let whichHand = HandSelection(rawValue: currentBranchState.node.identifier) {
-                let handPlaceHolder = "%@"
-                instructionState.title = instructionState.title?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
-                instructionState.subtitle = instructionState.subtitle?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
-                instructionState.detail = instructionState.detail?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
-                if whichHand.rawValue == HandSelection.right.rawValue, let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage, let uiImage = UIImage(named: imageInfo.imageName, in: SharedResources.bundle, compatibleWith: nil) {
-                    let mirroredUIImage = uiImage.withHorizontallyFlippedOrientation()
-                    instructionState.image = Image(uiImage: mirroredUIImage)
-                }
+            if let imageInfo = instructionState.contentNode.imageInfo as? AnimatedImage {
+//                iterateAnimatedImage(instructionState, imageInfo)
+                instructionState.image = Image(imageInfo.imageNames[self.animatedImageIndex], bundle: SharedResources.bundle)
             }
-//            else if let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage {
-//                instructionState.image = Image(imageInfo.imageName, bundle: SharedResources.bundle)
-//            }
+            if let whichHand = HandSelection(rawValue: currentBranchState.node.identifier) {
+                swapPlaceholderStringsAndReverseImage(in: instructionState, with: whichHand)
+            }
         }
         return nodeState
     }
+    
+    private func swapPlaceholderStringsAndReverseImage(in instructionState: InstructionState, with whichHand: HandSelection) {
+        let handPlaceHolder = "%@"
+        instructionState.title = instructionState.title?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
+        instructionState.subtitle = instructionState.subtitle?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
+        instructionState.detail = instructionState.detail?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
+        
+        if whichHand.rawValue == HandSelection.right.rawValue, let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage, let uiImage = UIImage(named: imageInfo.imageName, in: SharedResources.bundle, compatibleWith: nil) {
+            instructionState.image = Image(uiImage: uiImage.withHorizontallyFlippedOrientation())
+        }
+    }
+    
+    private func iterateAnimatedImage(_ instructionState: InstructionState, _ imageInfo: AnimatedImage) {
+//        instructionState.image = Image(imageInfo.imageNames[self.animatedImageIndex], bundle: SharedResources.bundle)
+//        timer = Timer.scheduledTimer(withTimeInterval: imageInfo.animationDuration / Double(imageInfo.imageNames.count), repeats: true) { _ in
+//            self.animatedImageIndex += 1
+//            if self.animatedImageIndex == imageInfo.imageNames.count {
+//                self.animatedImageIndex = 0
+//            }
+//            instructionState.image = Image(imageInfo.imageNames[self.animatedImageIndex], bundle: SharedResources.bundle)
+//        }
+        
+    }
+
 }
 
 //public final class TwoHandInstructionState : ContentNodeState {
