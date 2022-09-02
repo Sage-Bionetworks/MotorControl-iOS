@@ -1,5 +1,5 @@
 //
-//  MotorControl.swift
+//  MotorControlAssessmentViewModel.swift
 //
 //  Copyright © 2022 Sage Bionetworks. All rights reserved.
 //
@@ -45,15 +45,13 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
 //            return super.nodeState(for: node)
 //        }
 //    }
-    private var timer = Timer()
-    private var animatedImageIndex = 0
+    private var timer: Timer?
     
     override public func nodeState(for node: Node) -> NodeState? {
         let nodeState = super.nodeState(for: node)
         if let instructionState = nodeState as? InstructionState {
             if let imageInfo = instructionState.contentNode.imageInfo as? AnimatedImage {
-//                iterateAnimatedImage(instructionState, imageInfo)
-                instructionState.image = Image(imageInfo.imageNames[self.animatedImageIndex], bundle: SharedResources.bundle)
+                iterateAnimatedImage(instructionState, imageInfo)
             }
             if let whichHand = HandSelection(rawValue: currentBranchState.node.identifier) {
                 swapPlaceholderStringsAndReverseImage(in: instructionState, with: whichHand)
@@ -64,9 +62,9 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
     
     private func swapPlaceholderStringsAndReverseImage(in instructionState: InstructionState, with whichHand: HandSelection) {
         let handPlaceHolder = "%@"
-        instructionState.title = instructionState.title?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
-        instructionState.subtitle = instructionState.subtitle?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
-        instructionState.detail = instructionState.detail?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue)
+        instructionState.title = instructionState.title?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
+        instructionState.subtitle = instructionState.subtitle?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
+        instructionState.detail = instructionState.detail?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
         
         if whichHand.rawValue == HandSelection.right.rawValue, let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage, let uiImage = UIImage(named: imageInfo.imageName, in: SharedResources.bundle, compatibleWith: nil) {
             instructionState.image = Image(uiImage: uiImage.withHorizontallyFlippedOrientation())
@@ -74,17 +72,18 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
     }
     
     private func iterateAnimatedImage(_ instructionState: InstructionState, _ imageInfo: AnimatedImage) {
-//        instructionState.image = Image(imageInfo.imageNames[self.animatedImageIndex], bundle: SharedResources.bundle)
-//        timer = Timer.scheduledTimer(withTimeInterval: imageInfo.animationDuration / Double(imageInfo.imageNames.count), repeats: true) { _ in
-//            self.animatedImageIndex += 1
-//            if self.animatedImageIndex == imageInfo.imageNames.count {
-//                self.animatedImageIndex = 0
-//            }
-//            instructionState.image = Image(imageInfo.imageNames[self.animatedImageIndex], bundle: SharedResources.bundle)
-//        }
-        
+        let timeInterval = imageInfo.animationDuration / (imageInfo.imageNames.count != 0 ? Double(imageInfo.imageNames.count) : Double(1))
+        timer?.invalidate()
+        var animatedImageIndex = 0
+        instructionState.image = Image(imageInfo.imageNames[animatedImageIndex], bundle: SharedResources.bundle)
+        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
+            animatedImageIndex += 1
+            if animatedImageIndex >= imageInfo.imageNames.count {
+                animatedImageIndex = 0
+            }
+            instructionState.image = Image(imageInfo.imageNames[animatedImageIndex], bundle: SharedResources.bundle)
+        }
     }
-
 }
 
 //public final class TwoHandInstructionState : ContentNodeState {

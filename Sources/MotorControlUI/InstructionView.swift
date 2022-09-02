@@ -36,11 +36,10 @@ import AssessmentModelUI
 import SharedMobileUI
 import MotorControl
 import SharedResources
-import MotorControlV1
 
 
 struct InstructionView: View {
-    @ObservedObject var nodeState: InstructionState
+    let nodeState: InstructionState
     
     var body: some View {
         VStack {
@@ -74,16 +73,16 @@ struct InstructionNodeView: View {
     
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
-    let contentInfo: InstructionState
+    @ObservedObject var contentInfo: InstructionState
     
     var body: some View {
         GeometryReader { scrollViewGeometry in
-            
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment: .center, spacing: spacing) {
                         if let image = contentInfo.image {
-                            image.background(surveyTint)
+                            image
+                                .background(surveyTint)
                         }
                         if let title = contentInfo.title {
                             Text(title)
