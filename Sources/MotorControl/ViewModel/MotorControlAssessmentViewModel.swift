@@ -45,7 +45,6 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
 //            return super.nodeState(for: node)
 //        }
 //    }
-    private var timer: Timer?
     
     override public func nodeState(for node: Node) -> NodeState? {
         let nodeState = super.nodeState(for: node)
@@ -57,6 +56,14 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
                 swapPlaceholderStringsAndReverseImage(in: instructionState, with: whichHand)
             }
         }
+//        else if let overviewNode = node as? OverviewStepObject {
+//            let overviewState = OverviewState(overviewNode)
+//            overviewState.subtitle = "In overview state"
+//            if let imageInfo = overviewState.contentNode.imageInfo as? AnimatedImage {
+//                iterateAnimatedImage(overviewState, imageInfo)
+//            }
+//            return overviewState
+//        }
         return nodeState
     }
     
@@ -72,7 +79,8 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
     }
     
     private func iterateAnimatedImage(_ instructionState: InstructionState, _ imageInfo: AnimatedImage) {
-        let timeInterval = imageInfo.animationDuration / (imageInfo.imageNames.count != 0 ? Double(imageInfo.imageNames.count) : Double(1))
+        let timeInterval = imageInfo.animationDuration / Double(imageInfo.imageNames.count)
+        var timer: Timer?
         timer?.invalidate()
         var animatedImageIndex = 0
         instructionState.image = Image(imageInfo.imageNames[animatedImageIndex], bundle: SharedResources.bundle)
@@ -84,22 +92,41 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
             instructionState.image = Image(imageInfo.imageNames[animatedImageIndex], bundle: SharedResources.bundle)
         }
     }
+    
+//    private func iterateAnimatedImage(_ overviewState: OverviewState, _ imageInfo: AnimatedImage) {
+//        let timeInterval = imageInfo.animationDuration / Double(imageInfo.imageNames.count)
+//        var timer: Timer?
+//        timer?.invalidate()
+//        var animatedImageIndex = 0
+//        overviewState.image = Image(imageInfo.imageNames[animatedImageIndex], bundle: SharedResources.bundle)
+//        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
+//            animatedImageIndex += 1
+//            if animatedImageIndex >= imageInfo.imageNames.count {
+//                animatedImageIndex = 0
+//            }
+//            overviewState.title = String(animatedImageIndex)
+//            overviewState.image = Image(imageInfo.imageNames[animatedImageIndex], bundle: SharedResources.bundle)
+//        }
+//    }
 }
 
-//public final class TwoHandInstructionState : ContentNodeState {
-//    @Published public var image: Image?
-//    @Published public var title: String?
-//    @Published public var subtitle: String?
-//    @Published public var detail: String?
-//
-//    public init(_ instruction: ContentStep, whichHand: HandSelection, parentId: String? = nil) {
-//        self.title = instruction.title
-//        self.subtitle = instruction.subtitle
-//        self.detail = instruction.detail
-//        self.whichHand = whichHand
-//        if let imageInfo = instruction.imageInfo as? FetchableImage {
-//            self.image = Image(imageInfo.imageName, bundle: imageInfo.bundle)
-//        }
-//        super.init(step: instruction, result: instruction.instantiateResult(), parentId: parentId)
-//    }
-//}
+public final class OverviewState : ContentNodeState {
+    @Published public var image: Image?
+    @Published public var title: String?
+    @Published public var subtitle: String?
+    @Published public var detail: String?
+    public var icons: [OverviewIcon]?
+
+    public init(_ overview: OverviewStepObject, parentId: String? = nil) {
+        self.title = overview.title
+        self.subtitle = overview.subtitle
+        self.detail = overview.detail
+        self.icons = overview.icons
+        if let imageInfo = overview.imageInfo as? FetchableImage {
+            self.image = Image(imageInfo.imageName, bundle: SharedResources.bundle)
+        }
+        super.init(step: overview, result: overview.instantiateResult(), parentId: parentId)
+    }
+}
+
+

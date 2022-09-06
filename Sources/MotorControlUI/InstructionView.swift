@@ -91,10 +91,12 @@ struct InstructionNodeView: View {
                         if let subtitle = contentInfo.subtitle {
                             Text(subtitle)
                                 .font(.stepSubtitle)
+                                .multilineTextAlignment(.center)
                         }
                         if let detail = contentInfo.detail {
                             Text(detail)
                                 .font(.stepDetail)
+                                .multilineTextAlignment(.center)
                         }
                     }
                     .padding([.horizontal], spacing)

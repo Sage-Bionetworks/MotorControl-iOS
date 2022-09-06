@@ -94,17 +94,8 @@ final class TwoHandNavigator : Navigator {
     }
     
     func nodeAfter(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
-        guard let nodeNext = nextNode(identifier: currentNode?.identifier)
-        else {
-            return .init(node: nil, direction: .forward)
-        }
-        let selection = currentHandSelection(for: branchResult)
-        if nodeNext.hand() == nil || nodeNext.hand() == selection || selection == .both {
-            return .init(node: nodeNext, direction: .forward)
-        }
-        return .init(node: nextNode(identifier: nodeNext.identifier), direction: .forward)
+        return .init(node: nextNode(identifier: currentNode?.identifier, handSelection: currentHandSelection(for: branchResult)), direction: .forward)
     }
-    
     
     func nodeBefore(currentNode: Node?, branchResult: BranchNodeResult) -> NavigationPoint {
         return .init(node: previousNode(currentNode: currentNode), direction: .backward)
@@ -145,7 +136,7 @@ final class TwoHandNavigator : Navigator {
         return currentNode.identifier == nodes.last?.identifier && currentNode is CompletionStep
     }
     
-    private func nextNode(identifier: String?) -> Node? {
+    private func nextNode(identifier: String?, handSelection: HandSelection? = nil) -> Node? {
         guard let identifier = identifier
         else {
             return firstNode()
@@ -156,7 +147,16 @@ final class TwoHandNavigator : Navigator {
         else {
             return nil
         }
-        return nodes[index + 1]
+        let nextNode = nodes[index + 1]
+        guard let selection = handSelection, let hand = nextNode.hand(), selection != hand
+        else {
+            return nextNode
+        }
+        guard index + 2 < nodes.count
+        else {
+            return nil
+        }
+        return nodes[index + 2]
     }
     
     private func previousNode(currentNode: Node?) -> Node? {
@@ -172,7 +172,7 @@ final class TwoHandNavigator : Navigator {
 }
 
 enum HandSelection: String, Codable, CaseIterable {
-    case left, right, both
+    case left, right
 }
 
 extension Node {

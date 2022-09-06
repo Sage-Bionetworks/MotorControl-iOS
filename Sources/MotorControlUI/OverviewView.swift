@@ -145,3 +145,4 @@ fileprivate let exampleStep = OverviewStepObject(
     imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle, placementHint: "topBackground"),
     icons: [ icon1, icon2, icon3 ]
 )
+

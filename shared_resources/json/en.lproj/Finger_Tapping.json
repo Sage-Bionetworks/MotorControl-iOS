@@ -8,12 +8,12 @@
                 "type":"overview",
                 "title":"Finger Tapping",
                 "detail":"In this activity, we will measure your finger tapping speed and accuracy with each hand.",
-                 "image":{
+                "image":{
                      "type":"animated",
                      "imageNames":["tap_left_1", "tap_left_2"],
                      "placementType":"topBackground",
                      "animationDuration": 1
-                 },
+                },
                 "icons": [
                           {
                             "icon":"flat_surface",
