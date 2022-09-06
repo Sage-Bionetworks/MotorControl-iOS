@@ -70,24 +70,6 @@
                 }
              },
              {
-                "identifier":"tappingFirstHandInstruction",
-                "type":"handInstruction",
-                "title":"First, tap with your %@ hand",
-                "detail": "Alternate tapping the buttons that appear with your first and middle finger on your %@ HAND. Keep tapping for 30 seconds and as fast as you can.",
-                "image": {
-                    "type":"animated",
-                    "imageNames": ["tap_left_1", "tap_left_2"],
-                    "animationDuration": 1.0,
-                    "placementType": "topBackground"
-                },
-                "actions":{
-                    "goForward":{
-                        "type":"default",
-                        "buttonTitle": "Start the test"
-                    }
-                }
-             },
-             {
                  "identifier":"left",
                  "type":"transform",
                  "resourceName": "TappingSectionStep"

@@ -3,6 +3,24 @@
      "identifier":"tapping",
      "type":"section",
      "steps":[
+             {
+                "identifier":"tappingInstruction",
+                "type":"handInstruction",
+                "title":"Tap with your %@ hand",
+                "detail": "Alternate tapping the buttons that appear with your index and middle fingers on your %@ HAND. Keep tapping for 30 seconds as fast as you can.",
+                "image": {
+                    "type":"animated",
+                    "imageNames": ["tap_left_1", "tap_left_2"],
+                    "animationDuration": 1.0,
+                    "placementType": "topBackground"
+                },
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle": "Start the test"
+                    }
+                }
+             },
               {
                   "identifier": "tapping",
                   "type":"tapping",
@@ -14,7 +32,7 @@
                   },
                   "commands":["shouldDisableIdleTimer", "playSound"],
                   "spokenInstructions":{
-                      "start":"Tap the buttons with your %@ hand",
+                      "start":"Tap the buttons with your %@ hand.",
                       "end":"Great job! You’ve finished tapping with your %@ hand."
                   }
                }
