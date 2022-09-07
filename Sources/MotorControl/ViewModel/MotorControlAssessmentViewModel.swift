@@ -36,7 +36,6 @@ import AssessmentModel
 import SharedResources
 
 public final class MotorControlAssessmentViewModel : AssessmentViewModel {
-    
     override public func nodeState(for node: Node) -> NodeState? {
         let nodeState = super.nodeState(for: node)
         if let instructionState = nodeState as? InstructionState {

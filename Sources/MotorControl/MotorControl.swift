@@ -47,8 +47,6 @@ public enum MotorControlIdentifier : String, Codable, StringEnumSet, Documentabl
     
     /// The tapping test.
     case tapping = "Finger_Tapping"
-    
-    /// The 
 
     public func instantiateAssessmentState() throws -> AssessmentState {
         let filename = self.rawValue
