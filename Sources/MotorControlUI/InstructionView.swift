@@ -58,6 +58,7 @@ struct InstructionView_Previews: PreviewProvider {
             InstructionView(nodeState: InstructionState(example1, parentId: nil))
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example1)))
+            
         }
     }
 }
@@ -74,6 +75,7 @@ struct InstructionNodeView: View {
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     @ObservedObject var contentInfo: InstructionState
+    fileprivate let right = "right"
     
     var body: some View {
         GeometryReader { scrollViewGeometry in
@@ -81,8 +83,16 @@ struct InstructionNodeView: View {
                 ScrollView {
                     VStack(alignment: .center, spacing: spacing) {
                         if let imageInfo = contentInfo.contentNode.imageInfo {
-                            ContentImage(imageInfo)
-                                .background(surveyTint)
+                            if let title = contentInfo.title, title.lowercased().contains(right) {
+                                ContentImage(imageInfo)
+                                    .background(surveyTint)
+                                    .rotation3DEffect(.degrees(180), axis: (x: CGFloat(0), y: CGFloat(1), z: CGFloat(0)))
+                            }
+                            else {
+                                ContentImage(imageInfo)
+                                    .background(surveyTint)
+                                
+                            }
                         }
                         if let title = contentInfo.title {
                             Text(title)
@@ -107,21 +117,3 @@ struct InstructionNodeView: View {
         .ignoresSafeArea(edges: [.top])
     }
 }
-
-
-
-//
-//protocol InstructionViewState {
-//    var image: Image? { get }
-//    var title: String? { get }
-//    var subtitle: String? { get }
-//    var detail: String? { get }
-//}
-//
-//extension InstructionState : InstructionViewState {
-//
-//}
-
-//extension TwoHandInstructionState : InstructionViewState {
-//
-//}

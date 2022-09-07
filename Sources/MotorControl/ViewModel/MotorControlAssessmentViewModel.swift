@@ -51,9 +51,5 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
         instructionState.title = instructionState.title?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
         instructionState.subtitle = instructionState.subtitle?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
         instructionState.detail = instructionState.detail?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
-        
-        if whichHand.rawValue == HandSelection.right.rawValue, let imageInfo = instructionState.contentNode.imageInfo as? FetchableImage, let uiImage = UIImage(named: imageInfo.imageName, in: SharedResources.bundle, compatibleWith: nil) {
-            instructionState.image = Image(uiImage: uiImage.withHorizontallyFlippedOrientation())
-        }
     }
 }
