@@ -80,8 +80,8 @@ struct InstructionNodeView: View {
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(alignment: .center, spacing: spacing) {
-                        if let image = contentInfo.image {
-                            image
+                        if let imageInfo = contentInfo.contentNode.imageInfo {
+                            ContentImage(imageInfo)
                                 .background(surveyTint)
                         }
                         if let title = contentInfo.title {

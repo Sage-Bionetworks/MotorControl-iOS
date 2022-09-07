@@ -29,6 +29,7 @@
 		8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControlAssessmentView.swift; sourceTree = "<group>"; };
 		801430D728B574AC004982FA /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 		80CBB8A128BE7A33007EDCF1 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
+		80CBB8A428C7F90D007EDCF1 /* AssessmentModelKMM */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AssessmentModelKMM; path = ../../AssessmentModelKMM; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +47,7 @@
 		8004DEFD28AFFE1D0001A1F8 = {
 			isa = PBXGroup;
 			children = (
+				80CBB8A328C7F90D007EDCF1 /* Packages */,
 				8004DF3328AFFE760001A1F8 /* MotorControl-iOS */,
 				8004DF0828AFFE1D0001A1F8 /* iosViewBuilder */,
 				8004DF0728AFFE1D0001A1F8 /* Products */,
@@ -98,6 +100,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		80CBB8A328C7F90D007EDCF1 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				80CBB8A428C7F90D007EDCF1 /* AssessmentModelKMM */,
+			);
+			name = Packages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
