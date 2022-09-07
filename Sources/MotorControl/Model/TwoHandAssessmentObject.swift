@@ -65,7 +65,7 @@ final class TwoHandNavigator : Navigator {
             fatalError("identifiers not unique")
         }
         self.identifier = identifier
-        let handOrder = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
+        let handOrder = arc4random_uniform(2) == 0 ? [HandSelection.left, HandSelection.right] : [HandSelection.right, HandSelection.left]
         var temporaryNodes = nodes
         guard let firstHandIndex = nodes.firstIndex(where: { HandSelection(rawValue: $0.identifier) != nil  })
         else {
@@ -116,7 +116,7 @@ final class TwoHandNavigator : Navigator {
     }
     
     private func currentHandSelection(for branchResult: BranchNodeResult) -> HandSelection? {
-        guard let answer = branchResult.findAnswer(with: handSelection),
+        guard let answer = branchResult.findAnswer(with: handSelectionIdentifier),
               let jsonValue = answer.jsonValue,
               case .string(let rawValue) = jsonValue
         else {
