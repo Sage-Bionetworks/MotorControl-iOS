@@ -34,8 +34,6 @@
 import Foundation
 import AssessmentModel
 import JsonModel
-import SwiftUI
-import AVFAudio
 
 extension SerializableNodeType {
     static let twoHandAssessment: SerializableNodeType = "twoHandAssessment"
@@ -60,22 +58,18 @@ final class TwoHandNavigator : Navigator {
     
     public let identifier: String
     public let nodes: [Node]
-    public let handOrder: [HandSelection]
+    fileprivate let handSelectionIdentifier = "handSelection"
 
     public init(identifier: String, nodes: [Node]) {
         guard Set(nodes.map { $0.identifier }).count == nodes.count else {
             fatalError("identifiers not unique")
         }
         self.identifier = identifier
-        self.handOrder = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
+        let handOrder = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
         var temporaryNodes = nodes
-        var firstHandIndex = 0
-        for index in 0..<nodes.count {
-            if nodes[index].identifier == HandSelection.left.rawValue ||
-                nodes[index].identifier == HandSelection.right.rawValue {
-                firstHandIndex = index
-                break
-            }
+        guard let firstHandIndex = nodes.firstIndex(where: { HandSelection(rawValue: $0.identifier) != nil  })
+        else {
+            fatalError("Could not find sections with the expected left/right hand identifiers.")
         }
         if temporaryNodes[firstHandIndex].identifier == handOrder[1].rawValue {
             temporaryNodes.swapAt(firstHandIndex, firstHandIndex + 1)
@@ -122,7 +116,6 @@ final class TwoHandNavigator : Navigator {
     }
     
     private func currentHandSelection(for branchResult: BranchNodeResult) -> HandSelection? {
-        let handSelection = "handSelection"
         guard let answer = branchResult.findAnswer(with: handSelection),
               let jsonValue = answer.jsonValue,
               case .string(let rawValue) = jsonValue
@@ -160,7 +153,6 @@ final class TwoHandNavigator : Navigator {
     }
     
     private func previousNode(currentNode: Node?) -> Node? {
-        
         guard let index = nodes.firstIndex(where: {
             $0.identifier == currentNode?.identifier
         }), index > 0, !isCompleted(currentNode: currentNode!), !(currentNode is BranchNode)
