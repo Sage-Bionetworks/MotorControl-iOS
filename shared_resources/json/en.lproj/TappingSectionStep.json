@@ -4,7 +4,7 @@
      "type":"section",
      "steps":[
              {
-                "identifier":"instruction",
+                "identifier":"tappingInstruction",
                 "type":"handInstruction",
                 "title":"Tap with your %@ hand",
                 "detail": "Alternate tapping the buttons that appear with your index and middle fingers on your %@ HAND. Keep tapping for 30 seconds as fast as you can.",

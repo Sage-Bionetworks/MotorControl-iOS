@@ -50,11 +50,9 @@ final class MotorControlNavigationTests: XCTestCase {
     
     func testTwoHandTremorForwardNavigation() throws {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
+        
         let _ = try navigateForward(state, to: "completion")
-        guard let _ = state.currentNode else {
-            XCTFail("Current node is nil")
-            return
-        }
+        XCTAssertNotNil(state.currentNode)
     }
     
     func testTwoHandTremorHasNodeAfter() throws {
@@ -62,17 +60,14 @@ final class MotorControlNavigationTests: XCTestCase {
         
         let firstNode = state.navigator.firstNode()
         XCTAssertNotNil(firstNode)
-        
         if let firstNode = firstNode {
-            XCTAssertNotNil(state.navigator.hasNodeAfter(currentNode: firstNode, branchResult: state.assessmentResult))
+            XCTAssertTrue(state.navigator.hasNodeAfter(currentNode: firstNode, branchResult: state.assessmentResult))
         }
         
         let holdPhoneInstructions = try navigateForward(state, to: "holdPhoneInstructions")
-        
         XCTAssertTrue(state.navigator.hasNodeAfter(currentNode: holdPhoneInstructions, branchResult: state.assessmentResult))
         
         let lastNode = try navigateForward(state, to: "completion")
-        
         XCTAssertFalse(state.navigator.hasNodeAfter(currentNode: lastNode, branchResult: state.assessmentResult))
     }
     
@@ -83,57 +78,47 @@ final class MotorControlNavigationTests: XCTestCase {
         XCTAssertNotNil(firstNode)
         
         let sitDownNode = try navigateForward(state, to: "sitDownInstruction")
-        
         let nodeBefore = state.navigator.nodeBefore(currentNode: sitDownNode, branchResult: state.assessmentResult).node
         XCTAssertEqual(nodeBefore?.identifier, "holdPhoneInstructions")
-        
     }
     
     func testTwoHandTremorNodeBefore_first() throws {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
         
         let firstNode = try navigateForward(state, to: "introduction")
-        
         let nodeBefore = state.navigator.nodeBefore(currentNode: firstNode, branchResult: state.assessmentResult).node
         XCTAssertNil(nodeBefore)
-        
     }
     
     func testTwoHandTremorNodeBefore_right() throws {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
-
-        let rightNode = try navigateForward(state, to: "right")
         
+        let rightNode = try navigateForward(state, to: "right")
         let nodeBefore = state.navigator.nodeBefore(currentNode: rightNode, branchResult: state.assessmentResult).node
         XCTAssertNil(nodeBefore)
-        
     }
     
     func testTwoHandTremorNodeBefore_left() throws {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
         
         let leftNode = try navigateForward(state, to: "left")
-        
         let nodeBefore = state.navigator.nodeBefore(currentNode: leftNode, branchResult: state.assessmentResult).node
         XCTAssertNil(nodeBefore)
-        
     }
     
     func testTwoHandTremorNodeBefore_completion() throws {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
         
         let completionNode = try navigateForward(state, to: "completion")
-        
         let nodeBefore = state.navigator.nodeBefore(currentNode: completionNode, branchResult: state.assessmentResult).node
         XCTAssertNil(nodeBefore)
-        
     }
     
     func testTwoHandTremorHandSelection_left() throws {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
         
         let _ = try navigateForward(state, to: "completion", handSelection: "left")
-        let resultIdentifiers = state.assessmentResult.stepHistory.map{
+        let resultIdentifiers = state.assessmentResult.stepHistory.map {
             $0.identifier
         }
         XCTAssertFalse(resultIdentifiers.contains("right"))
@@ -143,7 +128,7 @@ final class MotorControlNavigationTests: XCTestCase {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
         
         let _ = try navigateForward(state, to: "completion", handSelection: "right")
-        let resultIdentifiers = state.assessmentResult.stepHistory.map{
+        let resultIdentifiers = state.assessmentResult.stepHistory.map {
             $0.identifier
         }
         XCTAssertFalse(resultIdentifiers.contains("left"))
@@ -153,7 +138,7 @@ final class MotorControlNavigationTests: XCTestCase {
         let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
         
         let _ = try navigateForward(state, to: "completion", handSelection: "both")
-        let resultIdentifiers = state.assessmentResult.stepHistory.map{
+        let resultIdentifiers = state.assessmentResult.stepHistory.map {
             $0.identifier
         }
         XCTAssertTrue(resultIdentifiers.contains("right"))
@@ -161,25 +146,16 @@ final class MotorControlNavigationTests: XCTestCase {
     }
     
     func testTwoHandTremorHandSelectionRandomization() throws {
-        var resultIdentifierList: [[String]] = []
-        for _ in 0...20 {
+        var resultIdentifierList: Set<[String]> = []
+        for _ in 0...10 {
             let state = TestNavigationState(try MotorControlIdentifier.tremor.instantiateAssessmentState())
             let _ = try navigateForward(state, to: "completion", handSelection: "both")
-            let resultIdentifiers = state.assessmentResult.stepHistory.map{
+            let resultIdentifiers = state.assessmentResult.stepHistory.map {
                 $0.identifier
             }
-            resultIdentifierList.append(resultIdentifiers)
+            resultIdentifierList.insert(resultIdentifiers)
         }
-        
-        var allListsAreSame = true
-        let firstList = resultIdentifierList[0]
-        for ii in 1...20 {
-            if firstList != resultIdentifierList[ii] {
-                allListsAreSame = false
-                break
-            }
-        }
-        XCTAssertFalse(allListsAreSame)
+        XCTAssertTrue(resultIdentifierList.count == 2)
     }
     
     func testTwoHandTremorIsCompleted() throws {
@@ -187,16 +163,14 @@ final class MotorControlNavigationTests: XCTestCase {
                                         
         guard let sitDownNode = state.navigator.node(identifier: "sitDownInstruction")
         else {
-            XCTFail("sitDownNode is nil")
-            return
+            throw TestError.nilValue
         }
         XCTAssertFalse(state.navigator.isCompleted(currentNode: sitDownNode, branchResult: state.assessmentResult))
         
         let _ = try navigateForward(state, to: "completion")
         guard let completionNode = state.currentNode
-        else{
-            XCTFail("completionNode is nil")
-            return
+        else {
+            throw TestError.nilValue
         }
         XCTAssertTrue(state.navigator.isCompleted(currentNode: completionNode, branchResult: state.assessmentResult))
     }
@@ -214,7 +188,7 @@ final class MotorControlNavigationTests: XCTestCase {
             if point.node != nil {
                 let result = point.node!.instantiateResult()
                 if result.identifier == "handSelection" {
-                    (result as! AnswerResult).jsonValue = handSelection.map{
+                    (result as! AnswerResult).jsonValue = handSelection.map {
                         .string($0)
                     }
                 }

@@ -37,7 +37,6 @@ import SharedMobileUI
 import MotorControl
 import SharedResources
 
-
 struct InstructionView: View {
     let nodeState: InstructionState
     
@@ -91,7 +90,6 @@ struct InstructionNodeView: View {
                             else {
                                 ContentImage(imageInfo)
                                     .background(surveyTint)
-                                
                             }
                         }
                         if let title = contentInfo.title {
