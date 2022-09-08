@@ -95,6 +95,7 @@ struct InstructionNodeView: View {
                         if let title = contentInfo.title {
                             Text(title)
                                 .font(.stepTitle)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                         if let subtitle = contentInfo.subtitle {
                             Text(subtitle)
