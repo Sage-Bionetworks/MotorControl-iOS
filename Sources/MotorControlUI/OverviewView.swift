@@ -95,7 +95,7 @@ struct OverviewNodeView: View {
                                 .multilineTextAlignment(.center)
                         }
                         if let icons = overview.icons {
-                            Text("This is what you'll need")
+                            Text("This is what you'll need", bundle: SharedResources.bundle)
                                 .font(.stepIconHeader)
                                 .foregroundColor(.textForeground)
                             HStack(alignment: .top, spacing: spacing) {
