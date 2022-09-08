@@ -163,7 +163,7 @@ final class TwoHandNavigator : Navigator {
     }
 }
 
-enum HandSelection: String, Codable, CaseIterable {
+public enum HandSelection: String, Codable, CaseIterable {
     case left, right
 }
 

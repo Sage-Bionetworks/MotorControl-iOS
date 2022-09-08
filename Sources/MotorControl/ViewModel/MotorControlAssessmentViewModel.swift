@@ -35,21 +35,46 @@ import AssessmentModelUI
 import AssessmentModel
 import SharedResources
 
+let formattedTextPlaceHolder = "%@"
+
 public final class MotorControlAssessmentViewModel : AssessmentViewModel {
     override public func nodeState(for node: Node) -> NodeState? {
-        let nodeState = super.nodeState(for: node)
-        if let instructionState = nodeState as? InstructionState {
-            if let whichHand = HandSelection(rawValue: currentBranchState.node.identifier) {
-                swapPlaceholderStringsAndReverseImage(in: instructionState, with: whichHand)
-            }
+        let whichHand = currentBranchState.node.hand()
+        if let instruction = node as? InstructionStep {
+            return MotorControlInstructionState(instruction,
+                                                parentId: currentBranchState.id,
+                                                whichHand: whichHand)
         }
-        return nodeState
+        else {
+            return super.nodeState(for: node)
+        }
     }
+}
+
+/// State object for an instruction.
+public final class MotorControlInstructionState : ContentNodeState {
     
-    private func swapPlaceholderStringsAndReverseImage(in instructionState: InstructionState, with whichHand: HandSelection) {
-        let handPlaceHolder = "%@"
-        instructionState.title = instructionState.title?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
-        instructionState.subtitle = instructionState.subtitle?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
-        instructionState.detail = instructionState.detail?.replacingOccurrences(of: handPlaceHolder, with: whichHand.rawValue.uppercased())
+    override public var progressHidden: Bool { true }
+
+    public let flippedImage: Bool
+    public let title: String?
+    public let subtitle: String?
+    public let detail: String?
+    
+    public init(_ instruction: InstructionStep, parentId: String?, whichHand: HandSelection? = nil) {
+        if let whichHand = whichHand {
+            self.flippedImage = (whichHand == .right)
+            let replacementString = NSLocalizedString(whichHand.rawValue.uppercased(), bundle: SharedResources.bundle, comment: "Which hand to use")
+            self.title = instruction.title?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+            self.subtitle = instruction.subtitle?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+            self.detail = instruction.detail?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+        }
+        else {
+            self.flippedImage = false
+            self.title = instruction.title
+            self.subtitle = instruction.subtitle
+            self.detail = instruction.detail
+        }
+        super.init(step: instruction, result: instruction.instantiateResult(), parentId: parentId)
     }
 }

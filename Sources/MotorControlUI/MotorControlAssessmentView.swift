@@ -92,7 +92,7 @@ public struct MotorControlAssessmentView : View {
             else if state.step is OverviewStep {
                 OverviewView(nodeState: state)
             }
-            else if let nodeState = state as? InstructionState {
+            else if let nodeState = state as? MotorControlInstructionState {
                 InstructionView(nodeState: nodeState)
             }
             else {
