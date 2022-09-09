@@ -52,7 +52,6 @@ final class TwoHandAssessmentObject : AbstractAssessmentObject {
     
     override func instantiateNavigator(state: NavigationState) throws -> Navigator {
         try TwoHandNavigator(identifier: identifier, nodes: children)
-        
     }
 }
 
