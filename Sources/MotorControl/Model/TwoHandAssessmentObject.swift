@@ -56,7 +56,7 @@ final class TwoHandAssessmentObject : AbstractAssessmentObject {
 
 final class TwoHandNavigator : Navigator {
     
-    public let identifier: String
+    let identifier: String
     let nodes: [Node]
     fileprivate let handSelectionIdentifier = "handSelection"
 
