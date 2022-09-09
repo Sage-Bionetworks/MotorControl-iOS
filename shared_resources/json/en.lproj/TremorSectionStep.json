@@ -6,10 +6,10 @@
                     "identifier":"instruction",
                     "type":"handInstruction",
                     "title":"Hold the phone with your %@ hand",
-                    "subtitle":"With your hand in your lap, hold your phone still with the screen facing up.",
+                    "detail":"With your hand in your lap, hold your phone still with the screen facing up.",
                     "image":{
                         "type":"fetchable",
-                        "imageName":"HoldPhone-Left",
+                        "imageName":"hold_phone_left",
                         "placementType":"topBackground"
                     },
                     "actions":{
@@ -29,7 +29,7 @@
                   "duration":30,
                   "image":{
                       "type":"fetchable",
-                      "imageName":"HoldPhone-Left",
+                      "imageName":"hold_phone_left",
                       "placementType":"fullsizeBackground"
                   },
                   "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],

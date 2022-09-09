@@ -29,6 +29,9 @@
 //
 
 import XCTest
+import JsonModel
+import AssessmentModel
+import AssessmentModelUI
 @testable import MotorControl
 
 final class MotorControlTests: XCTestCase {

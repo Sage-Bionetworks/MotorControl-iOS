@@ -15,7 +15,10 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "MotorControl",
-            targets: ["MotorControlV1", "MotorControl"]),
+            targets: [
+                "MotorControlV1",
+                "MotorControl"
+            ]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -27,13 +30,12 @@ let package = Package(
                  from: "1.4.9"),
         .package(name: "AssessmentModel",
                  url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
-                 from: "0.8.3"),
+                 from: "0.8.6"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
                  from: "1.3.1"),
     ],
     targets: [
-        
         .target(
             name: "MotorControl",
             dependencies: [
@@ -45,7 +47,13 @@ let package = Package(
                 .product(name: "MotionSensor", package: "MobilePassiveData"),
             ]
         ),
-        
+        .target(name: "MotorControlUI",
+                dependencies: [
+                    "MotorControl",
+                    "SharedResources",
+                    .product(name: "AssessmentModel", package: "AssessmentModel"),
+                    .product(name: "AssessmentModelUI", package: "AssessmentModel"),
+                ]),
         .target(name: "SharedResources",
                 dependencies: [
                     .product(name: "JsonModel", package: "JsonModel"),
@@ -73,13 +81,14 @@ let package = Package(
                     .process("Resources")
                 ]),
 
-        .testTarget(
-            name: "MotorControlV1Tests",
-            dependencies: [
-                "MotorControlV1",
-                .product(name: "Research_UnitTest", package: "SageResearch", condition: .when(platforms: [.iOS])),
-            ],
-            path: "MotorControl/MotorControlTests/Tests"),
+// TODO: Aaron Rabara 8/10/2022 
+//        .testTarget(
+//            name: "MotorControlV1Tests",
+//            dependencies: [
+//                "MotorControlV1",
+//                .product(name: "Research_UnitTest", package: "SageResearch", condition: .when(platforms: [.iOS])),
+//            ],
+//            path: "MotorControl/MotorControlTests/Tests"),
         
     ]
 )
