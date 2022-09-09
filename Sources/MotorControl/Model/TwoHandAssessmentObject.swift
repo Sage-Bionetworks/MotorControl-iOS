@@ -35,10 +35,11 @@ import Foundation
 import AssessmentModel
 import JsonModel
 
+fileprivate let handSelectionIdentifier = "handSelection"
+
 extension SerializableNodeType {
     static let twoHandAssessment: SerializableNodeType = "twoHandAssessment"
 }
-
 
 final class TwoHandAssessmentObject : AbstractAssessmentObject {
     override class func defaultType() -> SerializableNodeType {
@@ -50,7 +51,8 @@ final class TwoHandAssessmentObject : AbstractAssessmentObject {
     }
     
     override func instantiateNavigator(state: NavigationState) throws -> Navigator {
-        TwoHandNavigator(identifier: identifier, nodes: children)
+        try TwoHandNavigator(identifier: identifier, nodes: children)
+        
     }
 }
 
@@ -58,19 +60,19 @@ final class TwoHandNavigator : Navigator {
     
     public let identifier: String
     public let nodes: [Node]
-    fileprivate let handSelectionIdentifier = "handSelection"
 
-    public init(identifier: String, nodes: [Node]) {
+    public init(identifier: String, nodes: [Node]) throws {
         guard Set(nodes.map { $0.identifier }).count == nodes.count else {
-            fatalError("identifiers not unique")
+            throw TwoHandAssessmentError.identifiersNotUnique
         }
+        guard let firstHandIndex = nodes.firstIndex(where: { HandSelection(rawValue: $0.identifier) != nil  })
+        else {
+            throw TwoHandAssessmentError.noHandFound
+        }
+        
         self.identifier = identifier
         let handOrder : [HandSelection] = arc4random_uniform(2) == 0 ? [.left, .right] : [.right, .left]
         var temporaryNodes = nodes
-        guard let firstHandIndex = nodes.firstIndex(where: { HandSelection(rawValue: $0.identifier) != nil  })
-        else {
-            fatalError("Could not find sections with the expected left/right hand identifiers.")
-        }
         if temporaryNodes[firstHandIndex].identifier == handOrder[1].rawValue {
             temporaryNodes.swapAt(firstHandIndex, firstHandIndex + 1)
         }
@@ -161,6 +163,11 @@ final class TwoHandNavigator : Navigator {
         }
         return nodes[index - 1]
     }
+}
+
+enum TwoHandAssessmentError: Error {
+    case identifiersNotUnique
+    case noHandFound
 }
 
 public enum HandSelection: String, Codable, CaseIterable {
