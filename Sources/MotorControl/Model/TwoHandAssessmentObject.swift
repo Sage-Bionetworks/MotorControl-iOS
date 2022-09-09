@@ -57,7 +57,7 @@ final class TwoHandAssessmentObject : AbstractAssessmentObject {
 
 final class TwoHandNavigator : Navigator {
     
-    public let identifier: String
+    let identifier: String
     public let nodes: [Node]
 
     public init(identifier: String, nodes: [Node]) throws {
