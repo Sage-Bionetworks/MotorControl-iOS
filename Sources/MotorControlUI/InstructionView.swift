@@ -86,7 +86,7 @@ struct InstructionNodeView: View {
                         if let imageInfo = contentInfo.contentNode.imageInfo {
                             ContentImage(imageInfo)
                                 .background(surveyTint)
-                                .rotation3DEffect(.degrees(contentInfo.flippedImage ? 180 : 0), axis: (x: CGFloat(0), y: CGFloat(1), z: CGFloat(0)))
+                                .rotation3DEffect(.degrees(contentInfo.flippedImage ? 180 : 0), axis: (x: 0, y: 1, z: 0))
                         }
                         if let title = contentInfo.title {
                             Text(title)
