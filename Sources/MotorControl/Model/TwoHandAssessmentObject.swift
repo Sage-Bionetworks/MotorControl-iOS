@@ -60,7 +60,7 @@ final class TwoHandNavigator : Navigator {
     let nodes: [Node]
     fileprivate let handSelectionIdentifier = "handSelection"
 
-    public init(identifier: String, nodes: [Node]) {
+    init(identifier: String, nodes: [Node]) {
         guard Set(nodes.map { $0.identifier }).count == nodes.count else {
             fatalError("identifiers not unique")
         }
