@@ -38,7 +38,7 @@ import MotorControl
 import SharedResources
 
 struct InstructionView: View {
-    let nodeState: InstructionState
+    let nodeState: MotorControlInstructionState
     
     var body: some View {
         VStack {
@@ -54,7 +54,10 @@ struct InstructionView: View {
 struct InstructionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            InstructionView(nodeState: InstructionState(example1, parentId: nil))
+            InstructionView(nodeState: MotorControlInstructionState(example1, parentId: nil))
+                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
+                .environmentObject(AssessmentState(AssessmentObject(previewStep: example1)))
+            InstructionView(nodeState: MotorControlInstructionState(example1, parentId: nil, whichHand: .right))
                 .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
                 .environmentObject(AssessmentState(AssessmentObject(previewStep: example1)))
             
@@ -73,8 +76,7 @@ struct InstructionNodeView: View {
     
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
-    @ObservedObject var contentInfo: InstructionState
-    fileprivate let right = "right"
+    @ObservedObject var contentInfo: MotorControlInstructionState
     
     var body: some View {
         GeometryReader { scrollViewGeometry in
@@ -82,29 +84,26 @@ struct InstructionNodeView: View {
                 ScrollView {
                     VStack(alignment: .center, spacing: spacing) {
                         if let imageInfo = contentInfo.contentNode.imageInfo {
-                            if let title = contentInfo.title, title.lowercased().contains(right) {
-                                ContentImage(imageInfo)
-                                    .background(surveyTint)
-                                    .rotation3DEffect(.degrees(180), axis: (x: CGFloat(0), y: CGFloat(1), z: CGFloat(0)))
-                            }
-                            else {
-                                ContentImage(imageInfo)
-                                    .background(surveyTint)
-                            }
+                            ContentImage(imageInfo)
+                                .background(surveyTint)
+                                .rotation3DEffect(.degrees(contentInfo.flippedImage ? 180 : 0), axis: (x: CGFloat(0), y: CGFloat(1), z: CGFloat(0)))
                         }
                         if let title = contentInfo.title {
                             Text(title)
                                 .font(.stepTitle)
+                                .foregroundColor(.textForeground)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                         if let subtitle = contentInfo.subtitle {
                             Text(subtitle)
                                 .font(.stepSubtitle)
+                                .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
                         }
                         if let detail = contentInfo.detail {
                             Text(detail)
                                 .font(.stepDetail)
+                                .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
                         }
                     }
