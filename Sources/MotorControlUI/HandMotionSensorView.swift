@@ -36,6 +36,7 @@ import AssessmentModelUI
 import SharedMobileUI
 import MotorControl
 import SharedResources
+import Research
 
 struct HandMotionSensorView: View {
     let nodeState: MotorControlHandMotionSensorState
@@ -43,7 +44,7 @@ struct HandMotionSensorView: View {
     var body: some View {
         VStack {
             ZStack(alignment: .top) {
-                HandMotionSensorNodeView(contentInfo: nodeState)
+                HandMotionSensorNodeView(startDuration: nodeState.duration, contentInfo: nodeState)
                 StepHeaderView(nodeState)
             }
             SurveyNavigationView()
@@ -72,47 +73,75 @@ struct HandMotionSensorNodeView: View {
     
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
+    @State var countdown: Int = 5
+    @State var progress: CGFloat = .zero
+    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var currentInstruction: String = ""
+    let startDuration: TimeInterval
     let contentInfo: MotorControlHandMotionSensorState
     
     var body: some View {
-        GeometryReader { scrollViewGeometry in
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(alignment: .center, spacing: spacing) {
-                        if let title = contentInfo.title {
-                            Text(title)
-                                .font(.stepTitle)
-                                .foregroundColor(.textForeground)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        if let subtitle = contentInfo.subtitle {
-                            Text(subtitle)
-                                .font(.stepSubtitle)
-                                .foregroundColor(.textForeground)
-                                .multilineTextAlignment(.center)
-                        }
-                        if let detail = contentInfo.detail {
-                            Text(detail)
-                                .font(.stepDetail)
-                                .foregroundColor(.textForeground)
-                                .multilineTextAlignment(.center)
-                        }
-                        if let spokenInstruction = contentInfo.spokenInstructions {
-                            let keys = spokenInstruction.map{$0.key}
-                            let values = spokenInstruction.map {$0.value}
-                            ForEach(keys.indices) {index in
-                                HStack {
-                                    Text("\(keys[index])")
-                                    Text("\(values[index])")
-                                }
-                            }
-                        }
-                    }
-                    .padding([.horizontal], spacing)
-                    .frame(maxWidth: scrollViewGeometry.size.width)
-                }
+        ZStack(alignment: .center) {
+            if let imageInfo = contentInfo.contentNode.imageInfo {
+                ContentImage(imageInfo)
+                    .background(surveyTint)
             }
+            VStack(alignment: .center, spacing: spacing) {
+                if let title = contentInfo.title {
+                    Text(title)
+                        .font(.stepTitle)
+                        .foregroundColor(.textForeground)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Text("\(countdown)")
+                    .font(.latoFont(96, relativeTo: .title, weight: .bold))
+                    .padding(64)
+                    .background(
+                        Circle()
+                            .trim(from: 0.0, to: min(progress, 1.0))
+                            .stroke(style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                            .foregroundColor(surveyTint)
+                            .rotationEffect(Angle(degrees: 270.0))
+                    )
+                .foregroundColor(.textForeground)
+                .padding(.horizontal, spacing)
+                .onAppear {
+                    start()
+                    if let firstInstruction = contentInfo.spokenInstructions?[TimeInterval(0)] {
+                        currentInstruction = firstInstruction
+                    }
+                }
+                .onDisappear {
+                    timer.upstream.connect().cancel()
+                }
+                .onReceive(timer) { time in
+                    countdown = max(countdown - 1, 0)
+                    if let instruction = contentInfo.spokenInstructions?[TimeInterval(Int(startDuration) - countdown)], instruction != currentInstruction {
+                        currentInstruction = instruction
+                    }
+                    if countdown == 0 {
+                        currentInstruction = contentInfo.spokenInstructions?[TimeInterval(Double.infinity)] ?? ""
+                    }
+                }
+                Text(verbatim: currentInstruction)
+                    .font(.stepTitle)
+            }
+            .padding([.horizontal], spacing)
         }
         .ignoresSafeArea(edges: [.top])
+        
+
+    }
+    func start() {
+        countdown = Int(startDuration)
+        withAnimation(.linear(duration: startDuration)) {
+            progress = 1.0
+        }
+    }
+    
+    func stop() {
+        withAnimation(.linear(duration: 0)) {
+            progress = 0
+        }
     }
 }
