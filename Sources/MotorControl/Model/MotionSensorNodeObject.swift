@@ -51,7 +51,7 @@ class TremorNodeObject : MotionSensorNodeObject {
     }
 }
 
-class MotionSensorNodeObject : AbstractStepObject {
+public class MotionSensorNodeObject : AbstractStepObject {
     private enum CodingKeys : String, CodingKey {
         case duration, spokenInstructions
     }
@@ -63,7 +63,7 @@ class MotionSensorNodeObject : AbstractStepObject {
         case start, halfway, countdown, end
     }
     
-    override func spokenInstruction(at timeInterval: TimeInterval) -> String? {
+    public override func spokenInstruction(at timeInterval: TimeInterval) -> String? {
         var key = timeInterval
         if timeInterval >= duration && duration > 0 {
             key = Double.infinity

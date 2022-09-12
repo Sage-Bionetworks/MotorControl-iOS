@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		800200A828CFB7D8008A4C32 /* HandMotionSensorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800200A728CFB7D8008A4C32 /* HandMotionSensorView.swift */; };
 		8004DF0A28AFFE1D0001A1F8 /* iosViewBuilderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF0928AFFE1D0001A1F8 /* iosViewBuilderApp.swift */; };
 		8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF0B28AFFE1D0001A1F8 /* ContentView.swift */; };
 		8004DF0E28AFFE1F0001A1F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8004DF0D28AFFE1F0001A1F8 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		800200A728CFB7D8008A4C32 /* HandMotionSensorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandMotionSensorView.swift; sourceTree = "<group>"; };
 		8004DF0628AFFE1D0001A1F8 /* iosViewBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosViewBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8004DF0928AFFE1D0001A1F8 /* iosViewBuilderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosViewBuilderApp.swift; sourceTree = "<group>"; };
 		8004DF0B28AFFE1D0001A1F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 		8004DF3428AFFF6C0001A1F8 /* MotorControlUI */ = {
 			isa = PBXGroup;
 			children = (
+				800200A728CFB7D8008A4C32 /* HandMotionSensorView.swift */,
 				8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */,
 				8004DF3828B000600001A1F8 /* InstructionView.swift */,
 				801430D728B574AC004982FA /* OverviewView.swift */,
@@ -183,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				800200A828CFB7D8008A4C32 /* HandMotionSensorView.swift in Sources */,
 				801430D828B574AC004982FA /* OverviewView.swift in Sources */,
 				8004DF3B28B003E50001A1F8 /* MotorControlAssessmentView.swift in Sources */,
 				8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */,

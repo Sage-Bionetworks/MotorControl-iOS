@@ -45,6 +45,11 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
                                                 parentId: currentBranchState.id,
                                                 whichHand: whichHand)
         }
+        else if let handMotionSensorNode = node as? MotionSensorNodeObject {
+            return MotorControlHandMotionSensorState(handMotionSensorNode,
+                                           parentId: currentBranchState.id,
+                                           whichHand: whichHand)
+        }
         else {
             return super.nodeState(for: node)
         }
@@ -76,5 +81,32 @@ public final class MotorControlInstructionState : ContentNodeState {
             self.detail = instruction.detail
         }
         super.init(step: instruction, result: instruction.instantiateResult(), parentId: parentId)
+    }
+}
+
+/// State object for a Tremor node object
+public final class MotorControlHandMotionSensorState : ContentNodeState {
+    
+    public let duration: TimeInterval
+    public let spokenInstructions: [TimeInterval : String]?
+    public let title: String?
+    public let subtitle: String?
+    public let detail: String?
+    
+    public init(_ motionSensorNode: MotionSensorNodeObject, parentId: String?, whichHand: HandSelection? = nil) {
+        self.duration = motionSensorNode.duration
+        self.spokenInstructions = motionSensorNode.spokenInstructions
+        if let whichHand = whichHand {
+            let replacementString = NSLocalizedString(whichHand.rawValue.uppercased(), bundle: SharedResources.bundle, comment: "Which hand to use")
+            self.title = motionSensorNode.title?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+            self.subtitle = motionSensorNode.subtitle?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+            self.detail = motionSensorNode.detail?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+        }
+        else {
+            self.title = motionSensorNode.title
+            self.subtitle = motionSensorNode.subtitle
+            self.detail = motionSensorNode.detail
+        }
+        super.init(step: motionSensorNode, result: motionSensorNode.instantiateResult(), parentId: parentId)
     }
 }
