@@ -96,7 +96,7 @@ public struct MotorControlAssessmentView : View {
             else if let nodeState = state as? MotorControlInstructionState {
                 InstructionView(nodeState: nodeState)
             }
-            else if let nodeState = state as? MotorControlHandMotionSensorState {
+            else if let nodeState = state as? MotorControlTremorState {
                 HandMotionSensorView(nodeState: nodeState)
             }
             else {
