@@ -33,6 +33,7 @@
 import Foundation
 import JsonModel
 import AssessmentModel
+//import MobilePassiveData
 
 extension SerializableNodeType {
     static let tapping: SerializableNodeType = "tapping"
@@ -146,3 +147,37 @@ extension Dictionary {
         return result
     }
 }
+
+//extension MotionSensorNodeObject : MotionRecorderConfiguration {
+//    public var recorderTypes: Set<MotionRecorderType>? {
+//        [.accelerometer, .gyro, .gravity, .userAcceleration, .attitude, .rotationRate]
+//    }
+//
+//    public var requiresBackgroundAudio : Bool {
+//        true
+//    }
+//
+//    public var frequency : Double? {
+//        100.0
+//    }
+//
+//    public var usesCSVEncoding : Bool? {
+//        false
+//    }
+//
+//    public var shouldDeletePrevious : Bool {
+//        true
+//    }
+//
+//    public var stopStepIdentifier : String? {
+//        nil
+//    }
+//
+//    public var startStepIdentifier : String? {
+//        nil
+//    }
+//
+//    public func validate() throws {
+//
+//    }
+//}
