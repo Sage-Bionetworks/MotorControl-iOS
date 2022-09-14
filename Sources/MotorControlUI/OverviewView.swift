@@ -81,6 +81,7 @@ struct OverviewNodeView: View {
                             Text(title)
                                 .font(.stepTitle)
                                 .foregroundColor(.textForeground)
+                                .multilineTextAlignment(.center)
                         }
                         if let subtitle = overview.subtitle {
                             Text(subtitle)
