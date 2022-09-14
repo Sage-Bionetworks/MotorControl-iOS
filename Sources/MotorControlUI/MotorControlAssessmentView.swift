@@ -96,6 +96,9 @@ public struct MotorControlAssessmentView : View {
             else if let nodeState = state as? MotorControlInstructionState {
                 InstructionView(nodeState: nodeState)
             }
+            else if let nodeState = state as? MotionSensorStepState {
+                MotionSensorStepView(state: nodeState)
+            }
             else {
                 VStack {
                     Spacer()
