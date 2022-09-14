@@ -33,21 +33,22 @@
 import Foundation
 import JsonModel
 import AssessmentModel
-//import MobilePassiveData
+import MotionSensor
+import MobilePassiveData
 
 extension SerializableNodeType {
     static let tapping: SerializableNodeType = "tapping"
     static let tremor: SerializableNodeType = "tremor"
 }
  
-class TappingNodeObject : MotionSensorNodeObject {
-    override class func defaultType() -> SerializableNodeType {
+public class TappingNodeObject : MotionSensorNodeObject {
+    public override class func defaultType() -> SerializableNodeType {
         .tapping
     }
 }
 
-class TremorNodeObject : MotionSensorNodeObject {
-    override class func defaultType() -> SerializableNodeType {
+public class TremorNodeObject : MotionSensorNodeObject {
+    public override class func defaultType() -> SerializableNodeType {
         .tremor
     }
 }
@@ -57,8 +58,8 @@ public class MotionSensorNodeObject : AbstractStepObject {
         case duration, spokenInstructions
     }
     
-    let duration: TimeInterval
-    let spokenInstructions: [TimeInterval : String]?
+    public let duration: TimeInterval
+    public let spokenInstructions: [TimeInterval : String]?
     
     enum SpokenInstructionKeys : String, CodingKey {
         case start, halfway, countdown, end
@@ -72,19 +73,19 @@ public class MotionSensorNodeObject : AbstractStepObject {
         return self.spokenInstructions?[key]
     }
     
-    init() {
+    public init() {
         self.duration = 30
         self.spokenInstructions = nil
         super.init(identifier: "example")
     }
     
-    init(identifier: String, copyFrom object: MotionSensorNodeObject) {
+    public init(identifier: String, copyFrom object: MotionSensorNodeObject) {
         self.duration = object.duration
         self.spokenInstructions = object.spokenInstructions
         super.init(identifier: identifier, copyFrom: object)
     }
     
-    required init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let stepDuration = try container.decode(TimeInterval.self, forKey: .duration)
         self.duration = stepDuration
@@ -148,36 +149,36 @@ extension Dictionary {
     }
 }
 
-//extension MotionSensorNodeObject : MotionRecorderConfiguration {
-//    public var recorderTypes: Set<MotionRecorderType>? {
-//        [.accelerometer, .gyro, .gravity, .userAcceleration, .attitude, .rotationRate]
-//    }
-//
-//    public var requiresBackgroundAudio : Bool {
-//        true
-//    }
-//
-//    public var frequency : Double? {
-//        100.0
-//    }
-//
-//    public var usesCSVEncoding : Bool? {
-//        false
-//    }
-//
-//    public var shouldDeletePrevious : Bool {
-//        true
-//    }
-//
-//    public var stopStepIdentifier : String? {
-//        nil
-//    }
-//
-//    public var startStepIdentifier : String? {
-//        nil
-//    }
-//
-//    public func validate() throws {
-//
-//    }
-//}
+extension MotionSensorNodeObject : MotionRecorderConfiguration {
+    public var recorderTypes: Set<MotionRecorderType>? {
+        [.accelerometer, .gyro, .gravity, .userAcceleration, .attitude, .rotationRate]
+    }
+    
+    public var frequency: Double? {
+        100
+    }
+    
+    public var usesCSVEncoding: Bool? {
+        false
+    }
+    
+    public var shouldDeletePrevious: Bool {
+        true
+    }
+    
+    public var stopStepIdentifier: String? {
+        nil
+    }
+    
+    public var requiresBackgroundAudio: Bool {
+        true
+    }
+    
+    public var startStepIdentifier: String? {
+        nil
+    }
+    
+    public func validate() throws {
+        // do nothing
+    }
+}

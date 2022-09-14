@@ -96,8 +96,8 @@ public struct MotorControlAssessmentView : View {
             else if let nodeState = state as? MotorControlInstructionState {
                 InstructionView(nodeState: nodeState)
             }
-            else if let nodeState = state as? MotorControlTremorState {
-                HandMotionSensorView(nodeState: nodeState)
+            else if let nodeState = state as? MotionSensorStepState {
+                MotionSensorStepView(state: nodeState)
             }
             else {
                 VStack {
@@ -149,7 +149,7 @@ struct MotorControlAssessmentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             MotorControlAssessmentPreview(.tremor)
-            MotorControlAssessmentPreview(.tremor)
+            MotorControlAssessmentPreview(.kineticTremor)
                 .preferredColorScheme(.dark)
         }
     }

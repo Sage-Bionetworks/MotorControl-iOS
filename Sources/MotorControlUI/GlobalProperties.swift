@@ -33,21 +33,21 @@
 import SwiftUI
 import SharedMobileUI
 
-let bodyFontSize: CGFloat = 18
-let titleFontSize: CGFloat = 32
-let stepIconFontSize: CGFloat = 16
+let bodyFontSize: CGFloat = 20
+let titleFontSize: CGFloat = 34
+let stepIconFontSize: CGFloat = 18
 
 extension Font {
     static let textField: Font = .latoFont(fixedSize: bodyFontSize)
-    static let stepTitle: Font = .latoFont(titleFontSize, relativeTo: .title)
-    static let stepSubtitle: Font = .latoFont(bodyFontSize, relativeTo: .subheadline)
-    static let stepDetail: Font = .latoFont(bodyFontSize, relativeTo: .footnote)
-    static let stepIconHeader: Font = .latoFont(bodyFontSize, weight: .bold)
+    static let stepTitle: Font = .latoFont(fixedSize: titleFontSize)
+    static let stepSubtitle: Font = .latoFont(fixedSize:bodyFontSize)
+    static let stepDetail: Font = .latoFont(fixedSize:bodyFontSize)
+    static let stepIconHeader: Font = .latoFont(fixedSize:bodyFontSize)
     static let stepIconText: Font = .latoFont(fixedSize: stepIconFontSize)
 }
 
 struct SpacingEnvironmentKey: EnvironmentKey {
-    static let defaultValue: CGFloat = 20
+    static let defaultValue: CGFloat = 64
 }
 
 extension EnvironmentValues {

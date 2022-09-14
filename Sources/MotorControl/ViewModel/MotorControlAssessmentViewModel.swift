@@ -34,21 +34,21 @@ import SwiftUI
 import AssessmentModelUI
 import AssessmentModel
 import SharedResources
+import MobilePassiveData
+import MotionSensor
 
 let formattedTextPlaceHolder = "%@"
 
 public final class MotorControlAssessmentViewModel : AssessmentViewModel {
     override public func nodeState(for node: Node) -> NodeState? {
         let whichHand = currentBranchState.node.hand()
-        if let instruction = node as? InstructionStep {
+        if let instruction = node as? AbstractInstructionStepObject {
             return MotorControlInstructionState(instruction,
                                                 parentId: currentBranchState.id,
                                                 whichHand: whichHand)
         }
-        else if let handMotionSensorNode = node as? TremorNodeObject {
-            return MotorControlTremorState(handMotionSensorNode,
-                                           parentId: currentBranchState.id,
-                                           whichHand: whichHand)
+        else if let step = node as? MotionSensorNodeObject {
+            return MotionSensorStepState(step, assessmentState: state, branchState: currentBranchState)
         }
         else {
             return super.nodeState(for: node)
@@ -57,7 +57,7 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
 }
 
 /// State object for an instruction.
-public final class MotorControlInstructionState : ContentNodeState {
+public class AbstractMotionControlState : ContentNodeState {
     
     override public var progressHidden: Bool { true }
 
@@ -66,7 +66,7 @@ public final class MotorControlInstructionState : ContentNodeState {
     public let subtitle: String?
     public let detail: String?
     
-    public init(_ instruction: InstructionStep, parentId: String?, whichHand: HandSelection? = nil) {
+    public init(_ instruction: AbstractStepObject, parentId: String?, whichHand: HandSelection? = nil) {
         if let whichHand = whichHand {
             self.flippedImage = (whichHand == .right)
             let replacementString = NSLocalizedString(whichHand.rawValue.uppercased(), bundle: SharedResources.bundle, comment: "Which hand to use")
@@ -84,26 +84,27 @@ public final class MotorControlInstructionState : ContentNodeState {
     }
 }
 
-/// State object for a Tremor node object
-public final class MotorControlTremorState : ContentNodeState {
+/// State object for an instruction.
+public final class MotorControlInstructionState : AbstractMotionControlState {
+}
+
+public final class MotionSensorStepState : AbstractMotionControlState {
+    public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
     
-    public let duration: TimeInterval
-    public var spokenInstructions: [TimeInterval : String]?
-    public let title: String?
-    public let flippedImage: Bool
+    @Published public var recorder: MotionRecorder
     
-    public init(_ motionSensorNode: MotionSensorNodeObject, parentId: String?, whichHand: HandSelection? = nil) {
-        self.duration = motionSensorNode.duration
-        self.spokenInstructions = motionSensorNode.spokenInstructions
-        if let whichHand = whichHand {
-            self.flippedImage = (whichHand == .right)
-            let replacementString = NSLocalizedString(whichHand.rawValue.uppercased(), bundle: SharedResources.bundle, comment: "Which hand to use")
-            self.title = motionSensorNode.title?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+    public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
+        if assessmentState.outputDirectory == nil {
+            assessmentState.outputDirectory = createOutputDirectory()
         }
-        else {
-            self.title = motionSensorNode.title
-            self.flippedImage = false
-        }
-        super.init(step: motionSensorNode, result: motionSensorNode.instantiateResult(), parentId: parentId)
+        self.recorder = .init(configuration: motionConfig,
+                              outputDirectory: assessmentState.outputDirectory!,
+                              initialStepPath: "\(assessmentState.node.identifier)/\(branchState.node.identifier)",
+                              sectionIdentifier: branchState.node.identifier)
+        super.init(motionConfig, parentId: branchState.id, whichHand: branchState.node.hand())
     }
+}
+
+fileprivate func createOutputDirectory() -> URL {
+    URL(fileURLWithPath: UUID().uuidString, isDirectory: true, relativeTo: FileManager.default.temporaryDirectory)
 }

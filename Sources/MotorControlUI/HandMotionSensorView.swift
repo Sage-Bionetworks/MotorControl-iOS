@@ -40,11 +40,11 @@ import Research
 
 struct HandMotionSensorView: View {
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
-    let nodeState: MotorControlTremorState
+    let nodeState: MotionSensorStepState
     
     var body: some View {
         VStack {
-            HandMotionSensorNodeView(startDuration: nodeState.duration, contentInfo: nodeState)
+            HandMotionSensorNodeView(startDuration: nodeState.motionConfig.duration, contentInfo: nodeState)
         }
         .background {
             surveyTint
@@ -95,10 +95,9 @@ struct HandMotionSensorNodeView: View {
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var currentInstruction: String = ""
     let startDuration: TimeInterval
-    let contentInfo: MotorControlTremorState
+    let contentInfo: MotionSensorStepState
     
     var body: some View {
-
         Spacer()
         Text("\(countdown)")
             .font(.latoFont(fixedSize: 96, weight: .bold))
@@ -113,7 +112,7 @@ struct HandMotionSensorNodeView: View {
         .padding(.horizontal, spacing)
         .onAppear {
             start()
-            if let firstInstruction = contentInfo.spokenInstructions?[TimeInterval(0)] {
+            if let firstInstruction = contentInfo.motionConfig.spokenInstructions?[TimeInterval(0)] {
                 currentInstruction = firstInstruction
             }
         }
@@ -122,15 +121,15 @@ struct HandMotionSensorNodeView: View {
         }
         .onReceive(timer) { time in
             countdown = max(countdown - 1, 0)
-            if let instruction = contentInfo.spokenInstructions?[TimeInterval(Int(startDuration) - countdown)], instruction != currentInstruction {
+            if let instruction = contentInfo.motionConfig.spokenInstructions?[TimeInterval(Int(startDuration) - countdown)], instruction != currentInstruction {
                 currentInstruction = instruction
             }
             if countdown == 0 {
-                currentInstruction = contentInfo.spokenInstructions?[TimeInterval(Double.infinity)] ?? ""
+                currentInstruction = contentInfo.motionConfig.spokenInstructions?[TimeInterval(Double.infinity)] ?? ""
             }
         }
-//        Text(verbatim: currentInstruction)
-//            .font(.stepTitle)
+        Text(verbatim: currentInstruction)
+            .font(.stepTitle)
         Spacer()
     }
     
