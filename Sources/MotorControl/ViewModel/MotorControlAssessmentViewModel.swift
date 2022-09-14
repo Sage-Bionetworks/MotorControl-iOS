@@ -56,7 +56,7 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
     }
 }
 
-/// State object for an instruction.
+/// State object for an abstract motion control step
 public class AbstractMotionControlState : ContentNodeState {
     
     override public var progressHidden: Bool { true }
@@ -88,6 +88,7 @@ public class AbstractMotionControlState : ContentNodeState {
 public final class MotorControlInstructionState : AbstractMotionControlState {
 }
 
+/// State object for motion sensor steps
 public final class MotionSensorStepState : AbstractMotionControlState {
     public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
     

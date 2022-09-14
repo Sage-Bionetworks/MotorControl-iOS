@@ -59,7 +59,7 @@ struct MotionSensorStepView: View {
                 ZStack {
                     Circle()
                         .trim(from: 0.0, to: min(progress, 1.0))
-                        .stroke(style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                        .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .butt))
                         .rotationEffect(Angle(degrees: 270.0))
                         .frame(width: geometry.size.width / 2, height: geometry.size.width / 2, alignment: .center)
                         .background {
@@ -68,12 +68,12 @@ struct MotionSensorStepView: View {
                             
                             Circle()
                                 .fill(Color.screenBackground)
-                                .frame(width: geometry.size.width / 2 + 10, height: geometry.size.width / 2 + 10, alignment: .center)
+                                .frame(width: geometry.size.width / 2 + 5, height: geometry.size.width / 2 + 5, alignment: .center)
                         }
                         .position(x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY)
                     VStack {
                         Text("\(countdown)")
-                            .font(.latoFont(fixedSize: 96, weight: .thin))
+                            .font(.latoFont(fixedSize: geometry.size.width / 4, weight: .thin))
                             .foregroundColor(.textForeground)
                         Text(countdown == 1 ? "second" : "seconds", bundle: SharedResources.bundle)
                             .font(.textField)
@@ -88,7 +88,7 @@ struct MotionSensorStepView: View {
                 Spacer()
                 ContentImage(imageInfo)
                     .opacity(0.4)
-                    .scaleEffect(2)
+                    .scaleEffect(1.5)
                     .rotation3DEffect(.degrees(state.flippedImage ? 180 : 0), axis: (x: 0, y: 1, z: 0))
             }
         }
