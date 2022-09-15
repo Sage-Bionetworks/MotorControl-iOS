@@ -53,57 +53,80 @@ struct MotionSensorStepView: View {
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     
     @ViewBuilder
-    func content() -> some View {
+    fileprivate func insideCountdown(_ count: Int) -> some View {
         VStack {
-            GeometryReader { geometry in
-                ZStack {
-                    Circle()
-                        .trim(from: 0.0, to: min(progress, 1.0))
-                        .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
-                        .foregroundColor(.textForeground)
-                        .rotationEffect(Angle(degrees: 270.0))
-                        .frame(width: geometry.size.width / 2, height: geometry.size.width / 2, alignment: .center)
-                        .background {
-                            Circle()
-                                .fill(Color.screenBackground)
-                                .frame(width: geometry.size.width / 2 + 5, height: geometry.size.width / 2 + 5, alignment: .center)
-                        }
-                        .position(x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY)
-                    VStack {
-                        Text("\(countdown)")
-                            .font(.countdown)
-                            .foregroundColor(.textForeground)
-                        Text(countdown == 1 ? "second" : "seconds", bundle: SharedResources.bundle)
-                            .font(.textField)
-                            .foregroundColor(.textForeground)
-                    }
-                }
-            }
+            Text("\(count)")
+                .font(.countdown)
+                .foregroundColor(.textForeground)
+                .frame(maxWidth: .infinity, alignment: .center)
+            Text("seconds", bundle: SharedResources.bundle)
+                .font(.textField)
+                .foregroundColor(.textForeground)
         }
+    }
+    
+    @ViewBuilder
+    fileprivate func countdownDial() -> some View {
+        ZStack {
+            insideCountdown(countdown)
+            insideCountdown(30)
+                .opacity(0)
+        }
+        .fixedSize(horizontal: true, vertical: true)
+        .padding(48)
         .background {
+            Circle()
+                .trim(from: 0.0, to: min(progress, 1.0))
+                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .foregroundColor(.textForeground)
+                .rotationEffect(Angle(degrees: 270.0))
+                .padding(2.5)
+                .background {
+                    Circle()
+                        .fill(Color.sageWhite)
+                }
+        }
+
+    }
+    
+    @ViewBuilder
+    func insideView() -> some View {
+        VStack {
+            StepHeaderView(state)
+            if let title = state.title {
+                Text(title)
+                    .font(.stepTitle)
+                    .padding(spacing)
+                    .foregroundColor(.textForeground)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.center)
+            }
+            countdownDial()
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    func backgroundView() -> some View {
+        ZStack {
             surveyTint
-            if let imageInfo = state.contentNode.imageInfo {
-                Spacer()
-                ContentImage(imageInfo)
+            if let image = state.contentNode.imageInfo?.imageName {
+                Image(image, bundle: SharedResources.bundle)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
                     .opacity(0.4)
-                    .scaleEffect(1.5)
                     .rotation3DEffect(.degrees(state.flippedImage ? 180 : 0), axis: (x: 0, y: 1, z: 0))
             }
         }
-        .ignoresSafeArea(edges: [.top, .bottom])
-        .safeAreaInset(edge: .top, alignment: .center) {
-            VStack {
-                StepHeaderView(state)
-                if let title = state.title {
-                    Text(title)
-                        .font(.stepTitle)
-                        .padding(spacing)
-                        .foregroundColor(.textForeground)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .multilineTextAlignment(.center)
-                }
+        .edgesIgnoringSafeArea(.all)
+    }
+    
+    @ViewBuilder
+    func content() -> some View {
+        insideView()
+            .background {
+                backgroundView()
             }
-        }
     }
     
     var body: some View {

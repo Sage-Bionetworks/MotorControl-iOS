@@ -41,12 +41,11 @@ let countdownSize: CGFloat = 64
 extension Font {
     static let textField: Font = .latoFont(fixedSize: bodyFontSize)
     static let stepTitle: Font = .latoFont(fixedSize: titleFontSize)
-    static let stepSubtitle: Font = .latoFont(fixedSize:bodyFontSize)
-    static let stepDetail: Font = .latoFont(fixedSize:bodyFontSize)
-    static let stepIconHeader: Font = .latoFont(fixedSize:bodyFontSize)
+    static let stepSubtitle: Font = .latoFont(fixedSize: bodyFontSize)
+    static let stepDetail: Font = .latoFont(fixedSize: bodyFontSize)
+    static let stepIconHeader: Font = .latoFont(fixedSize: bodyFontSize)
     static let stepIconText: Font = .latoFont(fixedSize: stepIconFontSize)
     static let countdown: Font = .latoFont(fixedSize: countdownSize)
-
 }
 
 struct SpacingEnvironmentKey: EnvironmentKey {
