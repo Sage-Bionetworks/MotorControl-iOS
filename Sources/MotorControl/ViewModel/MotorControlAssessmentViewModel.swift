@@ -103,6 +103,12 @@ public final class MotionSensorStepState : AbstractMotionControlState {
                               outputDirectory: assessmentState.outputDirectory!,
                               initialStepPath: "\(assessmentState.node.identifier)/\(branchState.node.identifier)",
                               sectionIdentifier: branchState.node.identifier)
+        if let whichHand = branchState.node.hand()?.rawValue {
+            motionConfig.spokenInstructions?.forEach {
+                motionConfig.spokenInstructions?.updateValue(
+                    $0.1.replacingOccurrences(of: formattedTextPlaceHolder, with: whichHand), forKey: $0.0)
+            }
+        }
         super.init(motionConfig, parentId: branchState.id, whichHand: branchState.node.hand())
     }
 }
