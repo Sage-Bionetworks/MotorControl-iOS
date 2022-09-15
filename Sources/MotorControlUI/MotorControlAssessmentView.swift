@@ -89,6 +89,7 @@ public struct MotorControlAssessmentView : View {
             }
             else if state.step is CountdownStep {
                 CountdownStepView(state)
+                    .surveyTintColor(.textForeground)
             }
             else if state.step is OverviewStep {
                 OverviewView(nodeState: state)

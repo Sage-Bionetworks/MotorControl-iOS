@@ -45,7 +45,7 @@ extension Font {
     static let stepDetail: Font = .latoFont(fixedSize:bodyFontSize)
     static let stepIconHeader: Font = .latoFont(fixedSize:bodyFontSize)
     static let stepIconText: Font = .latoFont(fixedSize: stepIconFontSize)
-    static let countdown: Font = .latoFont(fixedSize: countdownSize, weight: .thin)
+    static let countdown: Font = .latoFont(fixedSize: countdownSize)
 
 }
 

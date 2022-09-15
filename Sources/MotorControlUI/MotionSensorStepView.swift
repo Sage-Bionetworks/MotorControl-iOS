@@ -47,26 +47,23 @@ struct MotionSensorStepView: View {
     @State var countdown: Int = 30
     @State var progress: CGFloat = .zero
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var instructionCache: [String] = []
+    @StateObject var clock = SimpleClock.init()
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     
-    
     @ViewBuilder
     func content() -> some View {
-        // TODO: syoung 09/13/2022 Make it pretty
-            
         VStack {
             GeometryReader { geometry in
                 ZStack {
                     Circle()
                         .trim(from: 0.0, to: min(progress, 1.0))
-                        .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .butt))
+                        .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                        .foregroundColor(.textForeground)
                         .rotationEffect(Angle(degrees: 270.0))
                         .frame(width: geometry.size.width / 2, height: geometry.size.width / 2, alignment: .center)
                         .background {
-                            Circle()
-                                .stroke(style: StrokeStyle(lineWidth: 4))
-                            
                             Circle()
                                 .fill(Color.screenBackground)
                                 .frame(width: geometry.size.width / 2 + 5, height: geometry.size.width / 2 + 5, alignment: .center)
@@ -75,12 +72,11 @@ struct MotionSensorStepView: View {
                     VStack {
                         Text("\(countdown)")
                             .font(.countdown)
-                            .fontWeight(.ultraLight)
                             .foregroundColor(.textForeground)
                         Text(countdown == 1 ? "second" : "seconds", bundle: SharedResources.bundle)
                             .font(.textField)
+                            .foregroundColor(.textForeground)
                     }
-                    
                 }
             }
         }
@@ -115,7 +111,7 @@ struct MotionSensorStepView: View {
             .onAppear {
                 // Reset the countdown animation and start the recorder.
                 resetCountdown()
-                if let instruction = state.motionConfig.spokenInstructions?[TimeInterval(Int(state.motionConfig.duration) - countdown)] {
+                if let instruction = state.motionConfig.spokenInstruction(at: 0) {
                     state.voicePrompter.speak(text: instruction, completion: .none)
                 }
                 Task {
@@ -151,32 +147,48 @@ struct MotionSensorStepView: View {
             .onReceive(timer) { time in
                 guard !state.recorder.isPaused, countdown > 0 else { return }
                 countdown = max(countdown - 1, 0)
-                if let instruction = state.motionConfig.spokenInstructions?[TimeInterval(Int(state.motionConfig.duration) - countdown)] {
-                    state.voicePrompter.speak(text: instruction, completion: .none)
-                }
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
                 // TODO: syoung 09/13/2022 Decide if this is causing weird stalling and refactor if needed.
                 if countdown == 0, state.recorder.status <= .running {
-                    if let instruction = state.motionConfig.spokenInstructions?[TimeInterval(Double.infinity)] {
-                        state.voicePrompter.speak(text: instruction, completion: .none)
-                    }
+                    speak(at: state.motionConfig.duration, completion: finishStep)
                     timer.upstream.connect().cancel()
-                    Task {
-                        do {
-                            state.result = try await state.recorder.stop()
-                        }
-                        catch {
-                            state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                        }
-                        pagedNavigation.goForward()
-                    }
+                }
+                else {
+                    speak(at: clock.runningDuration())
                 }
             }
+    }
+    
+    func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
+        guard let instruction = state.motionConfig.spokenInstruction(at: timeInterval),
+              !instructionCache.contains(instruction)
+        else {
+            completion?()
+            return
+        }
+        instructionCache.append(instruction)
+        state.voicePrompter.speak(text: instruction) { _, _ in
+            completion?()
+        }
+    }
+    
+    func finishStep() {
+        Task {
+            do {
+                state.result = try await state.recorder.stop()
+            }
+            catch {
+                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
+            }
+        }
+        pagedNavigation.goForward()
     }
 
     func resetCountdown() {
         let startDuration = state.motionConfig.duration
+        clock.reset()
         countdown = Int(startDuration)
+        instructionCache.removeAll()
         withAnimation(.linear(duration: startDuration)) {
             progress = 1.0
         }
@@ -202,8 +214,10 @@ struct PreviewMotionSensorStepView : View {
 
 struct MotionSensorStepView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewMotionSensorStepView()
+        Group {
+            PreviewMotionSensorStepView()
+        }
     }
 }
 
-fileprivate let example1 = TremorNodeObject()
+fileprivate let example1 = TremorNodeObject(identifier: "example", title: "Here's some text that tells you to do something", imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle))
