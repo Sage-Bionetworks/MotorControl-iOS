@@ -57,11 +57,11 @@ struct MotionSensorStepView: View {
     fileprivate func insideCountdownDial(_ count: Int) -> some View {
         VStack {
             Text("\(count)")
-                .font(.countdown)
+                .font(.countdownNumbers)
                 .foregroundColor(.textForeground)
                 .frame(maxWidth: .infinity, alignment: .center)
             Text("seconds", bundle: SharedResources.bundle)
-                .font(.textField)
+                .font(.countdownDialText)
                 .foregroundColor(.textForeground)
         }
     }
@@ -96,7 +96,7 @@ struct MotionSensorStepView: View {
             StepHeaderView(state)
             if let title = state.title {
                 Text(title)
-                    .font(.stepTitle)
+                    .font(.activeViewTitle)
                     .padding(spacing)
                     .foregroundColor(.textForeground)
                     .fixedSize(horizontal: false, vertical: true)
