@@ -91,6 +91,7 @@ public final class MotorControlInstructionState : AbstractMotionControlState {
 /// State object for motion sensor steps
 public final class MotionSensorStepState : AbstractMotionControlState {
     public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
+    public var voicePrompter: TextToSpeechSynthesizer = .init()
     
     @Published public var recorder: MotionRecorder
     

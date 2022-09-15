@@ -50,6 +50,7 @@ struct MotionSensorStepView: View {
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     
+    
     @ViewBuilder
     func content() -> some View {
         // TODO: syoung 09/13/2022 Make it pretty
@@ -73,7 +74,8 @@ struct MotionSensorStepView: View {
                         .position(x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY)
                     VStack {
                         Text("\(countdown)")
-                            .font(.latoFont(fixedSize: geometry.size.width / 4, weight: .thin))
+                            .font(.countdown)
+                            .fontWeight(.ultraLight)
                             .foregroundColor(.textForeground)
                         Text(countdown == 1 ? "second" : "seconds", bundle: SharedResources.bundle)
                             .font(.textField)
@@ -106,7 +108,6 @@ struct MotionSensorStepView: View {
                 }
             }
         }
-
     }
     
     var body: some View {
@@ -114,6 +115,9 @@ struct MotionSensorStepView: View {
             .onAppear {
                 // Reset the countdown animation and start the recorder.
                 resetCountdown()
+                if let instruction = state.motionConfig.spokenInstructions?[TimeInterval(Int(state.motionConfig.duration) - countdown)] {
+                    state.voicePrompter.speak(text: instruction, completion: .none)
+                }
                 Task {
                     do {
                         try await state.recorder.start()
@@ -147,9 +151,15 @@ struct MotionSensorStepView: View {
             .onReceive(timer) { time in
                 guard !state.recorder.isPaused, countdown > 0 else { return }
                 countdown = max(countdown - 1, 0)
+                if let instruction = state.motionConfig.spokenInstructions?[TimeInterval(Int(state.motionConfig.duration) - countdown)] {
+                    state.voicePrompter.speak(text: instruction, completion: .none)
+                }
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
                 // TODO: syoung 09/13/2022 Decide if this is causing weird stalling and refactor if needed.
                 if countdown == 0, state.recorder.status <= .running {
+                    if let instruction = state.motionConfig.spokenInstructions?[TimeInterval(Double.infinity)] {
+                        state.voicePrompter.speak(text: instruction, completion: .none)
+                    }
                     timer.upstream.connect().cancel()
                     Task {
                         do {

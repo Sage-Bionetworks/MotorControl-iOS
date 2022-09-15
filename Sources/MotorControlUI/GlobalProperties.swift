@@ -36,6 +36,7 @@ import SharedMobileUI
 let bodyFontSize: CGFloat = 20
 let titleFontSize: CGFloat = 34
 let stepIconFontSize: CGFloat = 18
+let countdownSize: CGFloat = 64
 
 extension Font {
     static let textField: Font = .latoFont(fixedSize: bodyFontSize)
@@ -44,10 +45,11 @@ extension Font {
     static let stepDetail: Font = .latoFont(fixedSize:bodyFontSize)
     static let stepIconHeader: Font = .latoFont(fixedSize:bodyFontSize)
     static let stepIconText: Font = .latoFont(fixedSize: stepIconFontSize)
+    static let countdown: Font = .latoFont(fixedSize: countdownSize, weight: .thin)
 }
 
 struct SpacingEnvironmentKey: EnvironmentKey {
-    static let defaultValue: CGFloat = 64
+    static let defaultValue: CGFloat = 20
 }
 
 extension EnvironmentValues {
