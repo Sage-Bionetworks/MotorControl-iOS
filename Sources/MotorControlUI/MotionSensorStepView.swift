@@ -51,9 +51,10 @@ struct MotionSensorStepView: View {
     @StateObject var clock = SimpleClock.init()
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
+    let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
     
     @ViewBuilder
-    fileprivate func insideCountdown(_ count: Int) -> some View {
+    fileprivate func insideCountdownDial(_ count: Int) -> some View {
         VStack {
             Text("\(count)")
                 .font(.countdown)
@@ -68,8 +69,8 @@ struct MotionSensorStepView: View {
     @ViewBuilder
     fileprivate func countdownDial() -> some View {
         ZStack {
-            insideCountdown(countdown)
-            insideCountdown(30)
+            insideCountdownDial(countdown)
+            insideCountdownDial(30)
                 .opacity(0)
         }
         .fixedSize(horizontal: true, vertical: true)
@@ -134,9 +135,7 @@ struct MotionSensorStepView: View {
             .onAppear {
                 // Reset the countdown animation and start the recorder.
                 resetCountdown()
-                if let instruction = state.motionConfig.spokenInstruction(at: 0) {
-                    state.voicePrompter.speak(text: instruction, completion: .none)
-                }
+                speak(at: 0)
                 Task {
                     do {
                         try await state.recorder.start()
