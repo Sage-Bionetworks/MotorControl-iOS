@@ -184,7 +184,7 @@ struct MotionSensorStepView: View {
     }
     
     func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
-        guard let instruction = state.motionConfig.spokenInstruction(at: timeInterval),
+        guard let instruction = state.spokenInstructions[Int(timeInterval)],
               !instructionCache.contains(instruction)
         else {
             completion?()

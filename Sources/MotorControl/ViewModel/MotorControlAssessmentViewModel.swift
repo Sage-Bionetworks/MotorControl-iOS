@@ -91,7 +91,8 @@ public final class MotorControlInstructionState : AbstractMotionControlState {
 /// State object for motion sensor steps
 public final class MotionSensorStepState : AbstractMotionControlState {
     public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
-    public var voicePrompter: TextToSpeechSynthesizer = .init()
+    public let voicePrompter: TextToSpeechSynthesizer = .init()
+    public var spokenInstructions: [Int : String] = [:]
     
     @Published public var recorder: MotionRecorder
     
@@ -103,13 +104,12 @@ public final class MotionSensorStepState : AbstractMotionControlState {
                               outputDirectory: assessmentState.outputDirectory!,
                               initialStepPath: "\(assessmentState.node.identifier)/\(branchState.node.identifier)",
                               sectionIdentifier: branchState.node.identifier)
+        super.init(motionConfig, parentId: branchState.id, whichHand: branchState.node.hand())
         if let whichHand = branchState.node.hand()?.rawValue {
             motionConfig.spokenInstructions?.forEach {
-                motionConfig.spokenInstructions?.updateValue(
-                    $0.1.replacingOccurrences(of: formattedTextPlaceHolder, with: whichHand), forKey: $0.0)
+                spokenInstructions[$0.0] = $0.1.replacingOccurrences(of: formattedTextPlaceHolder, with: whichHand)
             }
         }
-        super.init(motionConfig, parentId: branchState.id, whichHand: branchState.node.hand())
     }
 }
 
