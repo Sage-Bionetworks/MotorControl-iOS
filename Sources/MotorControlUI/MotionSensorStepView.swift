@@ -135,6 +135,7 @@ struct MotionSensorStepView: View {
             .onAppear {
                 // Reset the countdown animation and start the recorder.
                 resetCountdown()
+                audioFileSoundPlayer.vibrateDevice()
                 speak(at: 0)
                 Task {
                     do {
@@ -172,6 +173,7 @@ struct MotionSensorStepView: View {
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
                 // TODO: syoung 09/13/2022 Decide if this is causing weird stalling and refactor if needed.
                 if countdown == 0, state.recorder.status <= .running {
+                    audioFileSoundPlayer.vibrateDevice()
                     speak(at: state.motionConfig.duration, completion: finishStep)
                     timer.upstream.connect().cancel()
                 }
