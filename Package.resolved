@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "AssessmentModel",
-        "repositoryURL": "/Users/arabara/Github/AssessmentModelKMM",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
         "state": {
           "branch": null,
           "revision": "65cd9ee57f75f56bcd148b828de53110f8d7eefe",
