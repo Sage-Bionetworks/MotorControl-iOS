@@ -171,7 +171,6 @@ struct MotionSensorStepView: View {
                 guard !state.recorder.isPaused, countdown > 0 else { return }
                 countdown = max(countdown - 1, 0)
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
-                // TODO: syoung 09/13/2022 Decide if this is causing weird stalling and refactor if needed.
                 if countdown == 0, state.recorder.status <= .running {
                     audioFileSoundPlayer.vibrateDevice()
                     speak(at: state.motionConfig.duration, completion: finishStep)

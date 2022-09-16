@@ -47,6 +47,7 @@ struct ContentView: View {
         }
         .fullScreenCover(isPresented: $viewModel.isPresented) {
             AssessmentListener(viewModel)
+                .preferredColorScheme(.light)
         }
     }
     

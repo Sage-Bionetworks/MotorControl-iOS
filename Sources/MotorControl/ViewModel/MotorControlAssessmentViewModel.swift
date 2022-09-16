@@ -69,7 +69,7 @@ public class AbstractMotionControlState : ContentNodeState {
     public init(_ instruction: AbstractStepObject, parentId: String?, whichHand: HandSelection? = nil) {
         if let whichHand = whichHand {
             self.flippedImage = (whichHand == .right)
-            let replacementString = NSLocalizedString(whichHand.rawValue.uppercased(), bundle: SharedResources.bundle, comment: "Which hand to use")
+            let replacementString = whichHand.handReplacementString().uppercased()
             self.title = instruction.title?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
             self.subtitle = instruction.subtitle?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
             self.detail = instruction.detail?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
@@ -92,7 +92,7 @@ public final class MotorControlInstructionState : AbstractMotionControlState {
 public final class MotionSensorStepState : AbstractMotionControlState {
     public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
     public let voicePrompter: TextToSpeechSynthesizer = .init()
-    public var spokenInstructions: [Int : String] = [:]
+    public let spokenInstructions: [Int : String]
     
     @Published public var recorder: MotionRecorder
     
@@ -104,13 +104,15 @@ public final class MotionSensorStepState : AbstractMotionControlState {
                               outputDirectory: assessmentState.outputDirectory!,
                               initialStepPath: "\(assessmentState.node.identifier)/\(branchState.node.identifier)",
                               sectionIdentifier: branchState.node.identifier)
-        super.init(motionConfig, parentId: branchState.id, whichHand: branchState.node.hand())
-        if let whichHand = branchState.node.hand()?.rawValue {
-            motionConfig.spokenInstructions?.forEach {
-                spokenInstructions[$0.0] = $0.1.replacingOccurrences(of: formattedTextPlaceHolder, with: whichHand)
-            }
-        }
+        let whichHand = branchState.node.hand()
+        let replacementString = whichHand?.handReplacementString() ?? "NULL"
+        self.spokenInstructions = motionConfig.spokenInstructions?.mapValues { text in
+            text.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+        } ?? [:]
+        super.init(motionConfig, parentId: branchState.id, whichHand: whichHand)
     }
+    
+    ///TODO: Move speaking functionality to this view model
 }
 
 fileprivate func createOutputDirectory() -> URL {
