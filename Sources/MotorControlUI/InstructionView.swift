@@ -93,6 +93,7 @@ struct InstructionNodeView: View {
                                 .font(.stepTitle)
                                 .foregroundColor(.textForeground)
                                 .fixedSize(horizontal: false, vertical: true)
+                                .multilineTextAlignment(.center)
                         }
                         if let subtitle = contentInfo.subtitle {
                             Text(subtitle)

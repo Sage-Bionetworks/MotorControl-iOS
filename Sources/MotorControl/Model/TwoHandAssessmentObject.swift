@@ -34,6 +34,7 @@
 import Foundation
 import AssessmentModel
 import JsonModel
+import SharedResources
 
 fileprivate let handSelectionIdentifier = "handSelection"
 
@@ -171,6 +172,10 @@ enum TwoHandAssessmentError: Error {
 
 public enum HandSelection: String, Codable, CaseIterable {
     case left, right
+    
+    func handReplacementString() -> String {
+        SharedResources.bundle.localizedString(forKey: self.rawValue, value: self.rawValue, table: nil)
+    }
 }
 
 extension Node {

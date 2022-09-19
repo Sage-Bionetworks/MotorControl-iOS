@@ -59,16 +59,16 @@ public class MotionSensorNodeObject : AbstractStepObject {
     }
     
     public let duration: TimeInterval
-    public let spokenInstructions: [TimeInterval : String]?
+    public let spokenInstructions: [Int : String]?
     
     enum SpokenInstructionKeys : String, CodingKey {
         case start, halfway, countdown, end
     }
     
     public override func spokenInstruction(at timeInterval: TimeInterval) -> String? {
-        var key = timeInterval
+        var key = Int(timeInterval)
         if timeInterval >= duration && duration > 0 {
-            key = Double.infinity
+            key = Int(duration)
         }
         return self.spokenInstructions?[key]
     }
@@ -77,6 +77,12 @@ public class MotionSensorNodeObject : AbstractStepObject {
         self.duration = 30
         self.spokenInstructions = nil
         super.init(identifier: "example")
+    }
+    
+    public init(identifier: String, title: String? = nil, subtitle: String? = nil, detail: String? = nil, imageInfo: ImageInfo? = nil) {
+        self.duration = 30
+        self.spokenInstructions = nil
+        super.init(identifier: identifier, title: title, subtitle: subtitle, detail: detail, imageInfo: imageInfo)
     }
     
     public init(identifier: String, copyFrom object: MotionSensorNodeObject) {
@@ -93,25 +99,25 @@ public class MotionSensorNodeObject : AbstractStepObject {
             
             // Map the json deserialized dictionary into the `spokenInstructions` dictionary.
             var countdownStart: Int?
-            var instructions = dictionary.mapKeys({ (key) -> TimeInterval in
+            var instructions = dictionary.mapKeys({ (key) -> Int in
                 if let specialKey = SpokenInstructionKeys(stringValue: key) {
                     switch(specialKey) {
                     case .start:
                         return 0
                     case .halfway:
-                        return stepDuration / 2
+                        return Int(stepDuration / 2)
                     case .end:
-                        return Double.infinity
+                        return Int(stepDuration)
                     case .countdown:
                         guard let countdown = (dictionary[key] as NSString?)?.integerValue, countdown > 0
                             else {
-                                return -1.0
+                                return -1
                         }
                         countdownStart = countdown
-                        return stepDuration - TimeInterval(countdown)
+                        return Int(stepDuration) - countdown
                     }
                 }
-                return (key as NSString).doubleValue as TimeInterval
+                return (key as NSString).integerValue
             })
             
             // special-case handling of the countdown
@@ -119,7 +125,7 @@ public class MotionSensorNodeObject : AbstractStepObject {
                 let numberFormatter = NumberFormatter()
                 numberFormatter.numberStyle = .spellOut
                 for ii in 1...countdown {
-                    let timeInterval = stepDuration - TimeInterval(ii)
+                    let timeInterval = Int(stepDuration) - ii
                     instructions[timeInterval] = numberFormatter.string(from: NSNumber(value: ii))
                 }
             }

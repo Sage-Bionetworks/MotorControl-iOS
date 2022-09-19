@@ -48,7 +48,7 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
                                                 whichHand: whichHand)
         }
         else if let step = node as? MotionSensorNodeObject {
-            return MotionSensorStepState(step, assessmentState: state, branchState: currentBranchState)
+            return MotionSensorStepViewModel(step, assessmentState: state, branchState: currentBranchState)
         }
         else {
             return super.nodeState(for: node)
@@ -56,7 +56,7 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
     }
 }
 
-/// State object for an instruction.
+/// State object for an abstract motion control step
 public class AbstractMotionControlState : ContentNodeState {
     
     override public var progressHidden: Bool { true }
@@ -69,7 +69,7 @@ public class AbstractMotionControlState : ContentNodeState {
     public init(_ instruction: AbstractStepObject, parentId: String?, whichHand: HandSelection? = nil) {
         if let whichHand = whichHand {
             self.flippedImage = (whichHand == .right)
-            let replacementString = NSLocalizedString(whichHand.rawValue.uppercased(), bundle: SharedResources.bundle, comment: "Which hand to use")
+            let replacementString = whichHand.handReplacementString().uppercased()
             self.title = instruction.title?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
             self.subtitle = instruction.subtitle?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
             self.detail = instruction.detail?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
@@ -88,9 +88,13 @@ public class AbstractMotionControlState : ContentNodeState {
 public final class MotorControlInstructionState : AbstractMotionControlState {
 }
 
-public final class MotionSensorStepState : AbstractMotionControlState {
+/// State object for motion sensor steps
+public final class MotionSensorStepViewModel : AbstractMotionControlState {
     public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
-    
+    public let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
+    public let voicePrompter: TextToSpeechSynthesizer = .init()
+    public let spokenInstructions: [Int : String]
+    public var instructionCache: Set<Int> = []
     @Published public var recorder: MotionRecorder
     
     public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
@@ -101,7 +105,29 @@ public final class MotionSensorStepState : AbstractMotionControlState {
                               outputDirectory: assessmentState.outputDirectory!,
                               initialStepPath: "\(assessmentState.node.identifier)/\(branchState.node.identifier)",
                               sectionIdentifier: branchState.node.identifier)
-        super.init(motionConfig, parentId: branchState.id, whichHand: branchState.node.hand())
+        let whichHand = branchState.node.hand()
+        let replacementString = whichHand?.handReplacementString() ?? "NULL"
+        self.spokenInstructions = motionConfig.spokenInstructions?.mapValues { text in
+            text.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+        } ?? [:]
+        super.init(motionConfig, parentId: branchState.id, whichHand: whichHand)
+    }
+    
+    public func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
+        let key = Int(min(timeInterval, motionConfig.duration))
+        guard !instructionCache.contains(key), let instruction = spokenInstructions[key]
+        else {
+            completion?()
+            return
+        }
+        instructionCache.insert(key)
+        voicePrompter.speak(text: instruction) { _, _ in
+            completion?()
+        }
+    }
+    
+    public func resetInstructionCache() {
+        instructionCache.removeAll()
     }
 }
 

@@ -43,15 +43,88 @@ import SharedResources
 struct MotionSensorStepView: View {
     @EnvironmentObject var assessmentState: AssessmentState
     @EnvironmentObject var pagedNavigation: PagedNavigationViewModel
-    @ObservedObject var state: MotionSensorStepState
+    @ObservedObject var state: MotionSensorStepViewModel
     @State var countdown: Int = 30
     @State var progress: CGFloat = .zero
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @StateObject var clock = SimpleClock.init()
+    @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
+    @SwiftUI.Environment(\.spacing) var spacing: CGFloat
+    
+    @ViewBuilder
+    fileprivate func insideCountdownDial(_ count: Int) -> some View {
+        VStack {
+            Text("\(count)")
+                .font(.countdownNumbers)
+                .foregroundColor(.textForeground)
+                .frame(maxWidth: .infinity, alignment: .center)
+            Text("seconds", bundle: SharedResources.bundle)
+                .font(.countdownDialText)
+                .foregroundColor(.textForeground)
+        }
+    }
+    
+    @ViewBuilder
+    fileprivate func countdownDial() -> some View {
+        ZStack {
+            insideCountdownDial(countdown)
+            insideCountdownDial(30)
+                .opacity(0)
+        }
+        .fixedSize(horizontal: true, vertical: true)
+        .padding(48)
+        .background {
+            Circle()
+                .trim(from: 0.0, to: min(progress, 1.0))
+                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                .foregroundColor(.textForeground)
+                .rotationEffect(Angle(degrees: 270.0))
+                .padding(2.5)
+                .background {
+                    Circle()
+                        .fill(Color.sageWhite)
+                }
+        }
+    }
+    
+    @ViewBuilder
+    func insideView() -> some View {
+        VStack {
+            StepHeaderView(state)
+            if let title = state.title {
+                Text(title)
+                    .font(.activeViewTitle)
+                    .padding(spacing)
+                    .foregroundColor(.textForeground)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.center)
+            }
+            countdownDial()
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    func backgroundView() -> some View {
+        ZStack {
+            surveyTint
+            if let image = state.contentNode.imageInfo?.imageName {
+                Image(image, bundle: SharedResources.bundle)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .opacity(0.4)
+                    .rotation3DEffect(.degrees(state.flippedImage ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+            }
+        }
+        .edgesIgnoringSafeArea(.all)
+    }
     
     @ViewBuilder
     func content() -> some View {
-        // TODO: syoung 09/13/2022 Make it pretty
-        Text("\(countdown)")
+        insideView()
+            .background {
+                backgroundView()
+            }
     }
     
     var body: some View {
@@ -59,6 +132,8 @@ struct MotionSensorStepView: View {
             .onAppear {
                 // Reset the countdown animation and start the recorder.
                 resetCountdown()
+                state.audioFileSoundPlayer.vibrateDevice()
+                state.speak(at: 0)
                 Task {
                     do {
                         try await state.recorder.start()
@@ -93,25 +168,34 @@ struct MotionSensorStepView: View {
                 guard !state.recorder.isPaused, countdown > 0 else { return }
                 countdown = max(countdown - 1, 0)
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
-                // TODO: syoung 09/13/2022 Decide if this is causing weird stalling and refactor if needed.
                 if countdown == 0, state.recorder.status <= .running {
+                    state.audioFileSoundPlayer.vibrateDevice()
+                    state.speak(at: state.motionConfig.duration, completion: finishStep)
                     timer.upstream.connect().cancel()
-                    Task {
-                        do {
-                            state.result = try await state.recorder.stop()
-                        }
-                        catch {
-                            state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                        }
-                        pagedNavigation.goForward()
-                    }
+                }
+                else {
+                    state.speak(at: clock.runningDuration())
                 }
             }
+    }
+    
+    func finishStep() {
+        Task {
+            do {
+                state.result = try await state.recorder.stop()
+            }
+            catch {
+                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
+            }
+            pagedNavigation.goForward()
+        }
     }
 
     func resetCountdown() {
         let startDuration = state.motionConfig.duration
+        clock.reset()
         countdown = Int(startDuration)
+        state.resetInstructionCache()
         withAnimation(.linear(duration: startDuration)) {
             progress = 1.0
         }
@@ -137,8 +221,10 @@ struct PreviewMotionSensorStepView : View {
 
 struct MotionSensorStepView_Previews: PreviewProvider {
     static var previews: some View {
-        PreviewMotionSensorStepView()
+        Group {
+            PreviewMotionSensorStepView()
+        }
     }
 }
 
-fileprivate let example1 = TremorNodeObject()
+fileprivate let example1 = TremorNodeObject(identifier: "example", title: "Here's some text that tells you to do something", imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle))

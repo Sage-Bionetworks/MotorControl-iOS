@@ -51,8 +51,6 @@ extension MotorControlAssessmentView : AssessmentDisplayView {
 public struct MotorControlAssessmentView : View {
     @StateObject var viewModel: MotorControlAssessmentViewModel = .init()
     @ObservedObject var assessmentState: AssessmentState
-    //TODO: Decide whether or not we want this Aaron Rabara 8/25/22
-    //@State var didResignActive = false
     
     public init(_ assessmentState: AssessmentState) {
         self.assessmentState = assessmentState
@@ -89,6 +87,7 @@ public struct MotorControlAssessmentView : View {
             }
             else if state.step is CountdownStep {
                 CountdownStepView(state)
+                    .surveyTintColor(.textForeground)
             }
             else if state.step is OverviewStep {
                 OverviewView(nodeState: state)
@@ -96,7 +95,7 @@ public struct MotorControlAssessmentView : View {
             else if let nodeState = state as? MotorControlInstructionState {
                 InstructionView(nodeState: nodeState)
             }
-            else if let nodeState = state as? MotionSensorStepState {
+            else if let nodeState = state as? MotionSensorStepViewModel {
                 MotionSensorStepView(state: nodeState)
             }
             else {
@@ -149,7 +148,7 @@ struct MotorControlAssessmentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             MotorControlAssessmentPreview(.tremor)
-            MotorControlAssessmentPreview(.tremor)
+            MotorControlAssessmentPreview(.kineticTremor)
                 .preferredColorScheme(.dark)
         }
     }
