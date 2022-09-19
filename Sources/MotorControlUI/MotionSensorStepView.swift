@@ -47,11 +47,9 @@ struct MotionSensorStepView: View {
     @State var countdown: Int = 30
     @State var progress: CGFloat = .zero
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @State var instructionCache: [String] = []
     @StateObject var clock = SimpleClock.init()
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
-    let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
     
     @ViewBuilder
     fileprivate func insideCountdownDial(_ count: Int) -> some View {
@@ -87,7 +85,6 @@ struct MotionSensorStepView: View {
                         .fill(Color.sageWhite)
                 }
         }
-
     }
     
     @ViewBuilder
@@ -135,8 +132,8 @@ struct MotionSensorStepView: View {
             .onAppear {
                 // Reset the countdown animation and start the recorder.
                 resetCountdown()
-                audioFileSoundPlayer.vibrateDevice()
-                speak(at: 0)
+                state.audioFileSoundPlayer.vibrateDevice()
+                state.speak(at: 0)
                 Task {
                     do {
                         try await state.recorder.start()
@@ -172,27 +169,14 @@ struct MotionSensorStepView: View {
                 countdown = max(countdown - 1, 0)
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
                 if countdown == 0, state.recorder.status <= .running {
-                    audioFileSoundPlayer.vibrateDevice()
-                    speak(at: state.motionConfig.duration, completion: finishStep)
+                    state.audioFileSoundPlayer.vibrateDevice()
+                    state.speak(at: state.motionConfig.duration, completion: finishStep)
                     timer.upstream.connect().cancel()
                 }
                 else {
-                    speak(at: clock.runningDuration())
+                    state.speak(at: clock.runningDuration())
                 }
             }
-    }
-    
-    func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
-        guard let instruction = state.spokenInstructions[Int(timeInterval)],
-              !instructionCache.contains(instruction)
-        else {
-            completion?()
-            return
-        }
-        instructionCache.append(instruction)
-        state.voicePrompter.speak(text: instruction) { _, _ in
-            completion?()
-        }
     }
     
     func finishStep() {
@@ -211,7 +195,7 @@ struct MotionSensorStepView: View {
         let startDuration = state.motionConfig.duration
         clock.reset()
         countdown = Int(startDuration)
-        instructionCache.removeAll()
+        state.instructionCache.removeAll()
         withAnimation(.linear(duration: startDuration)) {
             progress = 1.0
         }

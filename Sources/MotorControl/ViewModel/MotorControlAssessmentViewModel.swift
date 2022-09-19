@@ -91,9 +91,10 @@ public final class MotorControlInstructionState : AbstractMotionControlState {
 /// State object for motion sensor steps
 public final class MotionSensorStepState : AbstractMotionControlState {
     public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
+    public let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
     public let voicePrompter: TextToSpeechSynthesizer = .init()
     public let spokenInstructions: [Int : String]
-    
+    public var instructionCache: [String] = []
     @Published public var recorder: MotionRecorder
     
     public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
@@ -112,7 +113,18 @@ public final class MotionSensorStepState : AbstractMotionControlState {
         super.init(motionConfig, parentId: branchState.id, whichHand: whichHand)
     }
     
-    ///TODO: Move speaking functionality to this view model
+    public func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
+        guard let instruction = spokenInstructions[Int(timeInterval)],
+              !instructionCache.contains(instruction)
+        else {
+            completion?()
+            return
+        }
+        instructionCache.append(instruction)
+        voicePrompter.speak(text: instruction) { _, _ in
+            completion?()
+        }
+    }
 }
 
 fileprivate func createOutputDirectory() -> URL {
