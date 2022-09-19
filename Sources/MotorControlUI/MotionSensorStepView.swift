@@ -43,7 +43,7 @@ import SharedResources
 struct MotionSensorStepView: View {
     @EnvironmentObject var assessmentState: AssessmentState
     @EnvironmentObject var pagedNavigation: PagedNavigationViewModel
-    @ObservedObject var state: MotionSensorStepState
+    @ObservedObject var state: MotionSensorStepViewModel
     @State var countdown: Int = 30
     @State var progress: CGFloat = .zero
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -187,15 +187,15 @@ struct MotionSensorStepView: View {
             catch {
                 state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
             }
+            pagedNavigation.goForward()
         }
-        pagedNavigation.goForward()
     }
 
     func resetCountdown() {
         let startDuration = state.motionConfig.duration
         clock.reset()
         countdown = Int(startDuration)
-        state.instructionCache.removeAll()
+        state.resetInstructionCache()
         withAnimation(.linear(duration: startDuration)) {
             progress = 1.0
         }

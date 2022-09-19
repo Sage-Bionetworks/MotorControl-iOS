@@ -48,7 +48,7 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
                                                 whichHand: whichHand)
         }
         else if let step = node as? MotionSensorNodeObject {
-            return MotionSensorStepState(step, assessmentState: state, branchState: currentBranchState)
+            return MotionSensorStepViewModel(step, assessmentState: state, branchState: currentBranchState)
         }
         else {
             return super.nodeState(for: node)
@@ -89,12 +89,12 @@ public final class MotorControlInstructionState : AbstractMotionControlState {
 }
 
 /// State object for motion sensor steps
-public final class MotionSensorStepState : AbstractMotionControlState {
+public final class MotionSensorStepViewModel : AbstractMotionControlState {
     public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
     public let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
     public let voicePrompter: TextToSpeechSynthesizer = .init()
     public let spokenInstructions: [Int : String]
-    public var instructionCache: [String] = []
+    public var instructionCache: Set<Int> = []
     @Published public var recorder: MotionRecorder
     
     public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
@@ -114,16 +114,20 @@ public final class MotionSensorStepState : AbstractMotionControlState {
     }
     
     public func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
-        guard let instruction = spokenInstructions[Int(timeInterval)],
-              !instructionCache.contains(instruction)
+        let key = Int(min(timeInterval, motionConfig.duration))
+        guard !instructionCache.contains(key), let instruction = spokenInstructions[key]
         else {
             completion?()
             return
         }
-        instructionCache.append(instruction)
+        instructionCache.insert(key)
         voicePrompter.speak(text: instruction) { _, _ in
             completion?()
         }
+    }
+    
+    public func resetInstructionCache() {
+        instructionCache.removeAll()
     }
 }
 
