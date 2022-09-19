@@ -72,7 +72,7 @@ struct OverviewNodeView: View {
         GeometryReader { scrollViewGeometry in
             ScrollViewReader { proxy in
                 ScrollView {
-                    VStack(alignment: .center, spacing: spacing) {
+                    VStack(alignment: .center) {
                         if let imageInfo = overview.imageInfo {
                             ContentImage(imageInfo)
                                 .background(surveyTint)
@@ -82,18 +82,23 @@ struct OverviewNodeView: View {
                                 .font(.stepTitle)
                                 .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
+                                .padding()
                         }
                         if let subtitle = overview.subtitle {
                             Text(subtitle)
                                 .font(.stepSubtitle)
                                 .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
+                                .padding([.bottom, .leading, .trailing])
+
                         }
                         if let detail = overview.detail {
                             Text(detail)
                                 .font(.stepDetail)
                                 .foregroundColor(.textForeground)
                                 .multilineTextAlignment(.center)
+                                .padding([.bottom, .leading, .trailing])
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                         if let icons = overview.icons {
                             Text("This is what you'll need", bundle: SharedResources.bundle)
@@ -117,7 +122,6 @@ struct OverviewNodeView: View {
                     .onAppear{
                         proxy.scrollTo(bottomID, anchor: .bottom)
                     }
-                    .padding([.horizontal], spacing)
                     .frame(maxWidth: scrollViewGeometry.size.width)
                 }
             }

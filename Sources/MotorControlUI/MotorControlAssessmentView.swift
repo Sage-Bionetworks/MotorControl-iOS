@@ -51,8 +51,6 @@ extension MotorControlAssessmentView : AssessmentDisplayView {
 public struct MotorControlAssessmentView : View {
     @StateObject var viewModel: MotorControlAssessmentViewModel = .init()
     @ObservedObject var assessmentState: AssessmentState
-    //TODO: Decide whether or not we want this Aaron Rabara 8/25/22
-    //@State var didResignActive = false
     
     public init(_ assessmentState: AssessmentState) {
         self.assessmentState = assessmentState

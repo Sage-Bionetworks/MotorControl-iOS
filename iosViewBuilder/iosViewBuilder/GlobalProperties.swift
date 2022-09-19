@@ -42,7 +42,7 @@ extension Font {
     static let stepTitle: Font = .latoFont(titleFontSize)
     static let stepSubtitle: Font = .latoFont(bodyFontSize)
     static let stepDetail: Font = .latoFont(bodyFontSize)
-    static let stepIconHeader: Font = .latoFont(bodyFontSize)
+    static let stepIconHeader: Font = .latoFont(bodyFontSize, weight: .bold)
     static let stepIconText: Font = .latoFont(stepIconFontSize)
     static let activeViewTitle: Font = .latoFont(fixedSize: titleFontSize)
     static let countdownNumbers: Font = .latoFont(fixedSize: countdownSize)
