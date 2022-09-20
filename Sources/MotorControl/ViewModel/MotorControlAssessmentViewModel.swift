@@ -47,8 +47,11 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
                                                 parentId: currentBranchState.id,
                                                 whichHand: whichHand)
         }
-        else if let step = node as? MotionSensorNodeObject {
-            return MotionSensorStepViewModel(step, assessmentState: state, branchState: currentBranchState)
+        else if let step = node as? TremorNodeObject {
+            return TremorStepViewModel(step, assessmentState: state, branchState: currentBranchState)
+        }
+        else if let step = node as? TappingNodeObject {
+            return TappingStepViewModel(step, assessmentState: state, branchState: currentBranchState)
         }
         else {
             return super.nodeState(for: node)
@@ -89,7 +92,7 @@ public final class MotorControlInstructionState : AbstractMotionControlState {
 }
 
 /// State object for motion sensor steps
-public final class MotionSensorStepViewModel : AbstractMotionControlState {
+public class MotionSensorStepViewModel : AbstractMotionControlState {
     public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
     public let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
     public let voicePrompter: TextToSpeechSynthesizer = .init()
@@ -129,6 +132,14 @@ public final class MotionSensorStepViewModel : AbstractMotionControlState {
     public func resetInstructionCache() {
         instructionCache.removeAll()
     }
+}
+
+/// View model for a tremor step
+public final class TremorStepViewModel : MotionSensorStepViewModel {
+}
+
+/// View model for a tapping step
+public final class TappingStepViewModel : MotionSensorStepViewModel {
 }
 
 fileprivate func createOutputDirectory() -> URL {
