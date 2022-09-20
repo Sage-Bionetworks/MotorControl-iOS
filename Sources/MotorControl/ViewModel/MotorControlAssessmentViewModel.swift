@@ -48,10 +48,14 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
                                                 whichHand: whichHand)
         }
         else if let step = node as? TremorNodeObject {
-            return TremorStepViewModel(step, assessmentState: state, branchState: currentBranchState)
+            return TremorStepViewModel(step,
+                                       assessmentState: state,
+                                       branchState: currentBranchState)
         }
         else if let step = node as? TappingNodeObject {
-            return TappingStepViewModel(step, assessmentState: state, branchState: currentBranchState)
+            return TappingStepViewModel(step,
+                                        assessmentState: state,
+                                        branchState: currentBranchState)
         }
         else {
             return super.nodeState(for: node)

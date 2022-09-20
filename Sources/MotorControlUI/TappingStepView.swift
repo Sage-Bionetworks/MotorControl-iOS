@@ -88,16 +88,18 @@ struct TappingStepView: View {
     }
 
     @ViewBuilder
-    func insideView() -> some View {
+    fileprivate func insideView() -> some View {
         VStack {
+            StepHeaderView(state)
             Spacer()
             countdownDial()
+            
             Spacer()
         }
     }
 
     @ViewBuilder
-    func backgroundView() -> some View {
+    fileprivate func backgroundView() -> some View {
         ZStack {
             surveyTint
             if let image = state.contentNode.imageInfo?.imageName {
@@ -112,7 +114,7 @@ struct TappingStepView: View {
     }
 
     @ViewBuilder
-    func content() -> some View {
+    fileprivate func content() -> some View {
         insideView()
             .background {
                 backgroundView()
@@ -146,17 +148,15 @@ struct TappingStepView: View {
                 // Once the countdown hits zero navigate forward.
                 if countdown == 0 {
                     state.audioFileSoundPlayer.vibrateDevice()
-                    state.speak(at: state.motionConfig.duration, completion: finishStep)
+                    state.speak(at: state.motionConfig.duration) {
+                        pagedNavigation.goForward()
+                    }
                     timer.upstream.connect().cancel()
                 }
                 else {
                     state.speak(at: clock.runningDuration())
                 }
             }
-    }
-
-    func finishStep() {
-        pagedNavigation.goForward()
     }
 
     func resetCountdown() {

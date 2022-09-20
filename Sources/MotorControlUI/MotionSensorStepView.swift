@@ -170,25 +170,23 @@ struct MotionSensorStepView: View {
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
                 if countdown == 0, state.recorder.status <= .running {
                     state.audioFileSoundPlayer.vibrateDevice()
-                    state.speak(at: state.motionConfig.duration, completion: finishStep)
+                    state.speak(at: state.motionConfig.duration) {
+                        Task {
+                            do {
+                                state.result = try await state.recorder.stop()
+                            }
+                            catch {
+                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
+                            }
+                            pagedNavigation.goForward()
+                        }
+                    }
                     timer.upstream.connect().cancel()
                 }
                 else {
                     state.speak(at: clock.runningDuration())
                 }
             }
-    }
-    
-    func finishStep() {
-        Task {
-            do {
-                state.result = try await state.recorder.stop()
-            }
-            catch {
-                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-            }
-            pagedNavigation.goForward()
-        }
     }
 
     func resetCountdown() {
