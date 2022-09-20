@@ -102,16 +102,8 @@ public class MotionSensorStepViewModel : AbstractMotionControlState {
     public let voicePrompter: TextToSpeechSynthesizer = .init()
     public let spokenInstructions: [Int : String]
     public var instructionCache: Set<Int> = []
-    @Published public var recorder: MotionRecorder
     
     public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
-        if assessmentState.outputDirectory == nil {
-            assessmentState.outputDirectory = createOutputDirectory()
-        }
-        self.recorder = .init(configuration: motionConfig,
-                              outputDirectory: assessmentState.outputDirectory!,
-                              initialStepPath: "\(assessmentState.node.identifier)/\(branchState.node.identifier)",
-                              sectionIdentifier: branchState.node.identifier)
         let whichHand = branchState.node.hand()
         let replacementString = whichHand?.handReplacementString() ?? "NULL"
         self.spokenInstructions = motionConfig.spokenInstructions?.mapValues { text in
@@ -140,6 +132,18 @@ public class MotionSensorStepViewModel : AbstractMotionControlState {
 
 /// View model for a tremor step
 public final class TremorStepViewModel : MotionSensorStepViewModel {
+    @Published public var recorder: MotionRecorder
+    
+    public override init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
+        if assessmentState.outputDirectory == nil {
+            assessmentState.outputDirectory = createOutputDirectory()
+        }
+        self.recorder = .init(configuration: motionConfig,
+                              outputDirectory: assessmentState.outputDirectory!,
+                              initialStepPath: "\(assessmentState.node.identifier)/\(branchState.node.identifier)",
+                              sectionIdentifier: branchState.node.identifier)
+        super.init(motionConfig, assessmentState: assessmentState, branchState: branchState)
+    }
 }
 
 /// View model for a tapping step
