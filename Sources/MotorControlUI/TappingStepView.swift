@@ -91,25 +91,35 @@ struct TappingStepView: View {
     fileprivate func tappingButtons() -> some View {
         HStack {
             Spacer()
-            Button(action: {
-                        print("Round Action")
-                        }) {
-                        Text(LocalizedStringKey("Left"))
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(Color.textForeground)
-                            .background(surveyTint.saturation(2))
-                            .clipShape(Circle())
-                    }
+            Text(LocalizedStringKey("Left"))
+                .frame(width: 100, height: 100)
+                .foregroundColor(Color.textForeground)
+                .background(surveyTint.saturation(2))
+                .clipShape(Circle())
+                .onClickGesture() { location in
+                    print(location)
+                    print(clock.runningDuration())
+                }
+//                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local).onEnded({ value in
+//                    print(value.location)
+//                    print(clock.runningDuration())
+//                }))
+                
             Spacer()
-            Button(action: {
-                        print("Round Action")
-                        }) {
-                        Text(LocalizedStringKey("Right"))
-                            .frame(width: 100, height: 100)
-                            .foregroundColor(Color.textForeground)
-                            .background(surveyTint.saturation(2))
-                            .clipShape(Circle())
-                    }
+            Text(LocalizedStringKey("Right"))
+                .frame(width: 100, height: 100)
+                .foregroundColor(Color.textForeground)
+                .background(surveyTint.saturation(2))
+                .clipShape(Circle())
+                .onClickGesture() { location in
+                    print(location)
+                    print(clock.runningDuration())
+                }
+//                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local).onEnded({ value in
+//                    print(value.location)
+//                    print(clock.runningDuration())
+//                }))
+                
             Spacer()
         }
     }
@@ -247,3 +257,28 @@ struct TappingStepView_Previews: PreviewProvider {
 }
 
 fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample", imageInfo: FetchableImage(imageName: "tap_left_1", bundle: SharedResources.bundle))
+
+extension View {
+    func onClickGesture(
+        count: Int,
+        coordinateSpace: CoordinateSpace = .local,
+        perform action: @escaping (CGPoint) -> Void
+    ) -> some View {
+        gesture(TappingLocationGesture(count: count, coordinateSpace: coordinateSpace)
+            .onEnded(perform: action)
+        )
+    }
+    
+    func onClickGesture(
+        count: Int,
+        perform action: @escaping (CGPoint) -> Void
+    ) -> some View {
+        onClickGesture(count: count, coordinateSpace: .local, perform: action)
+    }
+    
+    func onClickGesture(
+        perform action: @escaping (CGPoint) -> Void
+    ) -> some View {
+        onClickGesture(count: 1, coordinateSpace: .local, perform: action)
+    }
+}
