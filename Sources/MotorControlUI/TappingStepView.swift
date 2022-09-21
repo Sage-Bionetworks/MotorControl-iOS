@@ -34,6 +34,7 @@ import SwiftUI
 import AssessmentModel
 import AssessmentModelUI
 import JsonModel
+import MotionSensor
 import MobilePassiveData
 import MotorControl
 import SharedMobileUI
@@ -154,31 +155,52 @@ struct TappingStepView: View {
                 resetCountdown()
                 state.audioFileSoundPlayer.vibrateDevice()
                 state.speak(at: 0)
+                Task {
+                    do {
+                        try await state.recorder.start()
+                    }
+                    catch {
+                        state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
+                    }
+                }
             }
             .onDisappear {
                 // If the recorder isn't stopping and the view disappears, it's b/c the recorder is cancelled.
                 // Go ahead and cancel the timer and the recorder.
-                timer.upstream.connect().cancel()
-
+                if state.recorder.status <= .running {
+                    timer.upstream.connect().cancel()
+                    state.recorder.cancel()
+                }
             }
             .onChange(of: assessmentState.showingPauseActions) { newValue in
-
+                guard state.recorder.isPaused != newValue else { return }
                 if newValue {
-                    // Pause the countdown animation
+                    // Pause the recorder and countdown animation
+                    state.recorder.pause()
                     pauseCountdown()
                 }
                 else {
                     // Resume the recoder and reset the countdown animation
+                    state.recorder.resume()
                     resetCountdown()
                 }
             }
             .onReceive(timer) { time in
+                guard !state.recorder.isPaused, countdown > 0 else { return }
                 countdown = max(countdown - 1, 0)
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
-                if countdown == 0 {
+                if countdown == 0, state.recorder.status <= .running {
                     state.audioFileSoundPlayer.vibrateDevice()
-                    state.speak(at: state.motionConfig.duration){
-                        pagedNavigation.goForward()
+                    state.speak(at: state.motionConfig.duration) {
+                        Task {
+                            do {
+                                state.result = try await state.recorder.stop()
+                            }
+                            catch {
+                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
+                            }
+                            pagedNavigation.goForward()
+                        }
                     }
                     timer.upstream.connect().cancel()
                 }
@@ -199,6 +221,7 @@ struct TappingStepView: View {
     }
     
     func pauseCountdown() {
+        state.recorder.pause()
         withAnimation(.linear(duration: 0)) {
             progress = 0
         }
