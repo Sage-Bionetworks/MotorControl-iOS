@@ -90,41 +90,31 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
+    fileprivate func tappingButton(target: FingerTarget) -> some View {
+        Text("Tap", bundle: SharedResources.bundle)
+            .frame(width: 100, height: 100)
+            .foregroundColor(Color.textForeground)
+            .background(surveyTint.saturation(2))
+            .clipShape(Circle())
+            .onTouchDownGesture { location, seconds in
+                ///TODO: pass info to the view model to create a sample tap object
+                if let duration = seconds {
+                    print(duration)
+                    print(target.rawValue)
+                }
+                else {
+                    print(location)
+                }
+            }
+    }
+    
+    @ViewBuilder
     fileprivate func tappingButtons() -> some View {
         HStack {
             Spacer()
-            Text("Tap", bundle: SharedResources.bundle)
-                .frame(width: 100, height: 100)
-                .foregroundColor(Color.textForeground)
-                .background(surveyTint.saturation(2))
-                .clipShape(Circle())
-//                .onClickGesture() { location in
-//                    print("left")
-////                    print(location)
-////                    print(clock.runningDuration())
-//                }
-                .onTouchDownGesture { location, duration in
-                    print("left")
-//                    print(location)
-//                    print(duration ?? "No duration")
-                }
-                
+            tappingButton(target: .left)
             Spacer()
-            Text("Tap", bundle: SharedResources.bundle)
-                .frame(width: 100, height: 100)
-                .foregroundColor(Color.textForeground)
-                .background(surveyTint.saturation(2))
-                .clipShape(Circle())
-//                .onClickGesture() { location in
-//                    print("right")
-////                    print(location)
-////                    print(clock.runningDuration())
-//                }
-                .onTouchDownGesture { location, duration in
-                    print("right")
-//                    print(location)
-//                    print(duration ?? "No duration")
-                }
+            tappingButton(target: .right)
             Spacer()
         }
     }
@@ -166,13 +156,15 @@ struct TappingStepView: View {
                     backgroundView()
                 }
                 .coordinateSpace(name: "NotTapButton")
-//                .onTapGesture {
-//                    print("Full screen")
-//                }
-                .onTouchDownGesture { location, duration in
-                    print("full screen")
-//                    print(location)
-//                    print(duration ?? "No duration")
+                .onTouchDownGesture { location, seconds in
+                    ///TODO: pass info to the view model to create a sample tap object
+                    if let duration = seconds {
+                        print(duration)
+                        print(FingerTarget.fullScreen.rawValue)
+                    }
+                    else {
+                        print(location)
+                    }
                 }
         }
     }
@@ -258,6 +250,10 @@ struct TappingStepView: View {
     }
 }
 
+enum FingerTarget : String, Codable {
+    case left, right, fullScreen
+}
+
 struct PreviewTappingStepView : View {
     @StateObject var assessmentState: AssessmentState = .init(AssessmentObject(previewStep: tappingExample))
     
@@ -278,30 +274,6 @@ struct TappingStepView_Previews: PreviewProvider {
 
 fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample", imageInfo: FetchableImage(imageName: "tap_left_1", bundle: SharedResources.bundle))
 
-//extension View {
-//    func onClickGesture(
-//        count: Int,
-//        coordinateSpace: CoordinateSpace = .local,
-//        perform action: @escaping (CGPoint) -> Void
-//    ) -> some View {
-//        gesture(TappingLocationGesture(count: count, coordinateSpace: coordinateSpace)
-//            .onEnded(perform: action)
-//        )
-//    }
-//
-//    func onClickGesture(
-//        count: Int,
-//        perform action: @escaping (CGPoint) -> Void
-//    ) -> some View {
-//        onClickGesture(count: count, coordinateSpace: .local, perform: action)
-//    }
-//
-//    func onClickGesture(
-//        perform action: @escaping (CGPoint) -> Void
-//    ) -> some View {
-//        onClickGesture(count: 1, coordinateSpace: .local, perform: action)
-//    }
-//}
 
 extension View {
     func onTouchDownGesture(callback: @escaping (CGPoint, SecondDuration?) -> Void) -> some View {

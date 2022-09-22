@@ -166,8 +166,7 @@ final class TwoHandNavigator : Navigator {
 }
 
 enum TwoHandAssessmentError: Error {
-    case identifiersNotUnique
-    case noHandFound
+    case identifiersNotUnique, noHandFound
 }
 
 public enum HandSelection: String, Codable, CaseIterable {
