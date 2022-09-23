@@ -36,6 +36,7 @@ import AssessmentModel
 import SharedResources
 import MobilePassiveData
 import MotionSensor
+import JsonModel
 
 let formattedTextPlaceHolder = "%@"
 
@@ -148,4 +149,8 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
 
 fileprivate func createOutputDirectory() -> URL {
     URL(fileURLWithPath: UUID().uuidString, isDirectory: true, relativeTo: FileManager.default.temporaryDirectory)
+}
+
+public enum FingerTarget : String, Codable {
+    case left, right, fullScreen
 }

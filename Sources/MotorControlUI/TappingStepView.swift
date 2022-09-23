@@ -90,14 +90,13 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
-    fileprivate func tappingButton(target: FingerTarget) -> some View {
+    fileprivate func singleTappingButton(target: FingerTarget) -> some View {
         Text("Tap", bundle: SharedResources.bundle)
             .frame(width: 100, height: 100)
             .foregroundColor(Color.textForeground)
             .background(surveyTint.saturation(2))
             .clipShape(Circle())
             .onTouchDownGesture { location, seconds in
-                ///TODO: pass info to the view model to create a sample tap object
                 if let duration = seconds {
                     print(duration)
                     print(target.rawValue)
@@ -112,9 +111,9 @@ struct TappingStepView: View {
     fileprivate func tappingButtons() -> some View {
         HStack {
             Spacer()
-            tappingButton(target: .left)
+            singleTappingButton(target: .left)
             Spacer()
-            tappingButton(target: .right)
+            singleTappingButton(target: .right)
             Spacer()
         }
     }
@@ -155,9 +154,8 @@ struct TappingStepView: View {
                 .background {
                     backgroundView()
                 }
-                .coordinateSpace(name: "NotTapButton")
+                .coordinateSpace(name: FingerTarget.fullScreen.rawValue)
                 .onTouchDownGesture { location, seconds in
-                    ///TODO: pass info to the view model to create a sample tap object
                     if let duration = seconds {
                         print(duration)
                         print(FingerTarget.fullScreen.rawValue)
@@ -277,6 +275,6 @@ fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample",
 
 extension View {
     func onTouchDownGesture(callback: @escaping (CGPoint, SecondDuration?) -> Void) -> some View {
-        modifier(OnTouchDownGestureModifier(callback: callback, coordinateSpace: .named("NotTapButton")))
+        modifier(OnTouchDownGestureModifier(callback: callback, coordinateSpace: .named(FingerTarget.fullScreen.rawValue)))
     }
 }
