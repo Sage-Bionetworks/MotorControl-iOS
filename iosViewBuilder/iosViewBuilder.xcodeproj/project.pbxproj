@@ -18,6 +18,7 @@
 		807B71FC28D92CDC008A9F51 /* TappingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FB28D92CDC008A9F51 /* TappingStepView.swift */; };
 		807B71FF28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FE28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift */; };
 		80CBB8A228BE7A33007EDCF1 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CBB8A128BE7A33007EDCF1 /* GlobalProperties.swift */; };
+		80EE6FBC28DE17FE0097C6FE /* PausableAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */; };
 		FF57F48728D1342C00EF96CB /* MotionSensorStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF57F48628D1342C00EF96CB /* MotionSensorStepView.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		807B71FE28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTouchDownGestureModifier.swift; sourceTree = "<group>"; };
 		80CBB8A128BE7A33007EDCF1 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GlobalProperties.swift; path = ../../iosViewBuilder/iosViewBuilder/GlobalProperties.swift; sourceTree = "<group>"; };
 		80CBB8A428C7F90D007EDCF1 /* AssessmentModelKMM */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AssessmentModelKMM; path = ../../AssessmentModelKMM; sourceTree = "<group>"; };
+		80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausableAnimationModifier.swift; sourceTree = "<group>"; };
 		FF57F48628D1342C00EF96CB /* MotionSensorStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSensorStepView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				807B71FE28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift */,
+				80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 				807B71FF28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift in Sources */,
 				8004DF3B28B003E50001A1F8 /* MotorControlAssessmentView.swift in Sources */,
 				807B71FC28D92CDC008A9F51 /* TappingStepView.swift in Sources */,
+				80EE6FBC28DE17FE0097C6FE /* PausableAnimationModifier.swift in Sources */,
 				FF57F48728D1342C00EF96CB /* MotionSensorStepView.swift in Sources */,
 				8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */,
 				8004DF0A28AFFE1D0001A1F8 /* iosViewBuilderApp.swift in Sources */,

@@ -44,14 +44,24 @@ struct TappingStepView: View {
     @EnvironmentObject var assessmentState: AssessmentState
     @EnvironmentObject var pagedNavigation: PagedNavigationViewModel
     @ObservedObject var state: TappingStepViewModel
-    @State var tapCount: Int = 0
-    @State var countdown: Int = 30
-    @State var progress: CGFloat = .zero
+    @State var tapCount : Int = 0
+    @State var countdown : Double = 30
+    @State var progress : CGFloat = .zero
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @State var lastHand : HandSelection? = nil
+    @State var isPaused : Bool = false
     @StateObject var clock = SimpleClock.init()
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
+    
+    private var remainingDuration: RemainingDurationProvider<CGFloat> {
+        { currentProgress in
+            countdown
+        }
+    }
+
+    private let animation: AnimationWithDurationProvider = { duration in
+      .linear(duration: duration)
+    }
     
     @ViewBuilder
     fileprivate func insideCountdownDial(_ count: Int) -> some View {
@@ -69,7 +79,7 @@ struct TappingStepView: View {
     @ViewBuilder
     fileprivate func countdownDial() -> some View {
         ZStack {
-            insideCountdownDial(countdown)
+            insideCountdownDial(Int(countdown))
             insideCountdownDial(30)
                 .opacity(0)
         }
@@ -82,6 +92,11 @@ struct TappingStepView: View {
                 .foregroundColor(.textForeground)
                 .rotationEffect(Angle(degrees: 270.0))
                 .padding(2.5)
+                .pausableAnimation(binding: $progress,
+                                   targetValue: 1.0,
+                                   remainingDuration: remainingDuration,
+                                   animation: animation,
+                                   paused: $isPaused)
                 .background {
                     Circle()
                         .fill(Color.sageWhite)
@@ -102,6 +117,13 @@ struct TappingStepView: View {
                     print(target.rawValue)
                 }
                 else {
+                    tapCount += 1
+                    if tapCount == 1 {
+                        clock.resume()
+                        withAnimation(.linear(duration: state.motionConfig.duration)) {
+                            progress = 1.0
+                        }
+                    }
                     print(location)
                 }
             }
@@ -170,80 +192,66 @@ struct TappingStepView: View {
     var body: some View {
         content()
             .onAppear {
-                // Reset the countdown animation and start the recorder.
+                // Reset the countdown animation.
                 resetCountdown()
                 state.audioFileSoundPlayer.vibrateDevice()
                 state.speak(at: 0)
-                Task {
-                    do {
-                        try await state.recorder.start()
-                    }
-                    catch {
-                        state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                    }
-                }
             }
             .onDisappear {
-                // If the recorder isn't stopping and the view disappears, it's b/c the recorder is cancelled.
-                // Go ahead and cancel the timer and the recorder.
-                if state.recorder.status <= .running {
-                    timer.upstream.connect().cancel()
-                    state.recorder.cancel()
-                }
+                timer.upstream.connect().cancel()
+                state.recorder.cancel()
             }
             .onChange(of: assessmentState.showingPauseActions) { newValue in
-                guard state.recorder.isPaused != newValue else { return }
+                guard clock.isPaused != newValue else { return }
                 if newValue {
-                    // Pause the recorder and countdown animation
-                    state.recorder.pause()
+                    // Pause the countdown animation
                     pauseCountdown()
                 }
                 else {
-                    // Resume the recoder and reset the countdown animation
-                    state.recorder.resume()
-                    clock.resume()
+                    // Resume the clock
+                    resumeCountdown()
                 }
             }
-            .onReceive(timer) { time in
-                guard !state.recorder.isPaused, countdown > 0 else { return }
+            .onReceive(timer) { _ in
+                guard countdown >= 0 else { return }
+                guard tapCount > 0 else { return }
+                guard !clock.isPaused else { return }
                 countdown = max(countdown - 1, 0)
-                // Once the countdown hits zero, stop the recorder and *then* navigate forward.
-                if countdown == 0, state.recorder.status <= .running {
+                // Once the countdown hits zero, stop the countdown and *then* navigate forward.
+                if countdown == 0, progress == 1.0 {
                     state.audioFileSoundPlayer.vibrateDevice()
                     state.speak(at: state.motionConfig.duration) {
-                        Task {
-                            do {
-                                state.result = try await state.recorder.stop()
-                            }
-                            catch {
-                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                            }
-                            pagedNavigation.goForward()
-                        }
+                        pagedNavigation.goForward()
                     }
                     timer.upstream.connect().cancel()
                 }
                 else {
+                    guard clock.runningDuration() == state.motionConfig.duration else { return }
                     state.speak(at: clock.runningDuration())
                 }
             }
     }
 
     func resetCountdown() {
-        let startDuration = state.motionConfig.duration
         clock.reset()
-        countdown = Int(startDuration)
+        clock.pause()
+        countdown = state.motionConfig.duration
         state.resetInstructionCache()
-        withAnimation(.linear(duration: startDuration)) {
-            progress = 1.0
-        }
+    }
+
+    func pauseCountdown() {
+        clock.pause()
+        toggleAnimation()
+    }
+
+    func resumeCountdown() {
+        clock.resume()
+        toggleAnimation()
     }
     
-    func pauseCountdown() {
-        state.recorder.pause()
-        clock.pause()
-        withAnimation(.linear(duration: 0)) {
-            progress = 0
+    func toggleAnimation() {
+        if tapCount > 0 {
+            isPaused = !isPaused
         }
     }
 }
@@ -277,4 +285,18 @@ extension View {
     func onTouchDownGesture(callback: @escaping (CGPoint, SecondDuration?) -> Void) -> some View {
         modifier(OnTouchDownGestureModifier(callback: callback, coordinateSpace: .named(FingerTarget.fullScreen.rawValue)))
     }
+}
+
+extension View {
+    func pausableAnimation<Value: VectorArithmetic>(binding: Binding<Value>,
+                                                    targetValue: Value,
+                                                    remainingDuration: @escaping RemainingDurationProvider<Value>,
+                                                    animation: @escaping AnimationWithDurationProvider,
+                                                    paused: Binding<Bool>) -> some View {
+    self.modifier(PausableAnimationModifier(binding: binding,
+                                            targetValue: targetValue,
+                                            remainingDuration: remainingDuration,
+                                            animation: animation,
+                                            paused: paused))
+  }
 }
