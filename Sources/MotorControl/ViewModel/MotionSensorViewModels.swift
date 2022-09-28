@@ -90,19 +90,31 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
     var previousButton: TappingButtonIdentifier? = nil
     @Published public var tapCount: Int = 0
 
-    public func tappedScreen(uptime: TimeInterval, timestamp: TimeInterval, currentButton: TappingButtonIdentifier, location: CGPoint) {
-        let sample: TappingSample = .init(uptime: uptime,
-                                          timestamp: timestamp,
+    public func tappedScreen(uptime: TimeInterval,
+                             timestamp: TimeInterval,
+                             currentButton: TappingButtonIdentifier,
+                             location: CGPoint,
+                             duration: Double) {
+        let sample: TappingSample = .init(uptime: uptime - duration,
+                                          timestamp: timestamp - duration,
                                           stepPath: recorder.currentStepPath,
                                           buttonIdentifier: currentButton,
-                                          location: location, duration: 0)
+                                          location: location,
+                                          duration: duration)
         lastSample[currentButton] = sample
+        samples.append(sample)
         guard currentButton != .none, previousButton != currentButton
         else {
             return
         }
         tapCount += 1
         previousButton = currentButton
+    }
+    
+    public func printSamples() {
+        for s in samples {
+            print(s)
+        }
     }
 }
 

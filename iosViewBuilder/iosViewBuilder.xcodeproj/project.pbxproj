@@ -16,7 +16,7 @@
 		8004DF3B28B003E50001A1F8 /* MotorControlAssessmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */; };
 		801430D828B574AC004982FA /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801430D728B574AC004982FA /* OverviewView.swift */; };
 		807B71FC28D92CDC008A9F51 /* TappingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FB28D92CDC008A9F51 /* TappingStepView.swift */; };
-		807B71FF28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FE28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift */; };
+		807B71FF28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FE28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift */; };
 		80CBB8A228BE7A33007EDCF1 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CBB8A128BE7A33007EDCF1 /* GlobalProperties.swift */; };
 		80EE6FBC28DE17FE0097C6FE /* PausableAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */; };
 		FF57F48728D1342C00EF96CB /* MotionSensorStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF57F48628D1342C00EF96CB /* MotionSensorStepView.swift */; };
@@ -34,7 +34,7 @@
 		801430D728B574AC004982FA /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
 		807B71FA28D507D2008A9F51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		807B71FB28D92CDC008A9F51 /* TappingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappingStepView.swift; sourceTree = "<group>"; };
-		807B71FE28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTouchDownGestureModifier.swift; sourceTree = "<group>"; };
+		807B71FE28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFingerPressedGestureModifier.swift; sourceTree = "<group>"; };
 		80CBB8A128BE7A33007EDCF1 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GlobalProperties.swift; path = ../../iosViewBuilder/iosViewBuilder/GlobalProperties.swift; sourceTree = "<group>"; };
 		80CBB8A428C7F90D007EDCF1 /* AssessmentModelKMM */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AssessmentModelKMM; path = ../../AssessmentModelKMM; sourceTree = "<group>"; };
 		80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausableAnimationModifier.swift; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 		807B71FD28DB6D7C008A9F51 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				807B71FE28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift */,
+				807B71FE28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift */,
 				80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */,
 			);
 			path = Components;
@@ -206,7 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				801430D828B574AC004982FA /* OverviewView.swift in Sources */,
-				807B71FF28DB6DB2008A9F51 /* OnTouchDownGestureModifier.swift in Sources */,
+				807B71FF28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift in Sources */,
 				8004DF3B28B003E50001A1F8 /* MotorControlAssessmentView.swift in Sources */,
 				807B71FC28D92CDC008A9F51 /* TappingStepView.swift in Sources */,
 				80EE6FBC28DE17FE0097C6FE /* PausableAnimationModifier.swift in Sources */,

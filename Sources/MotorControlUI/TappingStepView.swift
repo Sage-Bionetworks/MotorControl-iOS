@@ -48,10 +48,10 @@ struct TappingStepView: View {
     @State var progress : CGFloat = .zero
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var isPaused : Bool = false
-    @StateObject var clock = SimpleClock.init()
+    @State var initialTap = false
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
-    
+
     @ViewBuilder
     fileprivate func insideCountdownDial(_ count: Int) -> some View {
         VStack {
@@ -98,18 +98,32 @@ struct TappingStepView: View {
             .foregroundColor(Color.textForeground)
             .background(surveyTint.saturation(2))
             .clipShape(Circle())
-            .onTouchDownGesture { startLocation, tapDuration in
-                guard clock.runningDuration() < state.motionConfig.duration else { return }
-                state.tappedScreen(uptime: SystemClock.uptime(), timestamp: clock.runningDuration(), currentButton: target, location: startLocation)
-
-                //Create simulaneous gesture for tap down for this logic
-                if state.tapCount == 1 {
-                    clock.reset()
-                    withAnimation(.linear(duration: state.motionConfig.duration)) {
-                        progress = 1.0
-                    }
-                }
+            .onFingerPressedGesture { startLocation, tapDuration in
+                guard state.recorder.clock.runningDuration() < state.motionConfig.duration else { return }
+                state.tappedScreen(uptime: SystemClock.uptime(),
+                                   timestamp: state.recorder.clock.runningDuration(),
+                                   currentButton: target, location: startLocation,
+                                   duration: tapDuration)
             }
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { touch in
+                        guard !initialTap, state.tapCount == 0 else { return }
+                        initialTap = true
+                        state.recorder.clock.reset()
+                        withAnimation(.linear(duration: state.motionConfig.duration)) {
+                            progress = 1.0
+                        }
+                        Task {
+                            do {
+                                try await state.recorder.start()
+                            }
+                            catch {
+                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
+                            }
+                        }
+                    }
+            )
     }
     
     @ViewBuilder
@@ -160,8 +174,13 @@ struct TappingStepView: View {
                     backgroundView()
                 }
                 .coordinateSpace(name: TappingButtonIdentifier.none.rawValue)
-                .onTouchDownGesture { location, tapDuration in
-                    state.tappedScreen(uptime: SystemClock.uptime(), timestamp: clock.runningDuration(), currentButton: .none, location: location)
+                .onFingerPressedGesture { location, tapDuration in
+                    guard initialTap else { return }
+                    state.tappedScreen(uptime: SystemClock.uptime(),
+                                       timestamp: state.recorder.clock.runningDuration(),
+                                       currentButton: .none,
+                                       location: location,
+                                       duration: tapDuration)
                 }
         }
     }
@@ -175,58 +194,72 @@ struct TappingStepView: View {
                 state.speak(at: 0)
             }
             .onDisappear {
-                timer.upstream.connect().cancel()
-                state.recorder.cancel()
+                // If the recorder isn't stopping and the view disappears, it's b/c the recorder is cancelled.
+                // Go ahead and cancel the timer and the recorder.
+                if state.recorder.status <= .running {
+                    timer.upstream.connect().cancel()
+                    state.recorder.cancel()
+                }
             }
             .onChange(of: assessmentState.showingPauseActions) { newValue in
-                guard clock.isPaused != newValue else { return }
+                guard state.recorder.isPaused != newValue else { return }
                 if newValue {
-                    // Pause the countdown animation
+                    // Pause the recorder and countdown animation
+                    state.recorder.pause()
                     pauseCountdown()
                 }
                 else {
-                    // Resume the clock
+                    // Resume the recoder and reset the countdown animation
+                    state.recorder.resume()
                     resumeCountdown()
                 }
             }
             .onReceive(timer) { _ in
-                guard countdown >= 0 else { return }
-                guard state.tapCount > 0 else { return }
-                guard !clock.isPaused else { return }
+                guard !state.recorder.isPaused, countdown > 0, initialTap else { return }
                 countdown = max(countdown - 1, 0)
                 // Once the countdown hits zero, stop the countdown and *then* navigate forward.
                 if countdown == 0 {
                     state.audioFileSoundPlayer.vibrateDevice()
                     state.speak(at: state.motionConfig.duration) {
-                        pagedNavigation.goForward()
+                        Task {
+                            do {
+                                state.result = try await state.recorder.stop()
+                            }
+                            catch {
+                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
+                            }
+                            state.printSamples()
+                            pagedNavigation.goForward()
+                        }
                     }
                     timer.upstream.connect().cancel()
                 }
                 else {
-                    guard clock.runningDuration() == state.motionConfig.duration else { return }
-                    state.speak(at: clock.runningDuration())
+                    guard state.recorder.clock.runningDuration() == state.motionConfig.duration else { return }
+                    state.speak(at: state.recorder.clock.runningDuration())
                 }
             }
     }
 
     private func resetCountdown() {
-        clock.reset()
+        state.recorder.clock.reset()
         countdown = state.motionConfig.duration
         state.resetInstructionCache()
     }
 
     private func pauseCountdown() {
-        clock.pause()
+        state.recorder.clock.pause()
+        state.recorder.pause()
         toggleAnimation()
     }
 
     private func resumeCountdown() {
-        clock.resume()
+        state.recorder.clock.resume()
         toggleAnimation()
     }
     
     private func toggleAnimation() {
-        if state.tapCount > 0 {
+        if initialTap {
             isPaused = !isPaused
         }
     }
@@ -254,7 +287,7 @@ fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample",
 
 
 extension View {
-    func onTouchDownGesture(callback: @escaping (CGPoint, SecondDuration?) -> Void) -> some View {
-        modifier(OnTouchDownGestureModifier(callback: callback, coordinateSpace: .named(TappingButtonIdentifier.none.rawValue)))
+    func onFingerPressedGesture(callback: @escaping (CGPoint, Double) -> Void) -> some View {
+        modifier(OnFingerPressedGestureModifier(callback: callback, coordinateSpace: .named(TappingButtonIdentifier.none.rawValue)))
     }
 }

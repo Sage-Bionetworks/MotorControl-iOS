@@ -1,5 +1,5 @@
 //
-//  OnTouchDownGestureModifier.swift
+//  OnFingerPressedGestureModifier.swift
 //
 //  Copyright © 2022 Sage Bionetworks. All rights reserved.
 //
@@ -33,11 +33,11 @@
 import SwiftUI
 import MobilePassiveData
 
-struct OnTouchDownGestureModifier: ViewModifier {
+struct OnFingerPressedGestureModifier: ViewModifier {
     @State private var fingerDown = false
     @State private var startLocation: CGPoint = .zero
     @StateObject var clock = SimpleClock.init()
-    let callback: (CGPoint, SecondDuration) -> Void
+    let callback: (CGPoint, Double) -> Void
     let coordinateSpace: CoordinateSpace
 
     func body(content: Content) -> some View {
