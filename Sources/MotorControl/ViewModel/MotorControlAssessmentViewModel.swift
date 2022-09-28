@@ -145,12 +145,28 @@ public final class TremorStepViewModel : MotionSensorStepViewModel {
 
 /// View model for a tapping step
 public final class TappingStepViewModel : MotionSensorStepViewModel {
+    public var samples: [TappingSample] = []
+    private var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
+    private var previousButton: TappingButtonIdentifier? = nil
+    @Published public var tapCount: Int = 0
+
+    public func tappedScreen(uptime: TimeInterval, timestamp: TimeInterval, currentButton: TappingButtonIdentifier, location: CGPoint) {
+        let sample: TappingSample = .init(uptime: uptime,
+                                          timestamp: timestamp,
+                                          stepPath: recorder.currentStepPath,
+                                          buttonIdentifier: currentButton,
+                                          location: location, duration: 0)
+        lastSample[currentButton] = sample
+        guard currentButton != .none, previousButton != currentButton
+        else {
+            return
+        }
+        tapCount += 1
+        print("Tapped \(currentButton.rawValue) and count is now \(tapCount)")
+        previousButton = currentButton
+    }
 }
 
 fileprivate func createOutputDirectory() -> URL {
     URL(fileURLWithPath: UUID().uuidString, isDirectory: true, relativeTo: FileManager.default.temporaryDirectory)
-}
-
-public enum FingerTarget : String, Codable {
-    case left, right, fullScreen
 }

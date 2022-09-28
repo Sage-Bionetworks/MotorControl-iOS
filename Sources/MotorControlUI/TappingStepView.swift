@@ -44,7 +44,6 @@ struct TappingStepView: View {
     @EnvironmentObject var assessmentState: AssessmentState
     @EnvironmentObject var pagedNavigation: PagedNavigationViewModel
     @ObservedObject var state: TappingStepViewModel
-    @State var tapCount : Int = 0
     @State var countdown : Double = 30
     @State var progress : CGFloat = .zero
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -52,16 +51,6 @@ struct TappingStepView: View {
     @StateObject var clock = SimpleClock.init()
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
-    
-    private var remainingDuration: RemainingDurationProvider<CGFloat> {
-        { currentProgress in
-            countdown
-        }
-    }
-
-    private let animation: AnimationWithDurationProvider = { duration in
-      .linear(duration: duration)
-    }
     
     @ViewBuilder
     fileprivate func insideCountdownDial(_ count: Int) -> some View {
@@ -92,11 +81,10 @@ struct TappingStepView: View {
                 .foregroundColor(.textForeground)
                 .rotationEffect(Angle(degrees: 270.0))
                 .padding(2.5)
-                .pausableAnimation(binding: $progress,
-                                   targetValue: 1.0,
-                                   remainingDuration: remainingDuration,
-                                   animation: animation,
-                                   paused: $isPaused)
+                .pausableAnimation(progress: $progress,
+                                   paused: $isPaused,
+                                   remainingDuration: $countdown,
+                                   totalDuration: 1.0)
                 .background {
                     Circle()
                         .fill(Color.sageWhite)
@@ -105,26 +93,22 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
-    fileprivate func singleTappingButton(target: FingerTarget) -> some View {
+    fileprivate func singleTappingButton(target: TappingButtonIdentifier) -> some View {
         Text("Tap", bundle: SharedResources.bundle)
             .frame(width: 100, height: 100)
             .foregroundColor(Color.textForeground)
             .background(surveyTint.saturation(2))
             .clipShape(Circle())
-            .onTouchDownGesture { location, seconds in
-                if let duration = seconds {
-                    print(duration)
-                    print(target.rawValue)
-                }
-                else {
-                    tapCount += 1
-                    if tapCount == 1 {
-                        clock.resume()
-                        withAnimation(.linear(duration: state.motionConfig.duration)) {
-                            progress = 1.0
-                        }
+            .onTouchDownGesture { startLocation, tapDuration in
+                guard clock.runningDuration() < state.motionConfig.duration else { return }
+                state.tappedScreen(uptime: SystemClock.uptime(), timestamp: clock.runningDuration(), currentButton: target, location: startLocation)
+
+                //Create simulaneous gesture for tap down for this logic
+                if state.tapCount == 1 {
+                    clock.reset()
+                    withAnimation(.linear(duration: state.motionConfig.duration)) {
+                        progress = 1.0
                     }
-                    print(location)
                 }
             }
     }
@@ -147,7 +131,7 @@ struct TappingStepView: View {
             Spacer()
             countdownDial()
             Spacer()
-            Text("\(tapCount)", bundle: SharedResources.bundle)
+            Text("\(state.tapCount)", bundle: SharedResources.bundle)
                 .foregroundColor(.textForeground)
                 .font(.countdownNumbers)
             tappingButtons()
@@ -176,15 +160,9 @@ struct TappingStepView: View {
                 .background {
                     backgroundView()
                 }
-                .coordinateSpace(name: FingerTarget.fullScreen.rawValue)
-                .onTouchDownGesture { location, seconds in
-                    if let duration = seconds {
-                        print(duration)
-                        print(FingerTarget.fullScreen.rawValue)
-                    }
-                    else {
-                        print(location)
-                    }
+                .coordinateSpace(name: TappingButtonIdentifier.none.rawValue)
+                .onTouchDownGesture { location, tapDuration in
+                    state.tappedScreen(uptime: SystemClock.uptime(), timestamp: clock.runningDuration(), currentButton: .none, location: location)
                 }
         }
     }
@@ -214,13 +192,14 @@ struct TappingStepView: View {
             }
             .onReceive(timer) { _ in
                 guard countdown >= 0 else { return }
-                guard tapCount > 0 else { return }
+                guard state.tapCount > 0 else { return }
                 guard !clock.isPaused else { return }
                 countdown = max(countdown - 1, 0)
                 // Once the countdown hits zero, stop the countdown and *then* navigate forward.
-                if countdown == 0, progress == 1.0 {
+                if countdown == 0 {
                     state.audioFileSoundPlayer.vibrateDevice()
                     state.speak(at: state.motionConfig.duration) {
+                        print(state.samples.count)
                         pagedNavigation.goForward()
                     }
                     timer.upstream.connect().cancel()
@@ -232,32 +211,27 @@ struct TappingStepView: View {
             }
     }
 
-    func resetCountdown() {
+    private func resetCountdown() {
         clock.reset()
-        clock.pause()
         countdown = state.motionConfig.duration
         state.resetInstructionCache()
     }
 
-    func pauseCountdown() {
+    private func pauseCountdown() {
         clock.pause()
         toggleAnimation()
     }
 
-    func resumeCountdown() {
+    private func resumeCountdown() {
         clock.resume()
         toggleAnimation()
     }
     
-    func toggleAnimation() {
-        if tapCount > 0 {
+    private func toggleAnimation() {
+        if state.tapCount > 0 {
             isPaused = !isPaused
         }
     }
-}
-
-enum FingerTarget : String, Codable {
-    case left, right, fullScreen
 }
 
 struct PreviewTappingStepView : View {
@@ -283,20 +257,6 @@ fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample",
 
 extension View {
     func onTouchDownGesture(callback: @escaping (CGPoint, SecondDuration?) -> Void) -> some View {
-        modifier(OnTouchDownGestureModifier(callback: callback, coordinateSpace: .named(FingerTarget.fullScreen.rawValue)))
+        modifier(OnTouchDownGestureModifier(callback: callback, coordinateSpace: .named(TappingButtonIdentifier.none.rawValue)))
     }
-}
-
-extension View {
-    func pausableAnimation<Value: VectorArithmetic>(binding: Binding<Value>,
-                                                    targetValue: Value,
-                                                    remainingDuration: @escaping RemainingDurationProvider<Value>,
-                                                    animation: @escaping AnimationWithDurationProvider,
-                                                    paused: Binding<Bool>) -> some View {
-    self.modifier(PausableAnimationModifier(binding: binding,
-                                            targetValue: targetValue,
-                                            remainingDuration: remainingDuration,
-                                            animation: animation,
-                                            paused: paused))
-  }
 }

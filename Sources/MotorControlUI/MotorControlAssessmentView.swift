@@ -97,9 +97,11 @@ public struct MotorControlAssessmentView : View {
             }
             else if let nodeState = state as? TremorStepViewModel {
                 MotionSensorStepView(state: nodeState)
+                    .modifier(AppBackgroundListener())
             }
             else if let nodeState = state as? TappingStepViewModel {
                 TappingStepView(state: nodeState)
+                    .modifier(AppBackgroundListener())
             }
             else {
                 VStack {
@@ -113,27 +115,32 @@ public struct MotorControlAssessmentView : View {
     }
 }
 
-//TODO: Decide whether or not we want this Aaron Rabara 8/25/22
-//struct AppBackgroundListener : ViewModifier {
-//    @EnvironmentObject var assessmentState: AssessmentState
-//    @State var didResignActive = false
-//
-//    func body(content: Content) -> some View {
-//        content
-//            .alert(isPresented: $didResignActive) {
-//                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: .module),
-//                      message: nil,
-//                      dismissButton: .default(Text("OK", bundle: .module), action: {
-//                    assessmentState.status = .continueLater
-//                }))
-//            }
-//        #if os(iOS)
-//            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-//                didResignActive = true
-//            }
-//        #endif
-//    }
-//}
+struct AppBackgroundListener : ViewModifier {
+    @EnvironmentObject var assessmentState: AssessmentState
+    @State var didResignActive = false
+
+    func body(content: Content) -> some View {
+        content
+            .alert(isPresented: $didResignActive) {
+                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: .module),
+                      message: nil,
+                      dismissButton: .default(Text("OK", bundle: .module), action: {
+                    assessmentState.status = .continueLater
+                }))
+            }
+        #if os(iOS)
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                didResignActive = true
+            }
+            .onAppear {
+                UIApplication.shared.isIdleTimerDisabled = true
+            }
+            .onDisappear {
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
+        #endif
+    }
+}
 
 struct MotorControlAssessmentPreview : View {
     let assessmentState: AssessmentState

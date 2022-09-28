@@ -35,30 +35,29 @@ import SwiftUI
 
 ///Modified from: https://swiftuirecipes.com/blog/pause-and-resume-animation-in-swiftui
 
-public typealias RemainingDurationProvider<Value: VectorArithmetic> = (Value) -> TimeInterval
+public typealias RemainingDurationProvider<Value: VectorArithmetic> = (Value) -> Double
 public typealias AnimationWithDurationProvider = (TimeInterval) -> Animation
 
-public struct PausableAnimationModifier<Value: VectorArithmetic>: AnimatableModifier {
-    @Binding var binding: Value
+public struct PausableAnimationModifier: AnimatableModifier {
+    @Binding var progress: CGFloat
     @Binding var paused: Bool
-
-    private let targetValue: Value
-    private let remainingDuration: RemainingDurationProvider<Value>
+    @Binding var remainingDuration: Double
+    private let totalDuration: Double
     private let animation: AnimationWithDurationProvider
-    
-    public var animatableData: Value
+    public var animatableData: Double
 
-    public init(binding: Binding<Value>,
-                targetValue: Value,
-                remainingDuration: @escaping RemainingDurationProvider<Value>,
-                animation: @escaping AnimationWithDurationProvider,
-                paused: Binding<Bool>) {
-        _binding = binding
-        self.targetValue = targetValue
-        self.remainingDuration = remainingDuration
-        self.animation = animation
+    public init(progress: Binding<CGFloat>,
+                paused: Binding<Bool>,
+                remainingDuration: Binding<Double>,
+                totalDuration: Double,
+                animation: @escaping AnimationWithDurationProvider = { .linear(duration: $0) }
+                ) {
+        _progress = progress
         _paused = paused
-        animatableData = binding.wrappedValue
+        _remainingDuration = remainingDuration
+        self.totalDuration = totalDuration
+        self.animation = animation
+        animatableData = progress.wrappedValue
     }
 
     public func body(content: Content) -> some View {
@@ -66,12 +65,12 @@ public struct PausableAnimationModifier<Value: VectorArithmetic>: AnimatableModi
             .onChange(of: paused) { isPaused in
                 if isPaused {
                     withAnimation(.instant) {
-                        binding = animatableData
+                        progress = animatableData
                     }
                 }
                 else {
-                    withAnimation(animation(remainingDuration(animatableData))) {
-                        binding = targetValue
+                    withAnimation(animation(remainingDuration)) {
+                        progress = totalDuration
                     }
                 }
             }
@@ -80,4 +79,16 @@ public struct PausableAnimationModifier<Value: VectorArithmetic>: AnimatableModi
 
 public extension Animation {
     static let instant = Animation.linear(duration: .leastNonzeroMagnitude)
+}
+
+extension View {
+    public func pausableAnimation(progress: Binding<CGFloat>,
+                                  paused: Binding<Bool>,
+                                  remainingDuration: Binding<Double>,
+                                  totalDuration: Double) -> some View {
+    self.modifier(PausableAnimationModifier(progress: progress,
+                                            paused: paused,
+                                            remainingDuration: remainingDuration,
+                                            totalDuration: totalDuration))
+  }
 }
