@@ -145,9 +145,9 @@ public final class TremorStepViewModel : MotionSensorStepViewModel {
 
 /// View model for a tapping step
 public final class TappingStepViewModel : MotionSensorStepViewModel {
-    public var samples: [TappingSample] = []
-    private var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
-    private var previousButton: TappingButtonIdentifier? = nil
+    var samples: [TappingSample] = []
+    var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
+    var previousButton: TappingButtonIdentifier? = nil
     @Published public var tapCount: Int = 0
 
     public func tappedScreen(uptime: TimeInterval, timestamp: TimeInterval, currentButton: TappingButtonIdentifier, location: CGPoint) {
@@ -162,7 +162,6 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
             return
         }
         tapCount += 1
-        print("Tapped \(currentButton.rawValue) and count is now \(tapCount)")
         previousButton = currentButton
     }
 }

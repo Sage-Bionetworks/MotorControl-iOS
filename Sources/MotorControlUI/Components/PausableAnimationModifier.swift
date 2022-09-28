@@ -32,30 +32,29 @@
 
 import SwiftUI
 
-
 ///Modified from: https://swiftuirecipes.com/blog/pause-and-resume-animation-in-swiftui
 
-public typealias RemainingDurationProvider<Value: VectorArithmetic> = (Value) -> Double
 public typealias AnimationWithDurationProvider = (TimeInterval) -> Animation
 
 public struct PausableAnimationModifier: AnimatableModifier {
     @Binding var progress: CGFloat
     @Binding var paused: Bool
     @Binding var remainingDuration: Double
-    private let totalDuration: Double
+    private let totalProgress: Double
     private let animation: AnimationWithDurationProvider
     public var animatableData: Double
 
     public init(progress: Binding<CGFloat>,
                 paused: Binding<Bool>,
                 remainingDuration: Binding<Double>,
-                totalDuration: Double,
-                animation: @escaping AnimationWithDurationProvider = { .linear(duration: $0) }
+                totalProgress: Double,
+                animation: @escaping AnimationWithDurationProvider
                 ) {
         _progress = progress
         _paused = paused
         _remainingDuration = remainingDuration
-        self.totalDuration = totalDuration
+        
+        self.totalProgress = totalProgress
         self.animation = animation
         animatableData = progress.wrappedValue
     }
@@ -70,7 +69,7 @@ public struct PausableAnimationModifier: AnimatableModifier {
                 }
                 else {
                     withAnimation(animation(remainingDuration)) {
-                        progress = totalDuration
+                        progress = totalProgress
                     }
                 }
             }
@@ -85,10 +84,12 @@ extension View {
     public func pausableAnimation(progress: Binding<CGFloat>,
                                   paused: Binding<Bool>,
                                   remainingDuration: Binding<Double>,
-                                  totalDuration: Double) -> some View {
+                                  totalProgress: Double = 1.0,
+                                  animation: @escaping AnimationWithDurationProvider = { .linear(duration: $0) }) -> some View {
     self.modifier(PausableAnimationModifier(progress: progress,
                                             paused: paused,
                                             remainingDuration: remainingDuration,
-                                            totalDuration: totalDuration))
+                                            totalProgress: totalProgress,
+                                            animation: animation))
   }
 }

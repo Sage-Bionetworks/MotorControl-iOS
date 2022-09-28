@@ -83,8 +83,7 @@ struct TappingStepView: View {
                 .padding(2.5)
                 .pausableAnimation(progress: $progress,
                                    paused: $isPaused,
-                                   remainingDuration: $countdown,
-                                   totalDuration: 1.0)
+                                   remainingDuration: $countdown)
                 .background {
                     Circle()
                         .fill(Color.sageWhite)
@@ -199,7 +198,6 @@ struct TappingStepView: View {
                 if countdown == 0 {
                     state.audioFileSoundPlayer.vibrateDevice()
                     state.speak(at: state.motionConfig.duration) {
-                        print(state.samples.count)
                         pagedNavigation.goForward()
                     }
                     timer.upstream.connect().cancel()
