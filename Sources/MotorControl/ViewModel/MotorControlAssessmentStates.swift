@@ -33,10 +33,6 @@
 import SwiftUI
 import AssessmentModelUI
 import AssessmentModel
-import SharedResources
-import MobilePassiveData
-import MotionSensor
-import JsonModel
 
 let formattedTextPlaceHolder = "%@"
 
@@ -94,78 +90,4 @@ public class AbstractMotionControlState : ContentNodeState {
 
 /// State object for an instruction.
 public final class MotorControlInstructionState : AbstractMotionControlState {
-}
-
-/// State object for motion sensor steps
-public class MotionSensorStepViewModel : AbstractMotionControlState {
-    public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
-    public let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
-    public let voicePrompter: TextToSpeechSynthesizer = .init()
-    public let spokenInstructions: [Int : String]
-    public var instructionCache: Set<Int> = []
-    @Published public var recorder: MotionRecorder
-    
-    public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
-        if assessmentState.outputDirectory == nil {
-            assessmentState.outputDirectory = createOutputDirectory()
-        }
-        self.recorder = .init(configuration: motionConfig,
-                              outputDirectory: assessmentState.outputDirectory!,
-                              initialStepPath: "\(assessmentState.node.identifier)/\(branchState.node.identifier)",
-                              sectionIdentifier: branchState.node.identifier)
-        let whichHand = branchState.node.hand()
-        let replacementString = whichHand?.handReplacementString() ?? "NULL"
-        self.spokenInstructions = motionConfig.spokenInstructions?.mapValues { text in
-            text.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
-        } ?? [:]
-        super.init(motionConfig, parentId: branchState.id, whichHand: whichHand)
-    }
-    
-    public func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
-        let key = Int(min(timeInterval, motionConfig.duration))
-        guard !instructionCache.contains(key), let instruction = spokenInstructions[key]
-        else {
-            completion?()
-            return
-        }
-        instructionCache.insert(key)
-        voicePrompter.speak(text: instruction) { _, _ in
-            completion?()
-        }
-    }
-    
-    public func resetInstructionCache() {
-        instructionCache.removeAll()
-    }
-}
-
-/// View model for a tremor step
-public final class TremorStepViewModel : MotionSensorStepViewModel {
-}
-
-/// View model for a tapping step
-public final class TappingStepViewModel : MotionSensorStepViewModel {
-    var samples: [TappingSample] = []
-    var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
-    var previousButton: TappingButtonIdentifier? = nil
-    @Published public var tapCount: Int = 0
-
-    public func tappedScreen(uptime: TimeInterval, timestamp: TimeInterval, currentButton: TappingButtonIdentifier, location: CGPoint) {
-        let sample: TappingSample = .init(uptime: uptime,
-                                          timestamp: timestamp,
-                                          stepPath: recorder.currentStepPath,
-                                          buttonIdentifier: currentButton,
-                                          location: location, duration: 0)
-        lastSample[currentButton] = sample
-        guard currentButton != .none, previousButton != currentButton
-        else {
-            return
-        }
-        tapCount += 1
-        previousButton = currentButton
-    }
-}
-
-fileprivate func createOutputDirectory() -> URL {
-    URL(fileURLWithPath: UUID().uuidString, isDirectory: true, relativeTo: FileManager.default.temporaryDirectory)
 }

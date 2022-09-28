@@ -33,7 +33,7 @@ let package = Package(
                  from: "0.8.6"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.3.1"),
+                 from: "1.3.2"),
     ],
     targets: [
         .target(
