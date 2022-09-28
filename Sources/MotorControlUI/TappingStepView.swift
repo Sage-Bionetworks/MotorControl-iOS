@@ -228,7 +228,6 @@ struct TappingStepView: View {
                             catch {
                                 state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
                             }
-                            state.printSamples()
                             pagedNavigation.goForward()
                         }
                     }

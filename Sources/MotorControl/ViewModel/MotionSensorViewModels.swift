@@ -110,12 +110,6 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
         tapCount += 1
         previousButton = currentButton
     }
-    
-    public func printSamples() {
-        for s in samples {
-            print(s)
-        }
-    }
 }
 
 fileprivate func createOutputDirectory() -> URL {
