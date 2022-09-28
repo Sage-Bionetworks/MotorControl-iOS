@@ -34,6 +34,7 @@ import SwiftUI
 import AssessmentModel
 import AssessmentModelUI
 import JsonModel
+import SharedResources
 import SharedMobileUI
 import MotorControl
 
@@ -122,9 +123,9 @@ struct AppBackgroundListener : ViewModifier {
     func body(content: Content) -> some View {
         content
             .alert(isPresented: $didResignActive) {
-                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: .module),
+                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: SharedResources.bundle),
                       message: nil,
-                      dismissButton: .default(Text("OK", bundle: .module), action: {
+                      dismissButton: .default(Text("OK", bundle: SharedResources.bundle), action: {
                     assessmentState.status = .continueLater
                 }))
             }

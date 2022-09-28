@@ -74,7 +74,7 @@ struct TappingStepView: View {
         }
         .fixedSize(horizontal: true, vertical: true)
         .padding(48)
-        .background {
+        .background (
             Circle()
                 .trim(from: 0.0, to: min(progress, 1.0))
                 .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
@@ -84,11 +84,11 @@ struct TappingStepView: View {
                 .pausableAnimation(progress: $progress,
                                    paused: $isPaused,
                                    remainingDuration: $countdown)
-                .background {
+                .background (
                     Circle()
                         .fill(Color.sageWhite)
-                }
-        }
+                )
+        )
     }
     
     @ViewBuilder
@@ -170,9 +170,9 @@ struct TappingStepView: View {
     func content() -> some View {
         GeometryReader { geometry in
             insideView()
-                .background {
+                .background (
                     backgroundView()
-                }
+                )
                 .coordinateSpace(name: TappingButtonIdentifier.none.rawValue)
                 .onFingerPressedGesture { location, tapDuration in
                     guard initialTap else { return }

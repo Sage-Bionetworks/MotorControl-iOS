@@ -32,6 +32,7 @@ import XCTest
 import JsonModel
 import AssessmentModel
 import AssessmentModelUI
+import SharedResources
 @testable import MotorControl
 
 final class MotorControlNavigationTests: XCTestCase {
@@ -174,10 +175,6 @@ final class MotorControlNavigationTests: XCTestCase {
         }
         XCTAssertTrue(state.navigator.isCompleted(currentNode: completionNode, branchResult: state.assessmentResult))
     }
-        
-    enum TestError: Error {
-        case nilValue
-    }
     
     func navigateForward(_ state: TestNavigationState, to identifier: String, handSelection: String? = "both") throws -> Node {
         var loopCount = 0
@@ -206,20 +203,53 @@ final class MotorControlNavigationTests: XCTestCase {
         }
         return node
     }
+}
 
-    class TestNavigationState : NavigationState {
-        let assessmentState: AssessmentState
-
-        public private(set) var navigator: Navigator! = nil
-
-        var currentNode: Node?
+final class MotorControlViewModelTests: XCTestCase {
+    
+    func testInstructionStateHand() throws {
+        let localizedHandLeft = SharedResources.bundle.localizedString(forKey: HandSelection.left.rawValue, value: HandSelection.left.rawValue.uppercased(), table: nil)
+        let localizedHandRight = SharedResources.bundle.localizedString(forKey: HandSelection.right.rawValue, value: HandSelection.right.rawValue.uppercased(), table: nil)
         
-        var assessment: Assessment { assessmentState.assessment }
-        var assessmentResult: AssessmentResult { assessmentState.assessmentResult }
-
-        init(_ assessmentState: AssessmentState) {
-            self.assessmentState = assessmentState
-            self.navigator = try! assessmentState.assessment.instantiateNavigator(state: self)
-        }
+        let instructionStateLeft = MotorControlInstructionState(handInstructionExample, parentId: nil, whichHand: HandSelection.left)
+        guard let title = instructionStateLeft.title, let detail = instructionStateLeft.detail else { throw TestError.nilValue }
+        XCTAssert(title.contains(localizedHandLeft))
+        XCTAssert(detail.contains(localizedHandLeft))
+        XCTAssertFalse(title.contains(localizedHandRight))
+        XCTAssertFalse(detail.contains(localizedHandRight))
+        
+        let instructionStateRight = MotorControlInstructionState(handInstructionExample, parentId: nil, whichHand: HandSelection.right)
+        guard let title = instructionStateRight.title, let detail = instructionStateRight.detail else { throw TestError.nilValue }
+        XCTAssert(title.contains(localizedHandRight))
+        XCTAssert(detail.contains(localizedHandRight))
+        XCTAssertFalse(title.contains(localizedHandLeft))
+        XCTAssertFalse(detail.contains(localizedHandLeft))
     }
+}
+
+fileprivate let handInstructionExample = InstructionStepObject(
+    identifier: "instruction",
+    title: "Tap with your %@ hand",
+    detail: "Alternate tapping the buttons that appear with your index and middle fingers on your %@ HAND. Keep tapping for 30 seconds as fast as you can.",
+    imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle, placementHint: "topBackground"))
+
+
+class TestNavigationState : NavigationState {
+    let assessmentState: AssessmentState
+
+    public private(set) var navigator: Navigator! = nil
+
+    var currentNode: Node?
+    
+    var assessment: Assessment { assessmentState.assessment }
+    var assessmentResult: AssessmentResult { assessmentState.assessmentResult }
+
+    init(_ assessmentState: AssessmentState) {
+        self.assessmentState = assessmentState
+        self.navigator = try! assessmentState.assessment.instantiateNavigator(state: self)
+    }
+}
+
+enum TestError: Error {
+    case nilValue
 }

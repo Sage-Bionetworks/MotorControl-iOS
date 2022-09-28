@@ -73,18 +73,18 @@ struct MotionSensorStepView: View {
         }
         .fixedSize(horizontal: true, vertical: true)
         .padding(48)
-        .background {
+        .background (
             Circle()
                 .trim(from: 0.0, to: min(progress, 1.0))
                 .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .foregroundColor(.textForeground)
                 .rotationEffect(Angle(degrees: 270.0))
                 .padding(2.5)
-                .background {
+                .background (
                     Circle()
                         .fill(Color.sageWhite)
-                }
-        }
+                )
+        )
     }
     
     @ViewBuilder
@@ -122,9 +122,9 @@ struct MotionSensorStepView: View {
     @ViewBuilder
     func content() -> some View {
         insideView()
-            .background {
+            .background (
                 backgroundView()
-            }
+            )
     }
     
     var body: some View {
