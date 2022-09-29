@@ -74,9 +74,9 @@ fileprivate let example1 = InstructionStepObject(
 
 struct InstructionNodeView: View {
     
+    @ObservedObject var contentInfo: MotorControlInstructionState
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
-    @ObservedObject var contentInfo: MotorControlInstructionState
     
     var body: some View {
         GeometryReader { scrollViewGeometry in

@@ -43,13 +43,10 @@ import SharedResources
 struct MotionSensorStepView: View {
     @EnvironmentObject var assessmentState: AssessmentState
     @EnvironmentObject var pagedNavigation: PagedNavigationViewModel
-    @ObservedObject var state: TremorStepViewModel
-    @State var countdown: Int = 30
-    @State var progress: CGFloat = .zero
-    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @StateObject var clock = SimpleClock.init()
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
+    @ObservedObject var state: TremorStepViewModel
+    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     @ViewBuilder
     fileprivate func insideCountdownDial(_ count: Int) -> some View {
@@ -67,7 +64,7 @@ struct MotionSensorStepView: View {
     @ViewBuilder
     fileprivate func countdownDial() -> some View {
         ZStack {
-            insideCountdownDial(countdown)
+            insideCountdownDial(Int(state.countdown))
             insideCountdownDial(30)
                 .opacity(0)
         }
@@ -75,7 +72,7 @@ struct MotionSensorStepView: View {
         .padding(48)
         .background (
             Circle()
-                .trim(from: 0.0, to: min(progress, 1.0))
+                .trim(from: 0.0, to: min(state.progress, 1.0))
                 .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .foregroundColor(.textForeground)
                 .rotationEffect(Angle(degrees: 270.0))
@@ -165,10 +162,10 @@ struct MotionSensorStepView: View {
                 }
             }
             .onReceive(timer) { time in
-                guard !state.recorder.isPaused, countdown > 0 else { return }
-                countdown = max(countdown - 1, 0)
+                guard !state.recorder.isPaused, state.countdown > 0 else { return }
+                state.countdown = max(state.countdown - 1, 0)
                 // Once the countdown hits zero, stop the recorder and *then* navigate forward.
-                if countdown == 0, state.recorder.status <= .running {
+                if state.countdown == 0, state.recorder.status <= .running {
                     state.audioFileSoundPlayer.vibrateDevice()
                     state.speak(at: state.motionConfig.duration) {
                         Task {
@@ -184,25 +181,24 @@ struct MotionSensorStepView: View {
                     timer.upstream.connect().cancel()
                 }
                 else {
-                    state.speak(at: clock.runningDuration())
+                    state.speak(at: state.recorder.clock.runningDuration())
                 }
             }
     }
 
     func resetCountdown() {
-        let startDuration = state.motionConfig.duration
-        clock.reset()
-        countdown = Int(startDuration)
+        state.recorder.clock.reset()
+        state.countdown = state.motionConfig.duration
         state.resetInstructionCache()
-        withAnimation(.linear(duration: startDuration)) {
-            progress = 1.0
+        withAnimation(.linear(duration: state.motionConfig.duration)) {
+            state.progress = 1.0
         }
     }
     
     func pauseCountdown() {
         state.recorder.pause()
         withAnimation(.linear(duration: 0)) {
-            progress = 0
+            state.progress = 0
         }
     }
 }

@@ -37,7 +37,7 @@ struct OnFingerPressedGestureModifier: ViewModifier {
     @State private var fingerDown = false
     @State private var startLocation: CGPoint = .zero
     @StateObject var clock = SimpleClock.init()
-    let callback: (CGPoint, Double) -> Void
+    let callback: (CGPoint, CGFloat) -> Void
     let coordinateSpace: CoordinateSpace
 
     func body(content: Content) -> some View {

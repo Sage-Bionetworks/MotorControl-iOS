@@ -43,14 +43,10 @@ import SharedResources
 struct TappingStepView: View {
     @EnvironmentObject var assessmentState: AssessmentState
     @EnvironmentObject var pagedNavigation: PagedNavigationViewModel
-    @ObservedObject var state: TappingStepViewModel
-    @State var countdown : Double = 30
-    @State var progress : CGFloat = .zero
-    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @State var isPaused : Bool = false
-    @State var initialTap = false
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
+    @ObservedObject var state: TappingStepViewModel
+    @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     @ViewBuilder
     fileprivate func insideCountdownDial(_ count: Int) -> some View {
@@ -68,7 +64,7 @@ struct TappingStepView: View {
     @ViewBuilder
     fileprivate func countdownDial() -> some View {
         ZStack {
-            insideCountdownDial(Int(countdown))
+            insideCountdownDial(Int(state.countdown))
             insideCountdownDial(30)
                 .opacity(0)
         }
@@ -76,14 +72,14 @@ struct TappingStepView: View {
         .padding(48)
         .background (
             Circle()
-                .trim(from: 0.0, to: min(progress, 1.0))
+                .trim(from: 0.0, to: min(state.progress, 1.0))
                 .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .foregroundColor(.textForeground)
                 .rotationEffect(Angle(degrees: 270.0))
                 .padding(2.5)
-                .pausableAnimation(progress: $progress,
-                                   paused: $isPaused,
-                                   remainingDuration: $countdown)
+                .pausableAnimation(progress: $state.progress,
+                                   paused: $state.isPaused,
+                                   remainingDuration: $state.countdown)
                 .background (
                     Circle()
                         .fill(Color.sageWhite)
@@ -108,11 +104,11 @@ struct TappingStepView: View {
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { touch in
-                        guard !initialTap, state.tapCount == 0 else { return }
-                        initialTap = true
+                        guard !state.initialTap, state.tapCount == 0 else { return }
+                        state.initialTap = true
                         state.recorder.clock.reset()
                         withAnimation(.linear(duration: state.motionConfig.duration)) {
-                            progress = 1.0
+                            state.progress = 1.0
                         }
                         Task {
                             do {
@@ -175,7 +171,7 @@ struct TappingStepView: View {
                 )
                 .coordinateSpace(name: TappingButtonIdentifier.none.rawValue)
                 .onFingerPressedGesture { location, tapDuration in
-                    guard initialTap else { return }
+                    guard state.initialTap else { return }
                     state.tappedScreen(uptime: SystemClock.uptime(),
                                        timestamp: state.recorder.clock.runningDuration(),
                                        currentButton: .none,
@@ -215,10 +211,10 @@ struct TappingStepView: View {
                 }
             }
             .onReceive(timer) { _ in
-                guard !state.recorder.isPaused, countdown > 0, initialTap else { return }
-                countdown = max(countdown - 1, 0)
+                guard !state.recorder.isPaused, state.countdown > 0, state.initialTap else { return }
+                state.countdown = max(state.countdown - 1, 0)
                 // Once the countdown hits zero, stop the countdown and *then* navigate forward.
-                if countdown == 0 {
+                if state.countdown == 0 {
                     state.audioFileSoundPlayer.vibrateDevice()
                     state.speak(at: state.motionConfig.duration) {
                         Task {
@@ -242,7 +238,7 @@ struct TappingStepView: View {
 
     private func resetCountdown() {
         state.recorder.clock.reset()
-        countdown = state.motionConfig.duration
+        state.countdown = state.motionConfig.duration
         state.resetInstructionCache()
     }
 
@@ -258,8 +254,8 @@ struct TappingStepView: View {
     }
     
     private func toggleAnimation() {
-        if initialTap {
-            isPaused = !isPaused
+        if state.initialTap {
+            state.isPaused = !state.isPaused
         }
     }
 }
@@ -286,7 +282,7 @@ fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample",
 
 
 extension View {
-    func onFingerPressedGesture(callback: @escaping (CGPoint, Double) -> Void) -> some View {
+    func onFingerPressedGesture(callback: @escaping (CGPoint, CGFloat) -> Void) -> some View {
         modifier(OnFingerPressedGestureModifier(callback: callback, coordinateSpace: .named(TappingButtonIdentifier.none.rawValue)))
     }
 }

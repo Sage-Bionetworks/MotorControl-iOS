@@ -70,21 +70,21 @@ public class AbstractMotionControlState : ContentNodeState {
     public let subtitle: String?
     public let detail: String?
     
-    public init(_ instruction: AbstractStepObject, parentId: String?, whichHand: HandSelection? = nil) {
+    public init(_ motionControlStep: AbstractStepObject, parentId: String?, whichHand: HandSelection? = nil) {
         if let whichHand = whichHand {
             self.flippedImage = (whichHand == .right)
             let replacementString = whichHand.handReplacementString().uppercased()
-            self.title = instruction.title?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
-            self.subtitle = instruction.subtitle?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
-            self.detail = instruction.detail?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+            self.title = motionControlStep.title?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+            self.subtitle = motionControlStep.subtitle?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
+            self.detail = motionControlStep.detail?.replacingOccurrences(of: formattedTextPlaceHolder, with: replacementString)
         }
         else {
             self.flippedImage = false
-            self.title = instruction.title
-            self.subtitle = instruction.subtitle
-            self.detail = instruction.detail
+            self.title = motionControlStep.title
+            self.subtitle = motionControlStep.subtitle
+            self.detail = motionControlStep.detail
         }
-        super.init(step: instruction, result: instruction.instantiateResult(), parentId: parentId)
+        super.init(step: motionControlStep, result: motionControlStep.instantiateResult(), parentId: parentId)
     }
 }
 

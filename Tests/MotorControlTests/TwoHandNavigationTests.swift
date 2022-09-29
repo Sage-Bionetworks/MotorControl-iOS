@@ -32,7 +32,6 @@ import XCTest
 import JsonModel
 import AssessmentModel
 import AssessmentModelUI
-import SharedResources
 @testable import MotorControl
 
 final class MotorControlNavigationTests: XCTestCase {
@@ -208,22 +207,22 @@ final class MotorControlNavigationTests: XCTestCase {
 final class MotorControlViewModelTests: XCTestCase {
     
     func testInstructionStateHand() throws {
-        let localizedHandLeft = SharedResources.bundle.localizedString(forKey: HandSelection.left.rawValue, value: HandSelection.left.rawValue.uppercased(), table: nil)
-        let localizedHandRight = SharedResources.bundle.localizedString(forKey: HandSelection.right.rawValue, value: HandSelection.right.rawValue.uppercased(), table: nil)
+        let left = HandSelection.left.rawValue.uppercased()
+        let right = HandSelection.right.rawValue.uppercased()
         
         let instructionStateLeft = MotorControlInstructionState(handInstructionExample, parentId: nil, whichHand: HandSelection.left)
         guard let title = instructionStateLeft.title, let detail = instructionStateLeft.detail else { throw TestError.nilValue }
-        XCTAssert(title.contains(localizedHandLeft))
-        XCTAssert(detail.contains(localizedHandLeft))
-        XCTAssertFalse(title.contains(localizedHandRight))
-        XCTAssertFalse(detail.contains(localizedHandRight))
+        XCTAssert(title.contains(left))
+        XCTAssert(detail.contains(left))
+        XCTAssertFalse(title.contains(right))
+        XCTAssertFalse(detail.contains(right))
         
         let instructionStateRight = MotorControlInstructionState(handInstructionExample, parentId: nil, whichHand: HandSelection.right)
         guard let title = instructionStateRight.title, let detail = instructionStateRight.detail else { throw TestError.nilValue }
-        XCTAssert(title.contains(localizedHandRight))
-        XCTAssert(detail.contains(localizedHandRight))
-        XCTAssertFalse(title.contains(localizedHandLeft))
-        XCTAssertFalse(detail.contains(localizedHandLeft))
+        XCTAssert(title.contains(right))
+        XCTAssert(detail.contains(right))
+        XCTAssertFalse(title.contains(left))
+        XCTAssertFalse(detail.contains(left))
         
         XCTAssertFalse(instructionStateLeft.flippedImage)
         XCTAssert(instructionStateRight.flippedImage)
@@ -283,10 +282,9 @@ func getTappingButtonIdentifier(_ ii: Int) -> TappingButtonIdentifier {
 fileprivate let handInstructionExample = InstructionStepObject(
     identifier: "instruction",
     title: "Tap with your %@ hand",
-    detail: "Alternate tapping the buttons that appear with your index and middle fingers on your %@ HAND. Keep tapping for 30 seconds as fast as you can.",
-    imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle, placementHint: "topBackground"))
+    detail: "Alternate tapping the buttons that appear with your index and middle fingers on your %@ HAND. Keep tapping for 30 seconds as fast as you can.")
 
-fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample", imageInfo: FetchableImage(imageName: "tap_left_1", bundle: SharedResources.bundle))
+fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample")
 
 class TestNavigationState : NavigationState {
     let assessmentState: AssessmentState

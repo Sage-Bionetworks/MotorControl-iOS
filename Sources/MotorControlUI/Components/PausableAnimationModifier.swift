@@ -39,15 +39,15 @@ public typealias AnimationWithDurationProvider = (TimeInterval) -> Animation
 public struct PausableAnimationModifier: AnimatableModifier {
     @Binding var progress: CGFloat
     @Binding var paused: Bool
-    @Binding var remainingDuration: Double
-    private let totalProgress: Double
+    @Binding var remainingDuration: CGFloat
+    private let totalProgress: CGFloat
     private let animation: AnimationWithDurationProvider
-    public var animatableData: Double
+    public var animatableData: CGFloat
 
     public init(progress: Binding<CGFloat>,
                 paused: Binding<Bool>,
-                remainingDuration: Binding<Double>,
-                totalProgress: Double,
+                remainingDuration: Binding<CGFloat>,
+                totalProgress: CGFloat,
                 animation: @escaping AnimationWithDurationProvider
                 ) {
         _progress = progress
@@ -83,8 +83,8 @@ public extension Animation {
 extension View {
     public func pausableAnimation(progress: Binding<CGFloat>,
                                   paused: Binding<Bool>,
-                                  remainingDuration: Binding<Double>,
-                                  totalProgress: Double = 1.0,
+                                  remainingDuration: Binding<CGFloat>,
+                                  totalProgress: CGFloat = 1.0,
                                   animation: @escaping AnimationWithDurationProvider = { .linear(duration: $0) }) -> some View {
     self.modifier(PausableAnimationModifier(progress: progress,
                                             paused: paused,
