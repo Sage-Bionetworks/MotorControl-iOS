@@ -219,7 +219,7 @@ struct GeometryRect : Codable {
 
 /// Values that identify the button that was tapped in a tapping sample.
 public enum TappingButtonIdentifier : String, Codable, StringEnumSet, DocumentableStringEnum {
-    case none, left, right
+    case left, right, none
 }
 
 /// The `TappingSample` class represents a single tap on a button.

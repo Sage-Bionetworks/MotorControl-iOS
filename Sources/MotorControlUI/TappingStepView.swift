@@ -104,15 +104,13 @@ struct TappingStepView: View {
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { touch in
-                        guard !state.initialTap, state.tapCount == 0 else { return }
-                        state.initialTap = true
-                        state.recorder.clock.reset()
-                        withAnimation(.linear(duration: state.motionConfig.duration)) {
-                            state.progress = 1.0
-                        }
+                        guard !state.initialTap else { return }
                         Task {
                             do {
                                 try await state.recorder.start()
+                                withAnimation(.linear(duration: state.motionConfig.duration)) {
+                                    state.progress = 1.0
+                                }
                             }
                             catch {
                                 state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
@@ -198,17 +196,7 @@ struct TappingStepView: View {
                 }
             }
             .onChange(of: assessmentState.showingPauseActions) { newValue in
-                guard state.recorder.isPaused != newValue else { return }
-                if newValue {
-                    // Pause the recorder and countdown animation
-                    state.recorder.pause()
-                    pauseCountdown()
-                }
-                else {
-                    // Resume the recoder and reset the countdown animation
-                    state.recorder.resume()
-                    resumeCountdown()
-                }
+                state.isPaused = newValue
             }
             .onReceive(timer) { _ in
                 guard !state.recorder.isPaused, state.countdown > 0, state.initialTap else { return }
@@ -242,22 +230,6 @@ struct TappingStepView: View {
         state.resetInstructionCache()
     }
 
-    private func pauseCountdown() {
-        state.recorder.clock.pause()
-        state.recorder.pause()
-        toggleAnimation()
-    }
-
-    private func resumeCountdown() {
-        state.recorder.clock.resume()
-        toggleAnimation()
-    }
-    
-    private func toggleAnimation() {
-        if state.initialTap {
-            state.isPaused = !state.isPaused
-        }
-    }
 }
 
 struct PreviewTappingStepView : View {

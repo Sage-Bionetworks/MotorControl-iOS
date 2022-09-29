@@ -43,7 +43,7 @@ public class MotionSensorStepViewModel : AbstractMotionControlState {
     public let voicePrompter: TextToSpeechSynthesizer = .init()
     public let spokenInstructions: [Int : String]
     public var instructionCache: Set<Int> = []
-    @Published public var recorder: MotionRecorder
+    public let recorder: MotionRecorder
     @Published public var countdown: CGFloat
     @Published public var progress: CGFloat = .zero
     
@@ -92,16 +92,24 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
     public var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
     public var previousButton: TappingButtonIdentifier? = nil
     @Published public var tapCount: Int = 0
-    @Published public var isPaused : Bool = false
-    @Published public var initialTap = false
-
-
+    @Published public var isPaused : Bool = false {
+        didSet {
+            guard recorder.status >= .starting else { return }
+            if isPaused {
+                recorder.pause()
+            }
+            else {
+                recorder.resume()
+            }
+        }
+    }
+    public var initialTap: Bool { recorder.status > .idle }
 
     public func tappedScreen(uptime: TimeInterval,
                              timestamp: TimeInterval,
                              currentButton: TappingButtonIdentifier,
                              location: CGPoint,
-                             duration: Double) {
+                             duration: TimeInterval) {
         let sample: TappingSample = .init(uptime: uptime - duration,
                                           timestamp: timestamp - duration,
                                           stepPath: recorder.currentStepPath,
