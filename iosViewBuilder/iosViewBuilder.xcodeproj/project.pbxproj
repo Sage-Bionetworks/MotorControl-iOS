@@ -15,6 +15,7 @@
 		8004DF3928B000600001A1F8 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF3828B000600001A1F8 /* InstructionView.swift */; };
 		8004DF3B28B003E50001A1F8 /* MotorControlAssessmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */; };
 		801430D828B574AC004982FA /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801430D728B574AC004982FA /* OverviewView.swift */; };
+		80593EA428E507B7005449E4 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80593EA328E507B6005449E4 /* GlobalProperties.swift */; };
 		807B71FC28D92CDC008A9F51 /* TappingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FB28D92CDC008A9F51 /* TappingStepView.swift */; };
 		807B71FF28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FE28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift */; };
 		80EE6FBC28DE17FE0097C6FE /* PausableAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */; };
@@ -31,6 +32,7 @@
 		8004DF3828B000600001A1F8 /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControlAssessmentView.swift; sourceTree = "<group>"; };
 		801430D728B574AC004982FA /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
+		80593EA328E507B6005449E4 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
 		807B71FA28D507D2008A9F51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		807B71FB28D92CDC008A9F51 /* TappingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappingStepView.swift; sourceTree = "<group>"; };
 		807B71FE28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFingerPressedGestureModifier.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			children = (
 				807B71FD28DB6D7C008A9F51 /* Components */,
 				8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */,
+				80593EA328E507B6005449E4 /* GlobalProperties.swift */,
 				8004DF3828B000600001A1F8 /* InstructionView.swift */,
 				801430D728B574AC004982FA /* OverviewView.swift */,
 				FF57F48628D1342C00EF96CB /* MotionSensorStepView.swift */,
@@ -211,6 +214,7 @@
 				8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */,
 				8004DF0A28AFFE1D0001A1F8 /* iosViewBuilderApp.swift in Sources */,
 				8004DF3928B000600001A1F8 /* InstructionView.swift in Sources */,
+				80593EA428E507B7005449E4 /* GlobalProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

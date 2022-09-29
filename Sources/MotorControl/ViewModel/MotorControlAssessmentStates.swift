@@ -1,5 +1,5 @@
 //
-//  MotorControlAssessmentViewModel.swift
+//  MotorControlAssessmentStates.swift
 //
 //  Copyright © 2022 Sage Bionetworks. All rights reserved.
 //

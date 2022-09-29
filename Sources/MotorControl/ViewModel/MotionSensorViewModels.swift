@@ -85,9 +85,9 @@ public final class TremorStepViewModel : MotionSensorStepViewModel {
 
 /// View model for a tapping step
 public final class TappingStepViewModel : MotionSensorStepViewModel {
-    var samples: [TappingSample] = []
-    var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
-    var previousButton: TappingButtonIdentifier? = nil
+    public var samples: [TappingSample] = []
+    public var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
+    public var previousButton: TappingButtonIdentifier? = nil
     @Published public var tapCount: Int = 0
 
     public func tappedScreen(uptime: TimeInterval,

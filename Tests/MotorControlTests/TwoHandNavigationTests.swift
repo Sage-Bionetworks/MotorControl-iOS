@@ -224,6 +224,59 @@ final class MotorControlViewModelTests: XCTestCase {
         XCTAssert(detail.contains(localizedHandRight))
         XCTAssertFalse(title.contains(localizedHandLeft))
         XCTAssertFalse(detail.contains(localizedHandLeft))
+        
+        XCTAssertFalse(instructionStateLeft.flippedImage)
+        XCTAssert(instructionStateRight.flippedImage)
+    }
+    
+    func testTappingState() throws {
+        let assessmentState: AssessmentState = .init(AssessmentObject())
+        let tappingStepViewModel: TappingStepViewModel = .init(tappingExample, assessmentState: assessmentState, branchState: assessmentState)
+        var taps = 50
+        for ii in 0..<taps {
+            let tappedButton = getTappingButtonIdentifier(ii)
+            let location = tappedButton == TappingButtonIdentifier.left ? CGPoint(x: 100, y: 500) : CGPoint(x: 200, y: 500)
+            tappingStepViewModel.tappedScreen(uptime: TimeInterval(ii),
+                                              timestamp: TimeInterval(ii),
+                                              currentButton: tappedButton,
+                                              location: location,
+                                              duration: 0.05)
+        }
+        
+        var goodTaps = taps - Int(taps / 3)
+        XCTAssertEqual(tappingStepViewModel.tapCount, goodTaps)
+        XCTAssertEqual(tappingStepViewModel.samples.count, taps)
+
+        tappingStepViewModel.tappedScreen(uptime: TimeInterval(1),
+                                          timestamp: TimeInterval(1),
+                                          currentButton: getTappingButtonIdentifier(taps),
+                                          location: CGPoint(x: 100, y: 500),
+                                          duration: 0.05)
+        taps += 1
+        goodTaps = taps - Int(taps / 3)
+        XCTAssertEqual(tappingStepViewModel.tapCount, goodTaps)
+        XCTAssertEqual(tappingStepViewModel.samples.count, taps)
+        
+        for ii in 0..<taps {
+            tappingStepViewModel.tappedScreen(uptime: TimeInterval(ii),
+                                              timestamp: TimeInterval(ii),
+                                              currentButton: TappingButtonIdentifier.none,
+                                              location: CGPoint(x: 100, y: 500),
+                                              duration: 0.05)
+        }
+        XCTAssertEqual(tappingStepViewModel.tapCount, goodTaps)
+        XCTAssertEqual(tappingStepViewModel.samples.count, taps * 2)
+    }
+}
+
+func getTappingButtonIdentifier(_ ii: Int) -> TappingButtonIdentifier {
+    switch ii % 3 {
+    case 0:
+        return TappingButtonIdentifier.left
+    case 1:
+        return TappingButtonIdentifier.right
+    default:
+        return TappingButtonIdentifier.none
     }
 }
 
@@ -233,6 +286,7 @@ fileprivate let handInstructionExample = InstructionStepObject(
     detail: "Alternate tapping the buttons that appear with your index and middle fingers on your %@ HAND. Keep tapping for 30 seconds as fast as you can.",
     imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle, placementHint: "topBackground"))
 
+fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample", imageInfo: FetchableImage(imageName: "tap_left_1", bundle: SharedResources.bundle))
 
 class TestNavigationState : NavigationState {
     let assessmentState: AssessmentState
