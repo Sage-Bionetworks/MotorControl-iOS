@@ -32,6 +32,7 @@
 
 import SwiftUI
 import MobilePassiveData
+import MotorControl
 
 struct OnFingerPressedGestureModifier: ViewModifier {
     @State private var fingerDown = false
@@ -56,5 +57,11 @@ struct OnFingerPressedGestureModifier: ViewModifier {
             .onDisappear {
                 clock.stop()
             }
+    }
+}
+
+extension View {
+    func onFingerPressedGesture(callback: @escaping (CGPoint, CGFloat) -> Void) -> some View {
+        modifier(OnFingerPressedGestureModifier(callback: callback, coordinateSpace: .named(TappingButtonIdentifier.none.rawValue)))
     }
 }

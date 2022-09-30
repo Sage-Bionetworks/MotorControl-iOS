@@ -35,6 +35,7 @@ import AssessmentModelUI
 import AssessmentModel
 import MobilePassiveData
 import MotionSensor
+import JsonModel
 
 /// State object for motion sensor steps
 public class MotionSensorStepViewModel : AbstractMotionControlState {
@@ -89,7 +90,6 @@ public final class TremorStepViewModel : MotionSensorStepViewModel {
 /// View model for a tapping step
 public final class TappingStepViewModel : MotionSensorStepViewModel {
     public var samples: [TappingSample] = []
-    public var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
     public var previousButton: TappingButtonIdentifier? = nil
     @Published public var tapCount: Int = 0
     @Published public var isPaused : Bool = false {
@@ -105,19 +105,22 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
     }
     public var initialTap: Bool { recorder.status > .idle }
 
+    @MainActor
     public func tappedScreen(uptime: TimeInterval,
                              timestamp: TimeInterval,
                              currentButton: TappingButtonIdentifier,
                              location: CGPoint,
                              duration: TimeInterval) {
+        guard recorder.clock.runningDuration() < motionConfig.duration else { return }
         let sample: TappingSample = .init(uptime: uptime - duration,
                                           timestamp: timestamp - duration,
                                           stepPath: recorder.currentStepPath,
                                           buttonIdentifier: currentButton,
                                           location: location,
                                           duration: duration)
-        lastSample[currentButton] = sample
         samples.append(sample)
+        // Update the tap count if the button is *not* the "none" case and either the previous button is nil
+        // or the previous button matches this button.
         guard currentButton != .none, previousButton != currentButton
         else {
             return

@@ -58,7 +58,7 @@ final class MotorControlViewModelTests: XCTestCase {
         XCTAssert(instructionStateRight.flippedImage)
     }
     
-    func testTappingStateCorrectTaps() {
+    @MainActor func testTappingStateCorrectTaps() {
         let assessmentState: AssessmentState = .init(AssessmentObject())
         let tappingStepViewModel: TappingStepViewModel = .init(tappingExample, assessmentState: assessmentState, branchState: assessmentState)
         let taps = 30
@@ -75,7 +75,7 @@ final class MotorControlViewModelTests: XCTestCase {
         XCTAssertEqual(tappingStepViewModel.samples.count, 30)
     }
     
-    func testTappingStateMixedTaps() {
+    @MainActor func testTappingStateMixedTaps() {
         let assessmentState: AssessmentState = .init(AssessmentObject())
         let tappingStepViewModel: TappingStepViewModel = .init(tappingExample, assessmentState: assessmentState, branchState: assessmentState)
         let taps = 30
@@ -92,7 +92,7 @@ final class MotorControlViewModelTests: XCTestCase {
         XCTAssertEqual(tappingStepViewModel.samples.count, 30)
     }
     
-    func testTappingStateNoCorrectTaps() {
+    @MainActor func testTappingStateNoCorrectTaps() {
         let assessmentState: AssessmentState = .init(AssessmentObject())
         let tappingStepViewModel: TappingStepViewModel = .init(tappingExample, assessmentState: assessmentState, branchState: assessmentState)
         let taps = 30
@@ -107,7 +107,6 @@ final class MotorControlViewModelTests: XCTestCase {
         XCTAssertEqual(tappingStepViewModel.samples.count, 30)
     }
 }
-
 
 func getAlternatingButtonIdentifier(_ ii: Int, modulo: Int) -> TappingButtonIdentifier {
     .allCases[ii % modulo]

@@ -95,7 +95,6 @@ struct TappingStepView: View {
             .background(surveyTint.saturation(2))
             .clipShape(Circle())
             .onFingerPressedGesture { startLocation, tapDuration in
-                guard state.recorder.clock.runningDuration() < state.motionConfig.duration else { return }
                 state.tappedScreen(uptime: SystemClock.uptime(),
                                    timestamp: state.recorder.clock.runningDuration(),
                                    currentButton: target, location: startLocation,
@@ -182,9 +181,6 @@ struct TappingStepView: View {
     var body: some View {
         content()
             .onAppear {
-                // Reset the countdown animation.
-                resetCountdown()
-                state.audioFileSoundPlayer.vibrateDevice()
                 state.speak(at: 0)
             }
             .onDisappear {
@@ -203,7 +199,6 @@ struct TappingStepView: View {
                 state.countdown = max(state.countdown - 1, 0)
                 // Once the countdown hits zero, stop the countdown and *then* navigate forward.
                 if state.countdown == 0 {
-                    state.audioFileSoundPlayer.vibrateDevice()
                     state.speak(at: state.motionConfig.duration) {
                         Task {
                             do {
@@ -217,19 +212,8 @@ struct TappingStepView: View {
                     }
                     timer.upstream.connect().cancel()
                 }
-                else {
-                    guard state.recorder.clock.runningDuration() == state.motionConfig.duration else { return }
-                    state.speak(at: state.recorder.clock.runningDuration())
-                }
             }
     }
-
-    private func resetCountdown() {
-        state.recorder.clock.reset()
-        state.countdown = state.motionConfig.duration
-        state.resetInstructionCache()
-    }
-
 }
 
 struct PreviewTappingStepView : View {
@@ -251,10 +235,3 @@ struct TappingStepView_Previews: PreviewProvider {
 }
 
 fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample", imageInfo: FetchableImage(imageName: "tap_left_1", bundle: SharedResources.bundle))
-
-
-extension View {
-    func onFingerPressedGesture(callback: @escaping (CGPoint, CGFloat) -> Void) -> some View {
-        modifier(OnFingerPressedGestureModifier(callback: callback, coordinateSpace: .named(TappingButtonIdentifier.none.rawValue)))
-    }
-}
