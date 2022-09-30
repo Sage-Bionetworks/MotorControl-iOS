@@ -17,7 +17,8 @@ let package = Package(
             name: "MotorControl",
             targets: [
                 "MotorControlV1",
-                "MotorControl"
+                "MotorControl",
+                "MotorControlUI",
             ]),
     ],
     dependencies: [

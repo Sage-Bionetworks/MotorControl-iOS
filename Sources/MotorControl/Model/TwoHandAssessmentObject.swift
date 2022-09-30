@@ -177,6 +177,9 @@ public enum HandSelection: String, Codable, CaseIterable {
     }
 }
 
+extension HandSelection : DocumentableStringEnum, StringEnumSet {
+}
+
 extension Node {
     func hand() -> HandSelection? {
         .init(rawValue: identifier)

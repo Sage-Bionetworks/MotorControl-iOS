@@ -88,10 +88,17 @@ public final class TremorStepViewModel : MotionSensorStepViewModel {
 
 /// View model for a tapping step
 public final class TappingStepViewModel : MotionSensorStepViewModel {
-    public var samples: [TappingSample] = []
-    public var lastSample: [TappingButtonIdentifier : TappingSample] = [:]
+    weak var branchState: BranchState!
+    public var tappingResult : TappingResultObject {
+        get { self.result as! TappingResultObject }
+        set { self.result = newValue }
+    }
     public var previousButton: TappingButtonIdentifier? = nil
-    @Published public var tapCount: Int = 0
+    @Published public var tapCount: Int = 0 {
+        didSet {
+            tappingResult.tapCount = tapCount
+        }
+    }
     @Published public var isPaused : Bool = false {
         didSet {
             guard recorder.status >= .starting else { return }
@@ -104,6 +111,12 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
         }
     }
     public var initialTap: Bool { recorder.status > .idle }
+    
+    override public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
+        super.init(motionConfig, assessmentState: assessmentState, branchState: branchState)
+        self.branchState = branchState
+        self.tappingResult.hand = whichHand
+    }
 
     public func tappedScreen(uptime: TimeInterval,
                              timestamp: TimeInterval,
@@ -116,14 +129,23 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
                                           buttonIdentifier: currentButton,
                                           location: location,
                                           duration: duration)
-        lastSample[currentButton] = sample
-        samples.append(sample)
+        tappingResult.samples.append(sample)
         guard currentButton != .none, previousButton != currentButton
         else {
             return
         }
         tapCount += 1
         previousButton = currentButton
+    }
+    
+    public func stop() async {
+        do {
+            let result = try await recorder.stop()
+            branchState.branchNodeResult.asyncResults = [result]
+        }
+        catch {
+            print("Failed to stop the motion recorder. \(error)")
+        }
     }
 }
 

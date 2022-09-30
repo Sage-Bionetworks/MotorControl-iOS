@@ -45,6 +45,10 @@ public class TappingNodeObject : MotionSensorNodeObject {
     public override class func defaultType() -> SerializableNodeType {
         .tapping
     }
+    
+    public override func instantiateResult() -> ResultData {
+        TappingResultObject(identifier: self.identifier)
+    }
 }
 
 public class TremorNodeObject : MotionSensorNodeObject {

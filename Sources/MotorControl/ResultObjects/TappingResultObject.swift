@@ -52,12 +52,12 @@ extension SerializableResultType {
 /// or to immediately perform analysis on it.
 public struct TappingResultObject : SerializableResultData, ResultData {
     private enum CodingKeys : String, OrderedEnumCodingKey {
-        case serializableType = "type", identifier, startDate, endDate, viewSize, buttonRectLeft, buttonRectRight, tapCount, samples
+        case serializableType = "type", identifier, hand, startDate, endDate, viewSize, buttonRectLeft, buttonRectRight, tapCount, samples
     }
 
     /// The identifier for the associated step.
-    public var identifier: String
-    
+    public let identifier: String
+
     /// Default = `.tapping`.
     public private(set) var serializableType: SerializableResultType = .tapping
     
@@ -66,9 +66,12 @@ public struct TappingResultObject : SerializableResultData, ResultData {
     
     /// Timestamp date for when the step was ended.
     public var endDate: Date = Date()
+    
+    /// Which hand the result is for.
+    public internal(set) var hand: HandSelection?
 
     /// An array of collected tapping samples.
-    public internal(set) var samples: [TappingSample]? = nil
+    public internal(set) var samples: [TappingSample] = []
     
     /// The tap count of hits that were within the buttons.
     public internal(set) var tapCount: Int = 0
@@ -79,7 +82,6 @@ public struct TappingResultObject : SerializableResultData, ResultData {
         set { viewSize = .init(size: newValue) }
     }
     private var viewSize: GeometryPoint = .init(size: .zero)
-    
 
     /// The frame of the left button, in points, relative to the step view bounds.
     public internal(set) var buttonRect1: CGRect {
@@ -88,7 +90,6 @@ public struct TappingResultObject : SerializableResultData, ResultData {
     }
     private var buttonRectLeft: GeometryRect = .init(rect: .zero)
     
-
     /// The frame of the right button, in points, relative to the step view bounds.
     public internal(set) var buttonRect2: CGRect {
         get { buttonRectRight.toRect() }
@@ -107,28 +108,27 @@ public struct TappingResultObject : SerializableResultData, ResultData {
     public func deepCopy() -> TappingResultObject {
         self
     }
-/// TODO: Aaron Rabara 09/26/22 Figure out how to deal with RSD references
-//    /// Build the archiveable or uploadable data for this result.
-//    public func buildArchiveData(at stepPath: String?) throws -> (manifest: RSDFileManifest, data: Data)? {
-//
-//        // The filename should include the section (left/right).
-//        let filename : String = {
-//            guard let pathComponent = stepPath?.components(separatedBy: "/").first(where: {
-//                HandSelection(rawValue: $0) != nil
-//            }) else {
-//                return self.identifier
-//            }
-//            return "\(pathComponent)_\(self.identifier)"
-//        }()
-//
-//        // create the manifest and encode the result.
-//        let manifest = RSDFileManifest(filename: filename, timestamp: self.startDate, contentType: "application/json", identifier: self.identifier, stepPath: stepPath)
-//        let data = try self.rsd_jsonEncodedData()
-//        return (manifest, data)
-//    }
+}
+
+extension TappingResultObject : FileArchivable {
     
-    public func dataScore() throws -> JsonSerializable? {
-        return tapCount
+    public func buildArchivableFileData(at stepPath: String?) throws -> (fileInfo: FileInfo, data: Data)? {
+        let data = try self.jsonEncodedData()
+        return (fileInfo(stepPath), data)
+    }
+    
+    private func fileInfo(_ stepPath: String?) -> FileInfo {
+        
+        // The filename should include the section (left/right).
+        let whichHand = hand ?? stepPath?.components(separatedBy: "/").compactMap { HandSelection(rawValue: $0) }.first
+        let filename = whichHand.map { "\($0.rawValue)_\(identifier)" } ?? identifier
+        
+        return .init(filename: filename,
+                     timestamp: startDate,
+                     contentType: "application/json",
+                     identifier: identifier,
+                     stepPath: stepPath,
+                     jsonSchema: jsonSchema)
     }
 }
 
@@ -294,6 +294,9 @@ extension TappingResultObject : DocumentableStruct {
             return .init(constValue: SerializableResultType.tapping)
         case .identifier:
             return .init(propertyType: .primitive(.string))
+        case .hand:
+            return .init(propertyType: .reference(HandSelection.documentableType()), propertyDescription:
+                            "Which hand was used for this section.")
         case .startDate, .endDate:
             return .init(propertyType: .format(.dateTime))
         case .viewSize:
@@ -313,7 +316,7 @@ extension TappingResultObject : DocumentableStruct {
     }
     
     public static func examples() -> [TappingResultObject] {
-        var result = TappingResultObject(identifier: "tapping")
+        var result = TappingResultObject()
         result.buttonRect1 = .init(x: 60, y: 500, width: 40, height: 40)
         result.buttonRect2 = .init(x: 160, y: 500, width: 40, height: 40)
         result.stepViewSize = .init(width: 320, height: 640)
