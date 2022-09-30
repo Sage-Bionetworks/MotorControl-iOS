@@ -95,23 +95,16 @@ struct TappingStepView: View {
             .background(surveyTint.saturation(2))
             .clipShape(Circle())
             .onFingerPressedGesture { startLocation, tapDuration in
-                state.tappedScreen(uptime: SystemClock.uptime(),
-                                   currentButton: target, location: startLocation,
+                state.tappedScreen(currentButton: target,
+                                   location: startLocation,
                                    duration: tapDuration)
             }
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { touch in
-                        guard !state.initialTap else { return }
-                        Task {
-                            do {
-                                try await state.recorder.start()
-                                withAnimation(.linear(duration: state.motionConfig.duration)) {
-                                    state.progress = 1.0
-                                }
-                            }
-                            catch {
-                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
+                        state.handleInitialTapOccurred {
+                            withAnimation(.linear(duration: state.motionConfig.duration)) {
+                                state.progress = 1.0
                             }
                         }
                     }

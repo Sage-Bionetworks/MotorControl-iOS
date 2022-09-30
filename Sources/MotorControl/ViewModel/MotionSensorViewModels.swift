@@ -112,7 +112,7 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
             }
         }
     }
-    public var initialTap: Bool { recorder.status > .idle }
+    public var initialTapOccurred: Bool { recorder.status > .idle }
     
     override public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
         super.init(motionConfig, assessmentState: assessmentState, branchState: branchState)
@@ -125,7 +125,7 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
                              location: CGPoint,
                              duration: TimeInterval) {
         guard recorder.clock.runningDuration() < motionConfig.duration else { return }
-        guard currentButton != TappingButtonIdentifier.none || initialTap else { return }
+        guard currentButton != TappingButtonIdentifier.none || initialTapOccurred else { return }
         
         let sample: TappingSample = .init(uptime: SystemClock.uptime() - duration,
                                           timestamp: max(recorder.clock.runningDuration() - duration, .zero),
@@ -145,7 +145,7 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
     }
     
     public func handleTimer(completion: @escaping () -> Void) {
-        guard !isPaused, countdown > 0, initialTap else { return }
+        guard !isPaused, countdown > 0, initialTapOccurred else { return }
         countdown = max(countdown - 1, 0)
         // Once the countdown hits zero, stop the countdown and *then* navigate forward.
         if countdown == 0 {
@@ -154,6 +154,19 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
                     await self.stop()
                     completion()
                 }
+            }
+        }
+    }
+    
+    public func handleInitialTapOccurred(completion: @escaping () -> Void) {
+        guard !initialTapOccurred else { return }
+        Task {
+            do {
+                try await recorder.start()
+                completion()
+            }
+            catch {
+                result = ErrorResultObject(identifier: node.identifier, error: error)
             }
         }
     }
