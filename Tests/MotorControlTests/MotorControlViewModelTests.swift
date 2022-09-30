@@ -72,7 +72,7 @@ final class MotorControlViewModelTests: XCTestCase {
                                               duration: 0.05)
         }
         XCTAssertEqual(tappingStepViewModel.tapCount, 30)
-        XCTAssertEqual(tappingStepViewModel.samples.count, 30)
+        XCTAssertEqual(tappingStepViewModel.tappingResult.samples.count, 30)
     }
     
     @MainActor func testTappingStateMixedTaps() {
@@ -89,7 +89,7 @@ final class MotorControlViewModelTests: XCTestCase {
                                               duration: 0.05)
         }
         XCTAssertEqual(tappingStepViewModel.tapCount, 20)
-        XCTAssertEqual(tappingStepViewModel.samples.count, 30)
+        XCTAssertEqual(tappingStepViewModel.tappingResult.samples.count, 30)
     }
     
     @MainActor func testTappingStateNoCorrectTaps() {
@@ -104,7 +104,7 @@ final class MotorControlViewModelTests: XCTestCase {
                                               duration: 0.05)
         }
         XCTAssertEqual(tappingStepViewModel.tapCount, 0)
-        XCTAssertEqual(tappingStepViewModel.samples.count, 30)
+        XCTAssertEqual(tappingStepViewModel.tappingResult.samples.count, 30)
     }
 }
 

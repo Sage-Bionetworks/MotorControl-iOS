@@ -96,7 +96,6 @@ struct TappingStepView: View {
             .clipShape(Circle())
             .onFingerPressedGesture { startLocation, tapDuration in
                 state.tappedScreen(uptime: SystemClock.uptime(),
-                                   timestamp: state.recorder.clock.runningDuration(),
                                    currentButton: target, location: startLocation,
                                    duration: tapDuration)
             }
@@ -168,10 +167,7 @@ struct TappingStepView: View {
                 )
                 .coordinateSpace(name: TappingButtonIdentifier.none.rawValue)
                 .onFingerPressedGesture { location, tapDuration in
-                    guard state.initialTap else { return }
-                    state.tappedScreen(uptime: SystemClock.uptime(),
-                                       timestamp: state.recorder.clock.runningDuration(),
-                                       currentButton: .none,
+                    state.tappedScreen(currentButton: .none,
                                        location: location,
                                        duration: tapDuration)
                 }
@@ -195,21 +191,8 @@ struct TappingStepView: View {
                 state.isPaused = newValue
             }
             .onReceive(timer) { _ in
-                guard !state.recorder.isPaused, state.countdown > 0, state.initialTap else { return }
-                state.countdown = max(state.countdown - 1, 0)
-                // Once the countdown hits zero, stop the countdown and *then* navigate forward.
-                if state.countdown == 0 {
-                    state.speak(at: state.motionConfig.duration) {
-                        Task {
-                            do {
-                                state.result = try await state.recorder.stop()
-                            }
-                            catch {
-                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                            }
-                            pagedNavigation.goForward()
-                        }
-                    }
+                state.handleTimer {
+                    pagedNavigation.goForward()
                     timer.upstream.connect().cancel()
                 }
             }

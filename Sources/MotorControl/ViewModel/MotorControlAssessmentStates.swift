@@ -69,8 +69,10 @@ public class AbstractMotionControlState : ContentNodeState {
     public let title: String?
     public let subtitle: String?
     public let detail: String?
+    public let whichHand: HandSelection?
     
     public init(_ motionControlStep: AbstractStepObject, parentId: String?, whichHand: HandSelection? = nil) {
+        self.whichHand = whichHand
         if let whichHand = whichHand {
             self.flippedImage = (whichHand == .right)
             let replacementString = whichHand.handReplacementString().uppercased()

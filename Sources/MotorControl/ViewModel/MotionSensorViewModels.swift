@@ -89,9 +89,18 @@ public final class TremorStepViewModel : MotionSensorStepViewModel {
 
 /// View model for a tapping step
 public final class TappingStepViewModel : MotionSensorStepViewModel {
-    public var samples: [TappingSample] = []
+
+    weak var branchState: BranchState!
+    public var tappingResult : TappingResultObject {
+        get { self.result as! TappingResultObject }
+        set { self.result = newValue }
+    }
     public var previousButton: TappingButtonIdentifier? = nil
-    @Published public var tapCount: Int = 0
+    @Published public var tapCount: Int = 0 {
+        didSet {
+            tappingResult.tapCount = tapCount
+        }
+    }
     @Published public var isPaused : Bool = false {
         didSet {
             guard recorder.status >= .starting else { return }
@@ -104,29 +113,59 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
         }
     }
     public var initialTap: Bool { recorder.status > .idle }
+    
+    override public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
+        super.init(motionConfig, assessmentState: assessmentState, branchState: branchState)
+        self.branchState = branchState
+        self.tappingResult.hand = whichHand
+    }
 
     @MainActor
-    public func tappedScreen(uptime: TimeInterval,
-                             timestamp: TimeInterval,
-                             currentButton: TappingButtonIdentifier,
+    public func tappedScreen(currentButton: TappingButtonIdentifier,
                              location: CGPoint,
                              duration: TimeInterval) {
         guard recorder.clock.runningDuration() < motionConfig.duration else { return }
-        let sample: TappingSample = .init(uptime: uptime - duration,
-                                          timestamp: timestamp - duration,
+        guard currentButton != TappingButtonIdentifier.none || initialTap else { return }
+        
+        let sample: TappingSample = .init(uptime: SystemClock.uptime() - duration,
+                                          timestamp: max(recorder.clock.runningDuration() - duration, .zero),
                                           stepPath: recorder.currentStepPath,
                                           buttonIdentifier: currentButton,
                                           location: location,
                                           duration: duration)
-        samples.append(sample)
         // Update the tap count if the button is *not* the "none" case and either the previous button is nil
         // or the previous button matches this button.
+        tappingResult.samples.append(sample)
         guard currentButton != .none, previousButton != currentButton
         else {
             return
         }
         tapCount += 1
         previousButton = currentButton
+    }
+    
+    public func handleTimer(completion: @escaping () -> Void) {
+        guard !isPaused, countdown > 0, initialTap else { return }
+        countdown = max(countdown - 1, 0)
+        // Once the countdown hits zero, stop the countdown and *then* navigate forward.
+        if countdown == 0 {
+            speak(at: motionConfig.duration) {
+                Task {
+                    await self.stop()
+                    completion()
+                }
+            }
+        }
+    }
+    
+    public func stop() async {
+        do {
+            let result = try await recorder.stop()
+            branchState.branchNodeResult.asyncResults = [result]
+        }
+        catch {
+            print("Failed to stop the motion recorder. \(error)")
+        }
     }
 }
 
