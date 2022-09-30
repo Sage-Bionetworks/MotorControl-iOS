@@ -206,12 +206,7 @@ struct TappingStepView: View {
                     state.audioFileSoundPlayer.vibrateDevice()
                     state.speak(at: state.motionConfig.duration) {
                         Task {
-                            do {
-                                state.result = try await state.recorder.stop()
-                            }
-                            catch {
-                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                            }
+                            await state.stop()
                             pagedNavigation.goForward()
                         }
                     }
