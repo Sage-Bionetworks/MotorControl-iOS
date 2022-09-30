@@ -166,8 +166,7 @@ final class TwoHandNavigator : Navigator {
 }
 
 enum TwoHandAssessmentError: Error {
-    case identifiersNotUnique
-    case noHandFound
+    case identifiersNotUnique, noHandFound
 }
 
 public enum HandSelection: String, Codable, CaseIterable {
@@ -176,6 +175,9 @@ public enum HandSelection: String, Codable, CaseIterable {
     func handReplacementString() -> String {
         SharedResources.bundle.localizedString(forKey: self.rawValue, value: self.rawValue, table: nil)
     }
+}
+
+extension HandSelection : DocumentableStringEnum, StringEnumSet {
 }
 
 extension Node {

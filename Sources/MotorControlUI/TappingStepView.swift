@@ -1,5 +1,5 @@
 //
-//  MotionSensorStepView.swift
+//  TappingStepView.swift
 //
 //  Copyright © 2022 Sage Bionetworks. All rights reserved.
 //
@@ -40,14 +40,14 @@ import MotorControl
 import SharedMobileUI
 import SharedResources
 
-struct MotionSensorStepView: View {
+struct TappingStepView: View {
     @EnvironmentObject var assessmentState: AssessmentState
     @EnvironmentObject var pagedNavigation: PagedNavigationViewModel
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
-    @ObservedObject var state: TremorStepViewModel
+    @ObservedObject var state: TappingStepViewModel
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
+
     @ViewBuilder
     fileprivate func insideCountdownDial(_ count: Int) -> some View {
         VStack {
@@ -77,6 +77,9 @@ struct MotionSensorStepView: View {
                 .foregroundColor(.textForeground)
                 .rotationEffect(Angle(degrees: 270.0))
                 .padding(2.5)
+                .pausableAnimation(progress: $state.progress,
+                                   paused: $state.isPaused,
+                                   remainingDuration: $state.countdown)
                 .background (
                     Circle()
                         .fill(Color.sageWhite)
@@ -85,19 +88,51 @@ struct MotionSensorStepView: View {
     }
     
     @ViewBuilder
-    func insideView() -> some View {
+    fileprivate func singleTappingButton(target: TappingButtonIdentifier) -> some View {
+        Text("Tap", bundle: SharedResources.bundle)
+            .frame(width: 100, height: 100)
+            .foregroundColor(Color.textForeground)
+            .background(surveyTint.saturation(2))
+            .clipShape(Circle())
+            .onFingerPressedGesture { startLocation, tapDuration in
+                state.tappedScreen(currentButton: target,
+                                   location: startLocation,
+                                   duration: tapDuration)
+            }
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { touch in
+                        state.handleInitialTapOccurred {
+                            withAnimation(.linear(duration: state.motionConfig.duration)) {
+                                state.progress = 1.0
+                            }
+                        }
+                    }
+            )
+    }
+    
+    @ViewBuilder
+    fileprivate func tappingButtons() -> some View {
+        HStack {
+            Spacer()
+            singleTappingButton(target: .left)
+            Spacer()
+            singleTappingButton(target: .right)
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    fileprivate func insideView() -> some View {
         VStack {
             StepHeaderView(state)
-            if let title = state.title {
-                Text(title)
-                    .font(.activeViewTitle)
-                    .padding(spacing)
-                    .foregroundColor(.textForeground)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .multilineTextAlignment(.center)
-            }
+            Spacer()
             countdownDial()
             Spacer()
+            Text("\(state.tapCount)", bundle: SharedResources.bundle)
+                .foregroundColor(.textForeground)
+                .font(.countdownNumbers)
+            tappingButtons()
         }
     }
     
@@ -118,27 +153,24 @@ struct MotionSensorStepView: View {
     
     @ViewBuilder
     func content() -> some View {
-        insideView()
-            .background (
-                backgroundView()
-            )
+        GeometryReader { geometry in
+            insideView()
+                .background (
+                    backgroundView()
+                )
+                .coordinateSpace(name: TappingButtonIdentifier.none.rawValue)
+                .onFingerPressedGesture { location, tapDuration in
+                    state.tappedScreen(currentButton: .none,
+                                       location: location,
+                                       duration: tapDuration)
+                }
+        }
     }
     
     var body: some View {
         content()
             .onAppear {
-                // Reset the countdown animation and start the recorder.
-                resetCountdown()
-                state.audioFileSoundPlayer.vibrateDevice()
                 state.speak(at: 0)
-                Task {
-                    do {
-                        try await state.recorder.start()
-                    }
-                    catch {
-                        state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                    }
-                }
             }
             .onDisappear {
                 // If the recorder isn't stopping and the view disappears, it's b/c the recorder is cancelled.
@@ -149,76 +181,33 @@ struct MotionSensorStepView: View {
                 }
             }
             .onChange(of: assessmentState.showingPauseActions) { newValue in
-                guard state.recorder.isPaused != newValue else { return }
-                if newValue {
-                    // Pause the recorder and countdown animation
-                    state.recorder.pause()
-                    pauseCountdown()
-                }
-                else {
-                    // Resume the recoder and reset the countdown animation
-                    state.recorder.resume()
-                    resetCountdown()
-                }
+                state.isPaused = newValue
             }
-            .onReceive(timer) { time in
-                guard !state.recorder.isPaused, state.countdown > 0 else { return }
-                state.countdown = max(state.countdown - 1, 0)
-                // Once the countdown hits zero, stop the recorder and *then* navigate forward.
-                if state.countdown == 0, state.recorder.status <= .running {
-                    state.audioFileSoundPlayer.vibrateDevice()
-                    state.speak(at: state.motionConfig.duration) {
-                        Task {
-                            do {
-                                state.result = try await state.recorder.stop()
-                            }
-                            catch {
-                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                            }
-                            pagedNavigation.goForward()
-                        }
-                    }
+            .onReceive(timer) { _ in
+                state.handleTimer {
+                    pagedNavigation.goForward()
                     timer.upstream.connect().cancel()
                 }
-                else {
-                    state.speak(at: state.recorder.clock.runningDuration())
-                }
             }
-    }
-
-    func resetCountdown() {
-        state.recorder.clock.reset()
-        state.countdown = state.motionConfig.duration
-        state.resetInstructionCache()
-        withAnimation(.linear(duration: state.motionConfig.duration)) {
-            state.progress = 1.0
-        }
-    }
-    
-    func pauseCountdown() {
-        state.recorder.pause()
-        withAnimation(.linear(duration: 0)) {
-            state.progress = 0
-        }
     }
 }
 
-struct PreviewMotionSensorStepView : View {
-    @StateObject var assessmentState: AssessmentState = .init(AssessmentObject(previewStep: example1))
+struct PreviewTappingStepView : View {
+    @StateObject var assessmentState: AssessmentState = .init(AssessmentObject(previewStep: tappingExample))
     
     var body: some View {
-        MotionSensorStepView(state: .init(example1, assessmentState: assessmentState, branchState: assessmentState))
+        TappingStepView(state: .init(tappingExample, assessmentState: assessmentState, branchState: assessmentState))
             .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
             .environmentObject(assessmentState)
     }
 }
 
-struct MotionSensorStepView_Previews: PreviewProvider {
+struct TappingStepView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            PreviewMotionSensorStepView()
+            PreviewTappingStepView()
         }
     }
 }
 
-fileprivate let example1 = TremorNodeObject(identifier: "example", title: "Here's some text that tells you to do something", imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle))
+fileprivate let tappingExample = TappingNodeObject(identifier: "tappingExample", imageInfo: FetchableImage(imageName: "tap_left_1", bundle: SharedResources.bundle))

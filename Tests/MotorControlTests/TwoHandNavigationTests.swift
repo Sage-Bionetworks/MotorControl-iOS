@@ -174,10 +174,6 @@ final class MotorControlNavigationTests: XCTestCase {
         }
         XCTAssertTrue(state.navigator.isCompleted(currentNode: completionNode, branchResult: state.assessmentResult))
     }
-        
-    enum TestError: Error {
-        case nilValue
-    }
     
     func navigateForward(_ state: TestNavigationState, to identifier: String, handSelection: String? = "both") throws -> Node {
         var loopCount = 0
@@ -206,20 +202,24 @@ final class MotorControlNavigationTests: XCTestCase {
         }
         return node
     }
+}
 
-    class TestNavigationState : NavigationState {
-        let assessmentState: AssessmentState
+class TestNavigationState : NavigationState {
+    let assessmentState: AssessmentState
 
-        public private(set) var navigator: Navigator! = nil
+    public private(set) var navigator: Navigator! = nil
 
-        var currentNode: Node?
-        
-        var assessment: Assessment { assessmentState.assessment }
-        var assessmentResult: AssessmentResult { assessmentState.assessmentResult }
+    var currentNode: Node?
+    
+    var assessment: Assessment { assessmentState.assessment }
+    var assessmentResult: AssessmentResult { assessmentState.assessmentResult }
 
-        init(_ assessmentState: AssessmentState) {
-            self.assessmentState = assessmentState
-            self.navigator = try! assessmentState.assessment.instantiateNavigator(state: self)
-        }
+    init(_ assessmentState: AssessmentState) {
+        self.assessmentState = assessmentState
+        self.navigator = try! assessmentState.assessment.instantiateNavigator(state: self)
     }
+}
+
+enum TestError: Error {
+    case nilValue
 }

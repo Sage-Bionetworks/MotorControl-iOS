@@ -72,6 +72,8 @@ class MotorControlFactory : AssessmentFactory {
         nodeSerializer.add(HandInstructionObject())
         nodeSerializer.add(TappingNodeObject())
         nodeSerializer.add(TremorNodeObject())
+        
+        resultSerializer.add(TappingResultObject())
     }
     
     override func resourceBundle(for bundleInfo: DecodableBundleInfo, from decoder: Decoder) -> ResourceBundle? {
