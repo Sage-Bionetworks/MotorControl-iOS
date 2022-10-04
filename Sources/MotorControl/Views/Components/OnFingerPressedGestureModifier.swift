@@ -32,7 +32,6 @@
 
 import SwiftUI
 import MobilePassiveData
-import MotorControl
 
 struct OnFingerPressedGestureModifier: ViewModifier {
     @State private var fingerDown = false

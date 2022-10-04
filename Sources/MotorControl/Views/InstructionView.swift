@@ -34,7 +34,6 @@ import SwiftUI
 import AssessmentModel
 import AssessmentModelUI
 import SharedMobileUI
-import MotorControl
 import SharedResources
 
 struct InstructionView: View {

@@ -36,7 +36,6 @@ import AssessmentModelUI
 import JsonModel
 import SharedResources
 import SharedMobileUI
-import MotorControl
 
 extension MotorControlAssessmentView : AssessmentDisplayView {
     public static func instantiateAssessmentState(_ identifier: String, config: Data?, restoredResult: Data?, interruptionHandling: InterruptionHandling?) throws -> AssessmentState {

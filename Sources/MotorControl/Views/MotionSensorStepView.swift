@@ -36,7 +36,6 @@ import AssessmentModelUI
 import JsonModel
 import MotionSensor
 import MobilePassiveData
-import MotorControl
 import SharedMobileUI
 import SharedResources
 
