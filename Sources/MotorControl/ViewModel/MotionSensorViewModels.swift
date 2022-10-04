@@ -124,9 +124,17 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
     public func tappedScreen(currentButton: TappingButtonIdentifier,
                              location: CGPoint,
                              duration: TimeInterval) {
-        guard recorder.clock.runningDuration() < motionConfig.duration else { return }
-        guard currentButton != TappingButtonIdentifier.none || initialTapOccurred else { return }
-        
+        guard recorder.clock.runningDuration() < motionConfig.duration, initialTapOccurred
+        else {
+            return
+        }
+        addTappingSample(currentButton: currentButton, location: location, duration: duration)
+    }
+    
+    @MainActor
+    func addTappingSample(currentButton: TappingButtonIdentifier,
+                          location: CGPoint,
+                          duration: TimeInterval) {
         let sample: TappingSample = .init(uptime: SystemClock.uptime() - duration,
                                           timestamp: max(recorder.clock.runningDuration() - duration, .zero),
                                           stepPath: recorder.currentStepPath,
@@ -136,6 +144,7 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
         // Update the tap count if the button is *not* the "none" case and either the previous button is nil
         // or the previous button matches this button.
         tappingResult.samples.append(sample)
+        
         guard currentButton != .none, previousButton != currentButton
         else {
             return
@@ -158,16 +167,14 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
         }
     }
     
-    public func handleInitialTapOccurred(completion: @escaping () -> Void) {
+    public func handleInitialTapOccurred() async throws {
         guard !initialTapOccurred else { return }
-        Task {
-            do {
-                try await recorder.start()
-                completion()
-            }
-            catch {
-                result = ErrorResultObject(identifier: node.identifier, error: error)
-            }
+        do {
+            try await recorder.start()
+        }
+        catch {
+            result = ErrorResultObject(identifier: node.identifier, error: error)
+            throw error
         }
     }
     

@@ -102,9 +102,14 @@ struct TappingStepView: View {
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { touch in
-                        state.handleInitialTapOccurred {
-                            withAnimation(.linear(duration: state.motionConfig.duration)) {
-                                state.progress = 1.0
+                        Task {
+                            do {
+                                try await state.handleInitialTapOccurred()
+                                withAnimation(.linear(duration: state.motionConfig.duration)) {
+                                    state.progress = 1.0
+                                }
+                            } catch {
+                                assessmentState.status = .error
                             }
                         }
                     }
