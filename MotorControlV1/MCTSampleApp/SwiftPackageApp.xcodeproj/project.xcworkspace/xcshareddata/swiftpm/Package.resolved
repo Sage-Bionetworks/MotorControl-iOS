@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "AssessmentModel",
-        "repositoryURL": "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
-        "state": {
-          "branch": null,
-          "revision": "65cd9ee57f75f56bcd148b828de53110f8d7eefe",
-          "version": "0.8.6"
-        }
-      },
-      {
         "package": "JsonModel",
         "repositoryURL": "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
         "state": {
@@ -29,12 +20,12 @@
         }
       },
       {
-        "package": "SharedMobileUI",
-        "repositoryURL": "https://github.com/Sage-Bionetworks/SharedMobileUI-AppleOS.git",
+        "package": "SageResearch",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/SageResearch.git",
         "state": {
           "branch": null,
-          "revision": "a3c4ff73d2b222d5a246f617d5c2b062eb3abfe4",
-          "version": "0.17.0"
+          "revision": "d5c2a7fafe83cf62c53742a553cf2f7c45f5c219",
+          "version": "4.6.1"
         }
       }
     ]
