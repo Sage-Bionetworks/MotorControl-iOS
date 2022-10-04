@@ -36,7 +36,7 @@ import SwiftUI
 
 public typealias AnimationWithDurationProvider = (TimeInterval) -> Animation
 
-public struct PausableAnimationModifier: AnimatableModifier {
+struct PausableAnimationModifier: AnimatableModifier {
     @Binding var progress: CGFloat
     @Binding var paused: Bool
     @Binding var remainingDuration: CGFloat

@@ -18,6 +18,14 @@ let package = Package(
             targets: [
                 "MotorControl",
             ]),
+
+        // Library added to support SwiftUI Preview (which only works within an app).
+        // See the iosViewBuilder app. syoung 10/04/2022
+        .library(
+            name: "LocalPreview",
+            targets: [
+                "SharedResources",
+            ]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
