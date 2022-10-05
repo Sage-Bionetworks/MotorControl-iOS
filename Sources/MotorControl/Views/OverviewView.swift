@@ -115,6 +115,7 @@ struct OverviewNodeView: View {
                                     }
                                 }
                             }
+                            .padding(.horizontal, 32)
                         }
                     }
                     .id(bottomID)
