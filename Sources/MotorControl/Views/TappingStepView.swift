@@ -137,6 +137,7 @@ struct TappingStepView: View {
                 .foregroundColor(.textForeground)
                 .font(.countdownNumbers)
             tappingButtons()
+                .padding(.bottom, 48)
         }
     }
     
