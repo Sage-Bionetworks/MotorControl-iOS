@@ -45,8 +45,24 @@ class MotionSensorStepViewModel : AbstractMotionControlState {
     let spokenInstructions: [Int : String]
     var instructionCache: Set<Int> = []
     let recorder: MotionRecorder
-    @Published var countdown: CGFloat
-    @Published var progress: CGFloat = .zero
+    
+    @Published var secondCount: Int = 0
+    @Published var countdown: CGFloat {
+        didSet {
+            secondCount = Int(countdown)
+        }
+    }
+    @Published var isPaused : Bool = false {
+        didSet {
+            guard recorder.status >= .starting else { return }
+            if isPaused {
+                recorder.pause()
+            }
+            else {
+                recorder.resume()
+            }
+        }
+    }
     
     init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
         if assessmentState.outputDirectory == nil {
@@ -78,8 +94,12 @@ class MotionSensorStepViewModel : AbstractMotionControlState {
         }
     }
     
-    func resetInstructionCache() {
+    @MainActor
+    func resetCountdown() {
+        recorder.clock.reset()
+        countdown = motionConfig.duration
         instructionCache.removeAll()
+        // TODO: syoung 10/05/2022 Flush the recorder file?
     }
 }
 
@@ -101,17 +121,7 @@ final class TappingStepViewModel : MotionSensorStepViewModel {
             tappingResult.tapCount = tapCount
         }
     }
-    @Published var isPaused : Bool = false {
-        didSet {
-            guard recorder.status >= .starting else { return }
-            if isPaused {
-                recorder.pause()
-            }
-            else {
-                recorder.resume()
-            }
-        }
-    }
+
     var initialTapOccurred: Bool { recorder.status > .idle }
     
     override init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {

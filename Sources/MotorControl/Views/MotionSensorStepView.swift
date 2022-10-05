@@ -45,6 +45,7 @@ struct MotionSensorStepView: View {
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var progress: CGFloat = 0
     
     @ObservedObject var state: TremorStepViewModel
     
@@ -52,7 +53,8 @@ struct MotionSensorStepView: View {
         content()
             .onAppear {
                 // Reset the countdown animation and start the recorder.
-                resetCountdown()
+                state.resetCountdown()
+                restartDial()
                 state.audioFileSoundPlayer.vibrateDevice()
                 state.speak(at: 0)
                 Task {
@@ -73,16 +75,12 @@ struct MotionSensorStepView: View {
                 }
             }
             .onChange(of: assessmentState.showingPauseActions) { newValue in
-                guard state.recorder.isPaused != newValue else { return }
-                if newValue {
-                    // Pause the recorder and countdown animation
-                    state.recorder.pause()
-                    pauseCountdown()
-                }
-                else {
+                guard state.isPaused != newValue else { return }
+                state.isPaused = newValue
+                if !newValue {
                     // Resume the recoder and reset the countdown animation
-                    state.recorder.resume()
-                    resetCountdown()
+                    state.resetCountdown()
+                    restartDial()
                 }
             }
             .onReceive(timer) { time in
@@ -119,42 +117,6 @@ struct MotionSensorStepView: View {
     }
     
     @ViewBuilder
-    private func insideCountdownDial(_ count: Int) -> some View {
-        VStack {
-            Text("\(count)")
-                .font(.countdownNumbers)
-                .foregroundColor(.textForeground)
-                .frame(maxWidth: .infinity, alignment: .center)
-            Text("seconds", bundle: SharedResources.bundle)
-                .font(.countdownDialText)
-                .foregroundColor(.textForeground)
-        }
-    }
-    
-    @ViewBuilder
-    private func countdownDial() -> some View {
-        ZStack {
-            insideCountdownDial(Int(state.countdown))
-            insideCountdownDial(30)
-                .opacity(0)
-        }
-        .fixedSize(horizontal: true, vertical: true)
-        .padding(48)
-        .background (
-            Circle()
-                .trim(from: 0.0, to: min(state.progress, 1.0))
-                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
-                .foregroundColor(.textForeground)
-                .rotationEffect(Angle(degrees: 270.0))
-                .padding(2.5)
-                .background (
-                    Circle()
-                        .fill(Color.sageWhite)
-                )
-        )
-    }
-    
-    @ViewBuilder
     private func insideView() -> some View {
         VStack {
             StepHeaderView(state)
@@ -166,7 +128,12 @@ struct MotionSensorStepView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.center)
             }
-            countdownDial()
+            CountdownDial(progress: $progress,
+                          remainingDuration: $state.countdown,
+                          paused: $state.isPaused,
+                          count: $state.secondCount,
+                          maxCount: Int(state.motionConfig.duration),
+                          label: Text("seconds", bundle: SharedResources.bundle))
             Spacer()
         }
     }
@@ -186,19 +153,10 @@ struct MotionSensorStepView: View {
         .edgesIgnoringSafeArea(.all)
     }
     
-    func resetCountdown() {
-        state.recorder.clock.reset()
-        state.countdown = state.motionConfig.duration
-        state.resetInstructionCache()
-        withAnimation(.linear(duration: state.motionConfig.duration)) {
-            state.progress = 1.0
-        }
-    }
-    
-    func pauseCountdown() {
-        state.recorder.pause()
-        withAnimation(.linear(duration: 0)) {
-            state.progress = 0
+    func restartDial() {
+        progress = 0
+        withAnimation(.linear(duration: state.countdown)) {
+            progress = 1.0
         }
     }
 }

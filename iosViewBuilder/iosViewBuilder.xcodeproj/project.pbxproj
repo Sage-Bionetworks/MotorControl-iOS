@@ -32,6 +32,7 @@
 		FF0B3AF928ECF8B2003D42AB /* TappingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AEA28ECF8B2003D42AB /* TappingStepView.swift */; };
 		FF0B3AFA28ECF8B2003D42AB /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AEB28ECF8B2003D42AB /* GlobalProperties.swift */; };
 		FF1DD83B28EE02DA00DD87BD /* TextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1DD83A28EE02DA00DD87BD /* TextContent.swift */; };
+		FF1DD83D28EE0E1900DD87BD /* CountdownDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1DD83C28EE0E1900DD87BD /* CountdownDial.swift */; };
 		FFA0978E28ECFB74003AF899 /* LocalPreview in Frameworks */ = {isa = PBXBuildFile; productRef = FFA0978D28ECFB74003AF899 /* LocalPreview */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		FF0B3AEA28ECF8B2003D42AB /* TappingStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappingStepView.swift; sourceTree = "<group>"; };
 		FF0B3AEB28ECF8B2003D42AB /* GlobalProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
 		FF1DD83A28EE02DA00DD87BD /* TextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContent.swift; sourceTree = "<group>"; };
+		FF1DD83C28EE0E1900DD87BD /* CountdownDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownDial.swift; sourceTree = "<group>"; };
 		FFA0978C28ECFB67003AF899 /* MotorControl-iOS */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "MotorControl-iOS"; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -184,6 +186,7 @@
 				FF0B3AE528ECF8B2003D42AB /* PausableAnimationModifier.swift */,
 				FF0B3AE628ECF8B2003D42AB /* OnFingerPressedGestureModifier.swift */,
 				FF1DD83A28EE02DA00DD87BD /* TextContent.swift */,
+				FF1DD83C28EE0E1900DD87BD /* CountdownDial.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				FF0B3AEF28ECF8B2003D42AB /* TappingResultObject.swift in Sources */,
 				FF0B3AF328ECF8B2003D42AB /* InstructionView.swift in Sources */,
 				FF0B3AF528ECF8B2003D42AB /* OnFingerPressedGestureModifier.swift in Sources */,
+				FF1DD83D28EE0E1900DD87BD /* CountdownDial.swift in Sources */,
 				FF0B3AF728ECF8B2003D42AB /* OverviewView.swift in Sources */,
 				FF0B3AFA28ECF8B2003D42AB /* GlobalProperties.swift in Sources */,
 			);

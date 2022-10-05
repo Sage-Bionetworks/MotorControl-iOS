@@ -45,6 +45,7 @@ struct TappingStepView: View {
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State var progress: CGFloat = .zero
     
     @ObservedObject var state: TappingStepViewModel
     
@@ -87,45 +88,6 @@ struct TappingStepView: View {
                 }
         }
     }
-
-    @ViewBuilder
-    private func insideCountdownDial(_ count: Int) -> some View {
-        VStack {
-            Text("\(count)")
-                .font(.countdownNumbers)
-                .foregroundColor(.textForeground)
-                .frame(maxWidth: .infinity, alignment: .center)
-            Text("seconds", bundle: SharedResources.bundle)
-                .font(.countdownDialText)
-                .foregroundColor(.textForeground)
-        }
-    }
-    
-    @ViewBuilder
-    private func countdownDial() -> some View {
-        ZStack {
-            insideCountdownDial(Int(state.countdown))
-            insideCountdownDial(30)
-                .opacity(0)
-        }
-        .fixedSize(horizontal: true, vertical: true)
-        .padding(48)
-        .background (
-            Circle()
-                .trim(from: 0.0, to: min(state.progress, 1.0))
-                .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
-                .foregroundColor(.textForeground)
-                .rotationEffect(Angle(degrees: 270.0))
-                .padding(2.5)
-                .pausableAnimation(progress: $state.progress,
-                                   paused: $state.isPaused,
-                                   remainingDuration: $state.countdown)
-                .background (
-                    Circle()
-                        .fill(Color.sageWhite)
-                )
-        )
-    }
     
     @ViewBuilder
     private func singleTappingButton(target: TappingButtonIdentifier) -> some View {
@@ -146,7 +108,7 @@ struct TappingStepView: View {
                             do {
                                 try await state.handleInitialTapOccurred()
                                 withAnimation(.linear(duration: state.motionConfig.duration)) {
-                                    state.progress = 1.0
+                                    progress = 1.0
                                 }
                             } catch {
                                 assessmentState.status = .error
@@ -172,11 +134,13 @@ struct TappingStepView: View {
         VStack {
             StepHeaderView(state)
             Spacer()
-            countdownDial()
+            CountdownDial(progress: $progress,
+                          remainingDuration: $state.countdown,
+                          paused: $state.isPaused,
+                          count: $state.tapCount,
+                          maxCount: 999,
+                          label: Text("Tap count", bundle: SharedResources.bundle))
             Spacer()
-            Text("\(state.tapCount)", bundle: SharedResources.bundle)
-                .foregroundColor(.textForeground)
-                .font(.countdownNumbers)
             tappingButtons()
                 .padding(.bottom, 48)
         }
