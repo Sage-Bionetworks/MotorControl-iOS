@@ -62,7 +62,7 @@ public enum MotorControlIdentifier : String, Codable, StringEnumSet, Documentabl
     }
 }
 
-class MotorControlFactory : AssessmentFactory {
+final class MotorControlFactory : AssessmentFactory {
     
     required init() {
         super.init()
