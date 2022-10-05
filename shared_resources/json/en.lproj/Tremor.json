@@ -33,7 +33,7 @@
              {
                 "identifier": "handSelection",
                 "type":"transform",
-                "resourceName": "HandSelectionStep"
+                "resourceName": "hand_selection_step"
              },
              {
                 "identifier":"holdPhoneInstructions",
@@ -72,12 +72,12 @@
              {
                  "identifier":"left",
                  "type":"transform",
-                 "resourceName": "TremorSectionStep"
+                 "resourceName": "tremor_section_step"
              },
              {
                  "identifier":"right",
                  "type":"transform",
-                 "resourceName": "TremorSectionStep"
+                 "resourceName": "tremor_section_step"
              },
              {
                  "identifier":"completion",
