@@ -39,9 +39,9 @@ let stepIconFontSize: CGFloat = 18
 let countdownSize: CGFloat = 64
 
 extension Font {
-    static let stepTitle: Font = .latoFont(titleFontSize)
-    static let stepSubtitle: Font = .latoFont(bodyFontSize)
-    static let stepDetail: Font = .latoFont(bodyFontSize)
+    static let stepTitle: Font = .latoFont(titleFontSize, relativeTo: .title)
+    static let stepSubtitle: Font = .latoFont(bodyFontSize, relativeTo: .body)
+    static let stepDetail: Font = .latoFont(bodyFontSize, relativeTo: .body)
     static let stepIconHeader: Font = .latoFont(bodyFontSize, weight: .bold)
     static let stepIconText: Font = .latoFont(stepIconFontSize)
     static let activeViewTitle: Font = .latoFont(fixedSize: titleFontSize)
