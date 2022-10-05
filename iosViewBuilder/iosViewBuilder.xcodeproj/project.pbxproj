@@ -31,6 +31,7 @@
 		FF0B3AF828ECF8B2003D42AB /* MotionSensorStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE928ECF8B2003D42AB /* MotionSensorStepView.swift */; };
 		FF0B3AF928ECF8B2003D42AB /* TappingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AEA28ECF8B2003D42AB /* TappingStepView.swift */; };
 		FF0B3AFA28ECF8B2003D42AB /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AEB28ECF8B2003D42AB /* GlobalProperties.swift */; };
+		FF1DD83B28EE02DA00DD87BD /* TextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1DD83A28EE02DA00DD87BD /* TextContent.swift */; };
 		FFA0978E28ECFB74003AF899 /* LocalPreview in Frameworks */ = {isa = PBXBuildFile; productRef = FFA0978D28ECFB74003AF899 /* LocalPreview */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		FF0B3AE928ECF8B2003D42AB /* MotionSensorStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionSensorStepView.swift; sourceTree = "<group>"; };
 		FF0B3AEA28ECF8B2003D42AB /* TappingStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappingStepView.swift; sourceTree = "<group>"; };
 		FF0B3AEB28ECF8B2003D42AB /* GlobalProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
+		FF1DD83A28EE02DA00DD87BD /* TextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContent.swift; sourceTree = "<group>"; };
 		FFA0978C28ECFB67003AF899 /* MotorControl-iOS */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "MotorControl-iOS"; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,6 +183,7 @@
 			children = (
 				FF0B3AE528ECF8B2003D42AB /* PausableAnimationModifier.swift */,
 				FF0B3AE628ECF8B2003D42AB /* OnFingerPressedGestureModifier.swift */,
+				FF1DD83A28EE02DA00DD87BD /* TextContent.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF1DD83B28EE02DA00DD87BD /* TextContent.swift in Sources */,
 				FF0B3AEE28ECF8B2003D42AB /* MotorControl.swift in Sources */,
 				FF0B3AF028ECF8B2003D42AB /* MotionSensorNodeObject.swift in Sources */,
 				FF0B3AF228ECF8B2003D42AB /* TwoHandAssessmentObject.swift in Sources */,

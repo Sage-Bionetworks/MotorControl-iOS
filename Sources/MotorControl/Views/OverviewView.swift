@@ -50,20 +50,10 @@ struct OverviewView: View {
     }
 }
 
-struct OverviewView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            OverviewView(nodeState: ContentNodeState(step: exampleStep, parentId: nil))
-                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
-                .environmentObject(AssessmentState(AssessmentObject(previewStep: exampleStep)))
-        }
-    }
-}
-
 struct OverviewNodeView: View {
-
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
+    
     let bottomID = "bottom"
     let overview: OverviewStepObject
     
@@ -76,50 +66,14 @@ struct OverviewNodeView: View {
                             ContentImage(imageInfo)
                                 .background(surveyTint)
                         }
-                        if let title = overview.title {
-                            Text(title)
-                                .font(.stepTitle)
-                                .foregroundColor(.textForeground)
-                                .multilineTextAlignment(.center)
-                                .padding()
-                        }
-                        if let subtitle = overview.subtitle {
-                            Text(subtitle)
-                                .font(.stepSubtitle)
-                                .foregroundColor(.textForeground)
-                                .multilineTextAlignment(.center)
-                                .padding([.bottom, .leading, .trailing])
-
-                        }
-                        if let detail = overview.detail {
-                            Text(detail)
-                                .font(.stepDetail)
-                                .foregroundColor(.textForeground)
-                                .multilineTextAlignment(.center)
-                                .padding([.bottom, .leading, .trailing])
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
-                        if let icons = overview.icons {
-                            Text("This is what you'll need", bundle: SharedResources.bundle)
-                                .font(.stepIconHeader)
-                                .foregroundColor(.textForeground)
-                            HStack(alignment: .top, spacing: spacing) {
-                                ForEach(icons) { iconInfo in
-                                    VStack(alignment: .center, spacing: spacing) {
-                                        Image(iconInfo.icon, bundle: SharedResources.bundle)
-                                        Text(iconInfo.title)
-                                            .font(.stepIconText)
-                                            .foregroundColor(.textForeground)
-                                            .multilineTextAlignment(.center)
-                                            .fixedSize(horizontal: false, vertical: true)
-                                    }
-                                }
-                            }
-                            .padding(.horizontal, 32)
-                        }
+                        TextContent(title: overview.title,
+                                    subtitle: overview.subtitle,
+                                    detail: overview.detail)
+                        iconsView()
+                            .padding()
                     }
                     .id(bottomID)
-                    .onAppear{
+                    .onAppear {
                         proxy.scrollTo(bottomID, anchor: .bottom)
                     }
                     .frame(maxWidth: scrollViewGeometry.size.width)
@@ -128,11 +82,42 @@ struct OverviewNodeView: View {
         }
         .ignoresSafeArea(edges: [.top])
     }
+    
+    @ViewBuilder
+    private func iconsView() -> some View {
+        if let icons = overview.icons {
+            Text("This is what you'll need", bundle: SharedResources.bundle)
+                .font(.stepIconHeader)
+                .foregroundColor(.textForeground)
+            HStack(alignment: .top, spacing: spacing) {
+                ForEach(icons) { iconInfo in
+                    VStack(alignment: .center, spacing: spacing) {
+                        Image(iconInfo.icon, bundle: SharedResources.bundle)
+                        Text(iconInfo.title)
+                            .font(.stepIconText)
+                            .foregroundColor(.textForeground)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension OverviewIcon : Identifiable {
     public var id: String {
         icon
+    }
+}
+
+struct OverviewView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            OverviewView(nodeState: ContentNodeState(step: exampleStep, parentId: nil))
+                .environmentObject(PagedNavigationViewModel(pageCount: 5, currentIndex: 0))
+                .environmentObject(AssessmentState(AssessmentObject(previewStep: exampleStep)))
+        }
     }
 }
 

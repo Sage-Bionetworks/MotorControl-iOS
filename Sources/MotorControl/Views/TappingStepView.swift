@@ -44,11 +44,52 @@ struct TappingStepView: View {
     @EnvironmentObject var pagedNavigation: PagedNavigationViewModel
     @SwiftUI.Environment(\.surveyTintColor) var surveyTint: Color
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
-    @ObservedObject var state: TappingStepViewModel
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    @ObservedObject var state: TappingStepViewModel
+    
+    var body: some View {
+        content()
+            .onAppear {
+                state.speak(at: 0)
+            }
+            .onDisappear {
+                // If the recorder isn't stopping and the view disappears, it's b/c the recorder is cancelled.
+                // Go ahead and cancel the timer and the recorder.
+                if state.recorder.status <= .running {
+                    timer.upstream.connect().cancel()
+                    state.recorder.cancel()
+                }
+            }
+            .onChange(of: assessmentState.showingPauseActions) { newValue in
+                state.isPaused = newValue
+            }
+            .onReceive(timer) { _ in
+                state.handleTimer {
+                    pagedNavigation.goForward()
+                    timer.upstream.connect().cancel()
+                }
+            }
+    }
+    
+    @ViewBuilder
+    private func content() -> some View {
+        GeometryReader { geometry in
+            insideView()
+                .background (
+                    backgroundView()
+                )
+                .coordinateSpace(name: TappingButtonIdentifier.none.rawValue)
+                .onFingerPressedGesture { location, tapDuration in
+                    state.tappedScreen(currentButton: .none,
+                                       location: location,
+                                       duration: tapDuration)
+                }
+        }
+    }
 
     @ViewBuilder
-    fileprivate func insideCountdownDial(_ count: Int) -> some View {
+    private func insideCountdownDial(_ count: Int) -> some View {
         VStack {
             Text("\(count)")
                 .font(.countdownNumbers)
@@ -61,7 +102,7 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
-    fileprivate func countdownDial() -> some View {
+    private func countdownDial() -> some View {
         ZStack {
             insideCountdownDial(Int(state.countdown))
             insideCountdownDial(30)
@@ -87,7 +128,7 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
-    fileprivate func singleTappingButton(target: TappingButtonIdentifier) -> some View {
+    private func singleTappingButton(target: TappingButtonIdentifier) -> some View {
         Text("Tap", bundle: SharedResources.bundle)
             .frame(width: 100, height: 100)
             .foregroundColor(Color.textForeground)
@@ -116,7 +157,7 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
-    fileprivate func tappingButtons() -> some View {
+    private func tappingButtons() -> some View {
         HStack {
             Spacer()
             singleTappingButton(target: .left)
@@ -127,7 +168,7 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
-    fileprivate func insideView() -> some View {
+    private func insideView() -> some View {
         VStack {
             StepHeaderView(state)
             Spacer()
@@ -142,7 +183,7 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
-    func backgroundView() -> some View {
+    private func backgroundView() -> some View {
         ZStack {
             surveyTint
             if let image = state.contentNode.imageInfo?.imageName {
@@ -154,46 +195,6 @@ struct TappingStepView: View {
             }
         }
         .edgesIgnoringSafeArea(.all)
-    }
-    
-    @ViewBuilder
-    func content() -> some View {
-        GeometryReader { geometry in
-            insideView()
-                .background (
-                    backgroundView()
-                )
-                .coordinateSpace(name: TappingButtonIdentifier.none.rawValue)
-                .onFingerPressedGesture { location, tapDuration in
-                    state.tappedScreen(currentButton: .none,
-                                       location: location,
-                                       duration: tapDuration)
-                }
-        }
-    }
-    
-    var body: some View {
-        content()
-            .onAppear {
-                state.speak(at: 0)
-            }
-            .onDisappear {
-                // If the recorder isn't stopping and the view disappears, it's b/c the recorder is cancelled.
-                // Go ahead and cancel the timer and the recorder.
-                if state.recorder.status <= .running {
-                    timer.upstream.connect().cancel()
-                    state.recorder.cancel()
-                }
-            }
-            .onChange(of: assessmentState.showingPauseActions) { newValue in
-                state.isPaused = newValue
-            }
-            .onReceive(timer) { _ in
-                state.handleTimer {
-                    pagedNavigation.goForward()
-                    timer.upstream.connect().cancel()
-                }
-            }
     }
 }
 
