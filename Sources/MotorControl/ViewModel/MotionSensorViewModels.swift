@@ -38,17 +38,17 @@ import MotionSensor
 import JsonModel
 
 /// State object for motion sensor steps
-public class MotionSensorStepViewModel : AbstractMotionControlState {
-    public var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
-    public let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
-    public let voicePrompter: TextToSpeechSynthesizer = .init()
-    public let spokenInstructions: [Int : String]
-    public var instructionCache: Set<Int> = []
-    public let recorder: MotionRecorder
-    @Published public var countdown: CGFloat
-    @Published public var progress: CGFloat = .zero
+class MotionSensorStepViewModel : AbstractMotionControlState {
+    var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
+    let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
+    let voicePrompter: TextToSpeechSynthesizer = .init()
+    let spokenInstructions: [Int : String]
+    var instructionCache: Set<Int> = []
+    let recorder: MotionRecorder
+    @Published var countdown: CGFloat
+    @Published var progress: CGFloat = .zero
     
-    public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
+    init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
         if assessmentState.outputDirectory == nil {
             assessmentState.outputDirectory = createOutputDirectory()
         }
@@ -65,7 +65,7 @@ public class MotionSensorStepViewModel : AbstractMotionControlState {
         super.init(motionConfig, parentId: branchState.id, whichHand: whichHand)
     }
     
-    public func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
+    func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
         let key = Int(min(timeInterval, motionConfig.duration))
         guard !instructionCache.contains(key), let instruction = spokenInstructions[key]
         else {
@@ -78,30 +78,30 @@ public class MotionSensorStepViewModel : AbstractMotionControlState {
         }
     }
     
-    public func resetInstructionCache() {
+    func resetInstructionCache() {
         instructionCache.removeAll()
     }
 }
 
 /// View model for a tremor step
-public final class TremorStepViewModel : MotionSensorStepViewModel {
+final class TremorStepViewModel : MotionSensorStepViewModel {
 }
 
 /// View model for a tapping step
-public final class TappingStepViewModel : MotionSensorStepViewModel {
+final class TappingStepViewModel : MotionSensorStepViewModel {
 
     weak var branchState: BranchState!
-    public var tappingResult : TappingResultObject {
+    var tappingResult : TappingResultObject {
         get { self.result as! TappingResultObject }
         set { self.result = newValue }
     }
-    public var previousButton: TappingButtonIdentifier? = nil
-    @Published public var tapCount: Int = 0 {
+    var previousButton: TappingButtonIdentifier? = nil
+    @Published var tapCount: Int = 0 {
         didSet {
             tappingResult.tapCount = tapCount
         }
     }
-    @Published public var isPaused : Bool = false {
+    @Published var isPaused : Bool = false {
         didSet {
             guard recorder.status >= .starting else { return }
             if isPaused {
@@ -112,16 +112,16 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
             }
         }
     }
-    public var initialTapOccurred: Bool { recorder.status > .idle }
+    var initialTapOccurred: Bool { recorder.status > .idle }
     
-    override public init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
+    override init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
         super.init(motionConfig, assessmentState: assessmentState, branchState: branchState)
         self.branchState = branchState
         self.tappingResult.hand = whichHand
     }
 
     @MainActor
-    public func tappedScreen(currentButton: TappingButtonIdentifier,
+    func tappedScreen(currentButton: TappingButtonIdentifier,
                              location: CGPoint,
                              duration: TimeInterval) {
         guard recorder.clock.runningDuration() < motionConfig.duration, initialTapOccurred
@@ -153,7 +153,7 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
         previousButton = currentButton
     }
     
-    public func handleTimer(completion: @escaping () -> Void) {
+    func handleTimer(completion: @escaping () -> Void) {
         guard !isPaused, countdown > 0, initialTapOccurred else { return }
         countdown = max(countdown - 1, 0)
         // Once the countdown hits zero, stop the countdown and *then* navigate forward.
@@ -167,7 +167,7 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
         }
     }
     
-    public func handleInitialTapOccurred() async throws {
+    func handleInitialTapOccurred() async throws {
         guard !initialTapOccurred else { return }
         do {
             try await recorder.start()
@@ -178,7 +178,7 @@ public final class TappingStepViewModel : MotionSensorStepViewModel {
         }
     }
     
-    public func stop() async {
+    func stop() async {
         do {
             let result = try await recorder.stop()
             branchState.branchNodeResult.asyncResults = [result]

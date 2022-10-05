@@ -36,8 +36,8 @@ import AssessmentModel
 
 let formattedTextPlaceHolder = "%@"
 
-public final class MotorControlAssessmentViewModel : AssessmentViewModel {
-    override public func nodeState(for node: Node) -> NodeState? {
+final class MotorControlAssessmentViewModel : AssessmentViewModel {
+    override func nodeState(for node: Node) -> NodeState? {
         let whichHand = currentBranchState.node.hand()
         if let instruction = node as? AbstractInstructionStepObject {
             return MotorControlInstructionState(instruction,
@@ -61,17 +61,17 @@ public final class MotorControlAssessmentViewModel : AssessmentViewModel {
 }
 
 /// State object for an abstract motion control step
-public class AbstractMotionControlState : ContentNodeState {
+class AbstractMotionControlState : ContentNodeState {
     
-    override public var progressHidden: Bool { true }
+    override var progressHidden: Bool { true }
 
-    public let flippedImage: Bool
-    public let title: String?
-    public let subtitle: String?
-    public let detail: String?
-    public let whichHand: HandSelection?
+    let flippedImage: Bool
+    let title: String?
+    let subtitle: String?
+    let detail: String?
+    let whichHand: HandSelection?
     
-    public init(_ motionControlStep: AbstractStepObject, parentId: String?, whichHand: HandSelection? = nil) {
+    init(_ motionControlStep: AbstractStepObject, parentId: String?, whichHand: HandSelection? = nil) {
         self.whichHand = whichHand
         if let whichHand = whichHand {
             self.flippedImage = (whichHand == .right)
@@ -91,5 +91,5 @@ public class AbstractMotionControlState : ContentNodeState {
 }
 
 /// State object for an instruction.
-public final class MotorControlInstructionState : AbstractMotionControlState {
+final class MotorControlInstructionState : AbstractMotionControlState {
 }

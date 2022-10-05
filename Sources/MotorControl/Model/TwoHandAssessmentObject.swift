@@ -59,9 +59,9 @@ final class TwoHandAssessmentObject : AbstractAssessmentObject {
 final class TwoHandNavigator : Navigator {
     
     let identifier: String
-    public let nodes: [Node]
+    let nodes: [Node]
 
-    public init(identifier: String, nodes: [Node]) throws {
+    init(identifier: String, nodes: [Node]) throws {
         guard Set(nodes.map { $0.identifier }).count == nodes.count else {
             throw TwoHandAssessmentError.identifiersNotUnique
         }
