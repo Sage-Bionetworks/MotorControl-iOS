@@ -40,11 +40,11 @@ import JsonModel
 /// State object for motion sensor steps
 class MotionSensorStepViewModel : AbstractMotionControlState {
     var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
-    let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
     let voicePrompter: TextToSpeechSynthesizer = .init()
     let spokenInstructions: [Int : String]
     var instructionCache: Set<Int> = []
     let recorder: MotionRecorder
+    weak var branchState: BranchState!
     
     @Published var secondCount: Int = 0
     @Published var countdown: CGFloat {
@@ -79,6 +79,7 @@ class MotionSensorStepViewModel : AbstractMotionControlState {
         } ?? [:]
         self.countdown = motionConfig.duration
         super.init(motionConfig, parentId: branchState.id, whichHand: whichHand)
+        self.branchState = branchState
     }
     
     func speak(at timeInterval: TimeInterval, completion: (() -> Void)? = nil) {
@@ -101,6 +102,57 @@ class MotionSensorStepViewModel : AbstractMotionControlState {
         instructionCache.removeAll()
         // TODO: syoung 10/05/2022 Flush the recorder file?
     }
+    
+    @MainActor
+    func startRecorder() {
+        guard recorder.status == .idle else { return }
+        Task {
+            do {
+                try await recorder.start()
+            }
+            catch {
+                recorder.clock.reset()
+                let result = ErrorResultObject(identifier: node.identifier, error: error)
+                branchState.branchNodeResult.asyncResults = [result]
+            }
+        }
+    }
+    
+    @MainActor
+    func updateCountdown() -> (currentTime: SecondDuration, isFinished: Bool)? {
+        guard !isPaused, countdown > 0
+        else {
+            return nil
+        }
+        let time = recorder.clock.runningDuration()
+        countdown = max(.zero, motionConfig.duration - time)
+        return (time, countdown == .zero)
+    }
+    
+    func stop() async {
+        // stop the recorder and speak the final instruction and *then*
+        // return from this method once both those have finished.
+        async let result = stopRecorder()
+        await withCheckedContinuation { completion in
+            speak(at: motionConfig.duration) {
+                completion.resume()
+            }
+        }
+        if let motionResult = await result {
+            branchState.branchNodeResult.asyncResults = [motionResult]
+        }
+    }
+        
+    func stopRecorder() async -> ResultData? {
+        guard recorder.status == .running else { return nil }
+        // Wrap stopping the recorder to catch the thrown error (if any).
+        do {
+            return try await recorder.stop()
+        }
+        catch {
+            return ErrorResultObject(identifier: node.identifier, error: error)
+        }
+    }
 }
 
 /// View model for a tremor step
@@ -109,24 +161,22 @@ final class TremorStepViewModel : MotionSensorStepViewModel {
 
 /// View model for a tapping step
 final class TappingStepViewModel : MotionSensorStepViewModel {
-
-    weak var branchState: BranchState!
+    
     var tappingResult : TappingResultObject {
         get { self.result as! TappingResultObject }
         set { self.result = newValue }
     }
+    var initialTapOccurred: Bool { recorder.status > .idle }
     var previousButton: TappingButtonIdentifier? = nil
+    
     @Published var tapCount: Int = 0 {
         didSet {
             tappingResult.tapCount = tapCount
         }
     }
 
-    var initialTapOccurred: Bool { recorder.status > .idle }
-    
     override init(_ motionConfig: MotionSensorNodeObject, assessmentState: AssessmentState, branchState: BranchState) {
         super.init(motionConfig, assessmentState: assessmentState, branchState: branchState)
-        self.branchState = branchState
         self.tappingResult.hand = whichHand
     }
 
@@ -138,6 +188,7 @@ final class TappingStepViewModel : MotionSensorStepViewModel {
         else {
             return
         }
+        // use a call-through method so that the unit tests will pass w/o starting the recorder
         addTappingSample(currentButton: currentButton, location: location, duration: duration)
     }
     
@@ -161,41 +212,6 @@ final class TappingStepViewModel : MotionSensorStepViewModel {
         }
         tapCount += 1
         previousButton = currentButton
-    }
-    
-    func handleTimer(completion: @escaping () -> Void) {
-        guard !isPaused, countdown > 0, initialTapOccurred else { return }
-        countdown = max(countdown - 1, 0)
-        // Once the countdown hits zero, stop the countdown and *then* navigate forward.
-        if countdown == 0 {
-            speak(at: motionConfig.duration) {
-                Task {
-                    await self.stop()
-                    completion()
-                }
-            }
-        }
-    }
-    
-    func handleInitialTapOccurred() async throws {
-        guard !initialTapOccurred else { return }
-        do {
-            try await recorder.start()
-        }
-        catch {
-            result = ErrorResultObject(identifier: node.identifier, error: error)
-            throw error
-        }
-    }
-    
-    func stop() async {
-        do {
-            let result = try await recorder.stop()
-            branchState.branchNodeResult.asyncResults = [result]
-        }
-        catch {
-            print("Failed to stop the motion recorder. \(error)")
-        }
     }
 }
 

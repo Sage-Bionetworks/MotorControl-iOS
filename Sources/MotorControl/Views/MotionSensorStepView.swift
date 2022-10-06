@@ -46,25 +46,20 @@ struct MotionSensorStepView: View {
     @SwiftUI.Environment(\.spacing) var spacing: CGFloat
     @State var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var progress: CGFloat = 0
+    let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
     
     @ObservedObject var state: TremorStepViewModel
     
     var body: some View {
         content()
             .onAppear {
-                // Reset the countdown animation and start the recorder.
+                // For a tremor step, the countdown should start automatically
+                // when the view appears.
                 state.resetCountdown()
                 restartDial()
-                state.audioFileSoundPlayer.vibrateDevice()
+                audioFileSoundPlayer.vibrateDevice()
                 state.speak(at: 0)
-                Task {
-                    do {
-                        try await state.recorder.start()
-                    }
-                    catch {
-                        state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                    }
-                }
+                state.startRecorder()
             }
             .onDisappear {
                 // If the recorder isn't stopping and the view disappears, it's b/c the recorder is cancelled.
@@ -83,27 +78,20 @@ struct MotionSensorStepView: View {
                     restartDial()
                 }
             }
-            .onReceive(timer) { time in
-                guard !state.recorder.isPaused, state.countdown > 0 else { return }
-                state.countdown = max(state.countdown - 1, 0)
-                // Once the countdown hits zero, stop the recorder and *then* navigate forward.
-                if state.countdown == 0, state.recorder.status <= .running {
-                    state.audioFileSoundPlayer.vibrateDevice()
-                    state.speak(at: state.motionConfig.duration) {
-                        Task {
-                            do {
-                                state.result = try await state.recorder.stop()
-                            }
-                            catch {
-                                state.result = ErrorResultObject(identifier: state.node.identifier, error: error)
-                            }
-                            pagedNavigation.goForward()
-                        }
-                    }
+            .onReceive(timer) { _ in
+                guard let response = state.updateCountdown() else { return }
+                if response.isFinished {
+                    // Clean up when finished and then go forward
+                    audioFileSoundPlayer.vibrateDevice()
                     timer.upstream.connect().cancel()
+                    Task {
+                        await state.stop()
+                        pagedNavigation.goForward()
+                    }
                 }
                 else {
-                    state.speak(at: state.recorder.clock.runningDuration())
+                    // Otherwise, just speak the instruction at the current time mark
+                    state.speak(at: response.currentTime)
                 }
             }
     }

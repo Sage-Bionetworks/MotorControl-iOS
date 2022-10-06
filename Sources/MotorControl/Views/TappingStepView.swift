@@ -66,9 +66,12 @@ struct TappingStepView: View {
                 state.isPaused = newValue
             }
             .onReceive(timer) { _ in
-                state.handleTimer {
+                guard let response = state.updateCountdown(), response.isFinished else { return }
+                // Clean up when finished and then go forward
+                timer.upstream.connect().cancel()
+                Task {
+                    await state.stop()
                     pagedNavigation.goForward()
-                    timer.upstream.connect().cancel()
                 }
             }
     }
@@ -103,17 +106,12 @@ struct TappingStepView: View {
             }
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
-                    .onChanged { touch in
-                        Task {
-                            do {
-                                try await state.handleInitialTapOccurred()
-                                withAnimation(.linear(duration: state.motionConfig.duration)) {
-                                    progress = 1.0
-                                }
-                            } catch {
-                                assessmentState.status = .error
-                            }
-                        }
+                    .onChanged { _ in
+                        guard !state.initialTapOccurred else { return }
+                        state.startRecorder()
+                        withAnimation(.linear(duration: state.motionConfig.duration)) {
+                            progress = 1.0
+                        } 
                     }
             )
     }
