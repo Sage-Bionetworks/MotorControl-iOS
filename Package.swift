@@ -16,16 +16,19 @@ let package = Package(
         .library(
             name: "MotorControl",
             targets: [
-                "MotorControlV1",
                 "MotorControl",
-                "MotorControlUI",
+            ]),
+
+        // Library added to support SwiftUI Preview (which only works within an app).
+        // See the iosViewBuilder app. syoung 10/04/2022
+        .library(
+            name: "LocalPreview",
+            targets: [
+                "SharedResources",
             ]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "SageResearch",
-                 url: "https://github.com/Sage-Bionetworks/SageResearch.git",
-                 from: "4.6.1"),
         .package(name: "JsonModel",
                  url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
                  from: "1.4.9"),
@@ -48,13 +51,6 @@ let package = Package(
                 .product(name: "MotionSensor", package: "MobilePassiveData"),
             ]
         ),
-        .target(name: "MotorControlUI",
-                dependencies: [
-                    "MotorControl",
-                    "SharedResources",
-                    .product(name: "AssessmentModel", package: "AssessmentModel"),
-                    .product(name: "AssessmentModelUI", package: "AssessmentModel"),
-                ]),
         .target(name: "SharedResources",
                 dependencies: [
                     .product(name: "JsonModel", package: "JsonModel"),
@@ -64,32 +60,5 @@ let package = Package(
         .testTarget(
             name: "MotorControlTests",
             dependencies: ["MotorControl"]),
-        
-        .target(
-            name: "MotorControlV1",
-            dependencies: ["JsonModel",
-                           .product(name: "Research", package: "SageResearch"),
-                           .product(name: "ResearchUI", package: "SageResearch", condition: .when(platforms: [.iOS])),
-                           .product(name: "MobilePassiveData", package: "MobilePassiveData"),
-                           .product(name: "MotionSensor", package: "MobilePassiveData"),
-                           .target(name: "MCTResources", condition: .when(platforms: [.iOS])),
-            ],
-            path: "MotorControl/MotorControl/iOS"),
-        
-        .target(name: "MCTResources",
-                path: "MotorControl/MotorControl/MCTResources/",
-                resources: [
-                    .process("Resources")
-                ]),
-
-// TODO: Aaron Rabara 8/10/2022 
-//        .testTarget(
-//            name: "MotorControlV1Tests",
-//            dependencies: [
-//                "MotorControlV1",
-//                .product(name: "Research_UnitTest", package: "SageResearch", condition: .when(platforms: [.iOS])),
-//            ],
-//            path: "MotorControl/MotorControlTests/Tests"),
-        
     ]
 )

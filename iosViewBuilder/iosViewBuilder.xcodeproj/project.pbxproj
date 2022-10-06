@@ -11,15 +11,29 @@
 		8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF0B28AFFE1D0001A1F8 /* ContentView.swift */; };
 		8004DF0E28AFFE1F0001A1F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8004DF0D28AFFE1F0001A1F8 /* Assets.xcassets */; };
 		8004DF1128AFFE1F0001A1F8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8004DF1028AFFE1F0001A1F8 /* Preview Assets.xcassets */; };
-		8004DF3728AFFFCE0001A1F8 /* MotorControl in Frameworks */ = {isa = PBXBuildFile; productRef = 8004DF3628AFFFCE0001A1F8 /* MotorControl */; };
-		8004DF3928B000600001A1F8 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF3828B000600001A1F8 /* InstructionView.swift */; };
-		8004DF3B28B003E50001A1F8 /* MotorControlAssessmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */; };
-		801430D828B574AC004982FA /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801430D728B574AC004982FA /* OverviewView.swift */; };
-		80593EA428E507B7005449E4 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80593EA328E507B6005449E4 /* GlobalProperties.swift */; };
-		807B71FC28D92CDC008A9F51 /* TappingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FB28D92CDC008A9F51 /* TappingStepView.swift */; };
-		807B71FF28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807B71FE28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift */; };
-		80EE6FBC28DE17FE0097C6FE /* PausableAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */; };
-		FF57F48728D1342C00EF96CB /* MotionSensorStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF57F48628D1342C00EF96CB /* MotionSensorStepView.swift */; };
+		FF0B3ACC28ECF83F003D42AB /* JsonModel in Frameworks */ = {isa = PBXBuildFile; productRef = FF0B3ACB28ECF83F003D42AB /* JsonModel */; };
+		FF0B3ACF28ECF85E003D42AB /* AssessmentModel in Frameworks */ = {isa = PBXBuildFile; productRef = FF0B3ACE28ECF85E003D42AB /* AssessmentModel */; };
+		FF0B3AD128ECF85E003D42AB /* AssessmentModelUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF0B3AD028ECF85E003D42AB /* AssessmentModelUI */; };
+		FF0B3AD428ECF88F003D42AB /* MobilePassiveData in Frameworks */ = {isa = PBXBuildFile; productRef = FF0B3AD328ECF88F003D42AB /* MobilePassiveData */; };
+		FF0B3AD628ECF88F003D42AB /* MotionSensor in Frameworks */ = {isa = PBXBuildFile; productRef = FF0B3AD528ECF88F003D42AB /* MotionSensor */; };
+		FF0B3AEC28ECF8B2003D42AB /* MotionSensorViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AD928ECF8B2003D42AB /* MotionSensorViewModels.swift */; };
+		FF0B3AED28ECF8B2003D42AB /* MotorControlAssessmentStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3ADA28ECF8B2003D42AB /* MotorControlAssessmentStates.swift */; };
+		FF0B3AEE28ECF8B2003D42AB /* MotorControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3ADB28ECF8B2003D42AB /* MotorControl.swift */; };
+		FF0B3AEF28ECF8B2003D42AB /* TappingResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3ADD28ECF8B2003D42AB /* TappingResultObject.swift */; };
+		FF0B3AF028ECF8B2003D42AB /* MotionSensorNodeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3ADF28ECF8B2003D42AB /* MotionSensorNodeObject.swift */; };
+		FF0B3AF128ECF8B2003D42AB /* HandInstructionObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE028ECF8B2003D42AB /* HandInstructionObject.swift */; };
+		FF0B3AF228ECF8B2003D42AB /* TwoHandAssessmentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE128ECF8B2003D42AB /* TwoHandAssessmentObject.swift */; };
+		FF0B3AF328ECF8B2003D42AB /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE328ECF8B2003D42AB /* InstructionView.swift */; };
+		FF0B3AF428ECF8B2003D42AB /* PausableAnimationModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE528ECF8B2003D42AB /* PausableAnimationModifier.swift */; };
+		FF0B3AF528ECF8B2003D42AB /* OnFingerPressedGestureModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE628ECF8B2003D42AB /* OnFingerPressedGestureModifier.swift */; };
+		FF0B3AF628ECF8B2003D42AB /* MotorControlAssessmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE728ECF8B2003D42AB /* MotorControlAssessmentView.swift */; };
+		FF0B3AF728ECF8B2003D42AB /* OverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE828ECF8B2003D42AB /* OverviewView.swift */; };
+		FF0B3AF828ECF8B2003D42AB /* MotionSensorStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AE928ECF8B2003D42AB /* MotionSensorStepView.swift */; };
+		FF0B3AF928ECF8B2003D42AB /* TappingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AEA28ECF8B2003D42AB /* TappingStepView.swift */; };
+		FF0B3AFA28ECF8B2003D42AB /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B3AEB28ECF8B2003D42AB /* GlobalProperties.swift */; };
+		FF1DD83B28EE02DA00DD87BD /* TextContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1DD83A28EE02DA00DD87BD /* TextContent.swift */; };
+		FF1DD83D28EE0E1900DD87BD /* CountdownDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1DD83C28EE0E1900DD87BD /* CountdownDial.swift */; };
+		FFA0978E28ECFB74003AF899 /* LocalPreview in Frameworks */ = {isa = PBXBuildFile; productRef = FFA0978D28ECFB74003AF899 /* LocalPreview */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,17 +42,25 @@
 		8004DF0B28AFFE1D0001A1F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8004DF0D28AFFE1F0001A1F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8004DF1028AFFE1F0001A1F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		8004DF3328AFFE760001A1F8 /* MotorControl-iOS */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "MotorControl-iOS"; path = ..; sourceTree = "<group>"; };
-		8004DF3828B000600001A1F8 /* InstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
-		8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControlAssessmentView.swift; sourceTree = "<group>"; };
-		801430D728B574AC004982FA /* OverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
-		80593EA328E507B6005449E4 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
 		807B71FA28D507D2008A9F51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		807B71FB28D92CDC008A9F51 /* TappingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappingStepView.swift; sourceTree = "<group>"; };
-		807B71FE28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnFingerPressedGestureModifier.swift; sourceTree = "<group>"; };
-		80CBB8A428C7F90D007EDCF1 /* AssessmentModelKMM */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AssessmentModelKMM; path = ../../AssessmentModelKMM; sourceTree = "<group>"; };
-		80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PausableAnimationModifier.swift; sourceTree = "<group>"; };
-		FF57F48628D1342C00EF96CB /* MotionSensorStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSensorStepView.swift; sourceTree = "<group>"; };
+		FF0B3AD928ECF8B2003D42AB /* MotionSensorViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionSensorViewModels.swift; sourceTree = "<group>"; };
+		FF0B3ADA28ECF8B2003D42AB /* MotorControlAssessmentStates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControlAssessmentStates.swift; sourceTree = "<group>"; };
+		FF0B3ADB28ECF8B2003D42AB /* MotorControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControl.swift; sourceTree = "<group>"; };
+		FF0B3ADD28ECF8B2003D42AB /* TappingResultObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappingResultObject.swift; sourceTree = "<group>"; };
+		FF0B3ADF28ECF8B2003D42AB /* MotionSensorNodeObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionSensorNodeObject.swift; sourceTree = "<group>"; };
+		FF0B3AE028ECF8B2003D42AB /* HandInstructionObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandInstructionObject.swift; sourceTree = "<group>"; };
+		FF0B3AE128ECF8B2003D42AB /* TwoHandAssessmentObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoHandAssessmentObject.swift; sourceTree = "<group>"; };
+		FF0B3AE328ECF8B2003D42AB /* InstructionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
+		FF0B3AE528ECF8B2003D42AB /* PausableAnimationModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PausableAnimationModifier.swift; sourceTree = "<group>"; };
+		FF0B3AE628ECF8B2003D42AB /* OnFingerPressedGestureModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnFingerPressedGestureModifier.swift; sourceTree = "<group>"; };
+		FF0B3AE728ECF8B2003D42AB /* MotorControlAssessmentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControlAssessmentView.swift; sourceTree = "<group>"; };
+		FF0B3AE828ECF8B2003D42AB /* OverviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverviewView.swift; sourceTree = "<group>"; };
+		FF0B3AE928ECF8B2003D42AB /* MotionSensorStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionSensorStepView.swift; sourceTree = "<group>"; };
+		FF0B3AEA28ECF8B2003D42AB /* TappingStepView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappingStepView.swift; sourceTree = "<group>"; };
+		FF0B3AEB28ECF8B2003D42AB /* GlobalProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
+		FF1DD83A28EE02DA00DD87BD /* TextContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextContent.swift; sourceTree = "<group>"; };
+		FF1DD83C28EE0E1900DD87BD /* CountdownDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownDial.swift; sourceTree = "<group>"; };
+		FFA0978C28ECFB67003AF899 /* MotorControl-iOS */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "MotorControl-iOS"; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +68,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8004DF3728AFFFCE0001A1F8 /* MotorControl in Frameworks */,
+				FF0B3ACF28ECF85E003D42AB /* AssessmentModel in Frameworks */,
+				FF0B3AD628ECF88F003D42AB /* MotionSensor in Frameworks */,
+				FF0B3AD128ECF85E003D42AB /* AssessmentModelUI in Frameworks */,
+				FFA0978E28ECFB74003AF899 /* LocalPreview in Frameworks */,
+				FF0B3AD428ECF88F003D42AB /* MobilePassiveData in Frameworks */,
+				FF0B3ACC28ECF83F003D42AB /* JsonModel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,8 +83,7 @@
 		8004DEFD28AFFE1D0001A1F8 = {
 			isa = PBXGroup;
 			children = (
-				80CBB8A328C7F90D007EDCF1 /* Packages */,
-				8004DF3328AFFE760001A1F8 /* MotorControl-iOS */,
+				FFA0978C28ECFB67003AF899 /* MotorControl-iOS */,
 				8004DF0828AFFE1D0001A1F8 /* iosViewBuilder */,
 				8004DF0728AFFE1D0001A1F8 /* Products */,
 				8004DF3528AFFFCE0001A1F8 /* Frameworks */,
@@ -75,8 +101,8 @@
 		8004DF0828AFFE1D0001A1F8 /* iosViewBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				FF0B3AD728ECF8B2003D42AB /* MotorControl */,
 				807B71FA28D507D2008A9F51 /* Info.plist */,
-				8004DF3428AFFF6C0001A1F8 /* MotorControlUI */,
 				8004DF0928AFFE1D0001A1F8 /* iosViewBuilderApp.swift */,
 				8004DF0B28AFFE1D0001A1F8 /* ContentView.swift */,
 				8004DF0D28AFFE1F0001A1F8 /* Assets.xcassets */,
@@ -93,21 +119,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		8004DF3428AFFF6C0001A1F8 /* MotorControlUI */ = {
-			isa = PBXGroup;
-			children = (
-				807B71FD28DB6D7C008A9F51 /* Components */,
-				8004DF3A28B003E50001A1F8 /* MotorControlAssessmentView.swift */,
-				80593EA328E507B6005449E4 /* GlobalProperties.swift */,
-				8004DF3828B000600001A1F8 /* InstructionView.swift */,
-				801430D728B574AC004982FA /* OverviewView.swift */,
-				FF57F48628D1342C00EF96CB /* MotionSensorStepView.swift */,
-				807B71FB28D92CDC008A9F51 /* TappingStepView.swift */,
-			);
-			name = MotorControlUI;
-			path = ../../Sources/MotorControlUI;
-			sourceTree = "<group>";
-		};
 		8004DF3528AFFFCE0001A1F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,21 +126,69 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		807B71FD28DB6D7C008A9F51 /* Components */ = {
+		FF0B3AD728ECF8B2003D42AB /* MotorControl */ = {
 			isa = PBXGroup;
 			children = (
-				807B71FE28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift */,
-				80EE6FBB28DE17FE0097C6FE /* PausableAnimationModifier.swift */,
+				FF0B3ADE28ECF8B2003D42AB /* Model */,
+				FF0B3ADC28ECF8B2003D42AB /* ResultObjects */,
+				FF0B3AD828ECF8B2003D42AB /* ViewModel */,
+				FF0B3AE228ECF8B2003D42AB /* Views */,
+				FF0B3ADB28ECF8B2003D42AB /* MotorControl.swift */,
 			);
-			path = Components;
+			name = MotorControl;
+			path = ../../Sources/MotorControl;
 			sourceTree = "<group>";
 		};
-		80CBB8A328C7F90D007EDCF1 /* Packages */ = {
+		FF0B3AD828ECF8B2003D42AB /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				80CBB8A428C7F90D007EDCF1 /* AssessmentModelKMM */,
+				FF0B3AD928ECF8B2003D42AB /* MotionSensorViewModels.swift */,
+				FF0B3ADA28ECF8B2003D42AB /* MotorControlAssessmentStates.swift */,
 			);
-			name = Packages;
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		FF0B3ADC28ECF8B2003D42AB /* ResultObjects */ = {
+			isa = PBXGroup;
+			children = (
+				FF0B3ADD28ECF8B2003D42AB /* TappingResultObject.swift */,
+			);
+			path = ResultObjects;
+			sourceTree = "<group>";
+		};
+		FF0B3ADE28ECF8B2003D42AB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FF0B3ADF28ECF8B2003D42AB /* MotionSensorNodeObject.swift */,
+				FF0B3AE028ECF8B2003D42AB /* HandInstructionObject.swift */,
+				FF0B3AE128ECF8B2003D42AB /* TwoHandAssessmentObject.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FF0B3AE228ECF8B2003D42AB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FF0B3AE428ECF8B2003D42AB /* Components */,
+				FF0B3AE328ECF8B2003D42AB /* InstructionView.swift */,
+				FF0B3AE728ECF8B2003D42AB /* MotorControlAssessmentView.swift */,
+				FF0B3AE828ECF8B2003D42AB /* OverviewView.swift */,
+				FF0B3AE928ECF8B2003D42AB /* MotionSensorStepView.swift */,
+				FF0B3AEA28ECF8B2003D42AB /* TappingStepView.swift */,
+				FF0B3AEB28ECF8B2003D42AB /* GlobalProperties.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FF0B3AE428ECF8B2003D42AB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				FF0B3AE528ECF8B2003D42AB /* PausableAnimationModifier.swift */,
+				FF0B3AE628ECF8B2003D42AB /* OnFingerPressedGestureModifier.swift */,
+				FF1DD83A28EE02DA00DD87BD /* TextContent.swift */,
+				FF1DD83C28EE0E1900DD87BD /* CountdownDial.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,7 +208,12 @@
 			);
 			name = iosViewBuilder;
 			packageProductDependencies = (
-				8004DF3628AFFFCE0001A1F8 /* MotorControl */,
+				FF0B3ACB28ECF83F003D42AB /* JsonModel */,
+				FF0B3ACE28ECF85E003D42AB /* AssessmentModel */,
+				FF0B3AD028ECF85E003D42AB /* AssessmentModelUI */,
+				FF0B3AD328ECF88F003D42AB /* MobilePassiveData */,
+				FF0B3AD528ECF88F003D42AB /* MotionSensor */,
+				FFA0978D28ECFB74003AF899 /* LocalPreview */,
 			);
 			productName = iosViewBuilder;
 			productReference = 8004DF0628AFFE1D0001A1F8 /* iosViewBuilder.app */;
@@ -179,6 +243,11 @@
 				Base,
 			);
 			mainGroup = 8004DEFD28AFFE1D0001A1F8;
+			packageReferences = (
+				FF0B3ACA28ECF83F003D42AB /* XCRemoteSwiftPackageReference "JsonModel-Swift" */,
+				FF0B3ACD28ECF85E003D42AB /* XCRemoteSwiftPackageReference "AssessmentModelKMM" */,
+				FF0B3AD228ECF88F003D42AB /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */,
+			);
 			productRefGroup = 8004DF0728AFFE1D0001A1F8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -205,16 +274,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				801430D828B574AC004982FA /* OverviewView.swift in Sources */,
-				807B71FF28DB6DB2008A9F51 /* OnFingerPressedGestureModifier.swift in Sources */,
-				8004DF3B28B003E50001A1F8 /* MotorControlAssessmentView.swift in Sources */,
-				807B71FC28D92CDC008A9F51 /* TappingStepView.swift in Sources */,
-				80EE6FBC28DE17FE0097C6FE /* PausableAnimationModifier.swift in Sources */,
-				FF57F48728D1342C00EF96CB /* MotionSensorStepView.swift in Sources */,
+				FF1DD83B28EE02DA00DD87BD /* TextContent.swift in Sources */,
+				FF0B3AEE28ECF8B2003D42AB /* MotorControl.swift in Sources */,
+				FF0B3AF028ECF8B2003D42AB /* MotionSensorNodeObject.swift in Sources */,
+				FF0B3AF228ECF8B2003D42AB /* TwoHandAssessmentObject.swift in Sources */,
+				FF0B3AF428ECF8B2003D42AB /* PausableAnimationModifier.swift in Sources */,
+				FF0B3AF128ECF8B2003D42AB /* HandInstructionObject.swift in Sources */,
+				FF0B3AF628ECF8B2003D42AB /* MotorControlAssessmentView.swift in Sources */,
+				FF0B3AF828ECF8B2003D42AB /* MotionSensorStepView.swift in Sources */,
 				8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */,
+				FF0B3AED28ECF8B2003D42AB /* MotorControlAssessmentStates.swift in Sources */,
 				8004DF0A28AFFE1D0001A1F8 /* iosViewBuilderApp.swift in Sources */,
-				8004DF3928B000600001A1F8 /* InstructionView.swift in Sources */,
-				80593EA428E507B7005449E4 /* GlobalProperties.swift in Sources */,
+				FF0B3AF928ECF8B2003D42AB /* TappingStepView.swift in Sources */,
+				FF0B3AEC28ECF8B2003D42AB /* MotionSensorViewModels.swift in Sources */,
+				FF0B3AEF28ECF8B2003D42AB /* TappingResultObject.swift in Sources */,
+				FF0B3AF328ECF8B2003D42AB /* InstructionView.swift in Sources */,
+				FF0B3AF528ECF8B2003D42AB /* OnFingerPressedGestureModifier.swift in Sources */,
+				FF1DD83D28EE0E1900DD87BD /* CountdownDial.swift in Sources */,
+				FF0B3AF728ECF8B2003D42AB /* OverviewView.swift in Sources */,
+				FF0B3AFA28ECF8B2003D42AB /* GlobalProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,10 +496,62 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		FF0B3ACA28ECF83F003D42AB /* XCRemoteSwiftPackageReference "JsonModel-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Sage-Bionetworks/JsonModel-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
+		FF0B3ACD28ECF85E003D42AB /* XCRemoteSwiftPackageReference "AssessmentModelKMM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.6;
+			};
+		};
+		FF0B3AD228ECF88F003D42AB /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		8004DF3628AFFFCE0001A1F8 /* MotorControl */ = {
+		FF0B3ACB28ECF83F003D42AB /* JsonModel */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = MotorControl;
+			package = FF0B3ACA28ECF83F003D42AB /* XCRemoteSwiftPackageReference "JsonModel-Swift" */;
+			productName = JsonModel;
+		};
+		FF0B3ACE28ECF85E003D42AB /* AssessmentModel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF0B3ACD28ECF85E003D42AB /* XCRemoteSwiftPackageReference "AssessmentModelKMM" */;
+			productName = AssessmentModel;
+		};
+		FF0B3AD028ECF85E003D42AB /* AssessmentModelUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF0B3ACD28ECF85E003D42AB /* XCRemoteSwiftPackageReference "AssessmentModelKMM" */;
+			productName = AssessmentModelUI;
+		};
+		FF0B3AD328ECF88F003D42AB /* MobilePassiveData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF0B3AD228ECF88F003D42AB /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = MobilePassiveData;
+		};
+		FF0B3AD528ECF88F003D42AB /* MotionSensor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FF0B3AD228ECF88F003D42AB /* XCRemoteSwiftPackageReference "MobilePassiveData-SDK" */;
+			productName = MotionSensor;
+		};
+		FFA0978D28ECFB74003AF899 /* LocalPreview */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LocalPreview;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

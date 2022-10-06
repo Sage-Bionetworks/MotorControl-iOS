@@ -32,7 +32,6 @@
 
 import SwiftUI
 import AssessmentModelUI
-import MotorControl
 
 struct ContentView: View {
     @StateObject var viewModel: ViewModel = .init()

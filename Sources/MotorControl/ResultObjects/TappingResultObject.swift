@@ -234,7 +234,7 @@ public enum TappingButtonIdentifier : String, Codable, StringEnumSet, Documentab
 /// completes, it may be appropriate to serialize the sample for transmission to a server,
 /// or to immediately perform analysis on it.
 public struct TappingSample : SampleRecord, Codable, Equatable {
-    private enum CodingKeys : String, OrderedEnumCodingKey {
+    private enum CodingKeys : String, CodingKey, CaseIterable {
         case stepPath, timestamp, uptime, buttonIdentifier, location, duration
     }
     

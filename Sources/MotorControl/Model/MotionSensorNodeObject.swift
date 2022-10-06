@@ -41,35 +41,35 @@ extension SerializableNodeType {
     static let tremor: SerializableNodeType = "tremor"
 }
  
-public class TappingNodeObject : MotionSensorNodeObject {
-    public override class func defaultType() -> SerializableNodeType {
+class TappingNodeObject : MotionSensorNodeObject {
+    override class func defaultType() -> SerializableNodeType {
         .tapping
     }
     
-    public override func instantiateResult() -> ResultData {
+    override func instantiateResult() -> ResultData {
         TappingResultObject(identifier: self.identifier)
     }
 }
 
-public class TremorNodeObject : MotionSensorNodeObject {
-    public override class func defaultType() -> SerializableNodeType {
+class TremorNodeObject : MotionSensorNodeObject {
+    override class func defaultType() -> SerializableNodeType {
         .tremor
     }
 }
 
-public class MotionSensorNodeObject : AbstractStepObject {
+class MotionSensorNodeObject : AbstractStepObject {
     private enum CodingKeys : String, CodingKey {
         case duration, spokenInstructions
     }
     
-    public let duration: TimeInterval
-    public let spokenInstructions: [Int : String]?
+    let duration: TimeInterval
+    let spokenInstructions: [Int : String]?
     
     enum SpokenInstructionKeys : String, CodingKey {
         case start, halfway, countdown, end
     }
     
-    public override func spokenInstruction(at timeInterval: TimeInterval) -> String? {
+    override func spokenInstruction(at timeInterval: TimeInterval) -> String? {
         var key = Int(timeInterval)
         if timeInterval >= duration && duration > 0 {
             key = Int(duration)
@@ -77,25 +77,25 @@ public class MotionSensorNodeObject : AbstractStepObject {
         return self.spokenInstructions?[key]
     }
     
-    public init() {
+    init() {
         self.duration = 30
         self.spokenInstructions = nil
         super.init(identifier: "example")
     }
     
-    public init(identifier: String, title: String? = nil, subtitle: String? = nil, detail: String? = nil, imageInfo: ImageInfo? = nil) {
+    init(identifier: String, title: String? = nil, subtitle: String? = nil, detail: String? = nil, imageInfo: ImageInfo? = nil) {
         self.duration = 30
         self.spokenInstructions = nil
         super.init(identifier: identifier, title: title, subtitle: subtitle, detail: detail, imageInfo: imageInfo)
     }
     
-    public init(identifier: String, copyFrom object: MotionSensorNodeObject) {
+    init(identifier: String, copyFrom object: MotionSensorNodeObject) {
         self.duration = object.duration
         self.spokenInstructions = object.spokenInstructions
         super.init(identifier: identifier, copyFrom: object)
     }
     
-    public required init(from decoder: Decoder) throws {
+    required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let stepDuration = try container.decode(TimeInterval.self, forKey: .duration)
         self.duration = stepDuration
@@ -160,35 +160,35 @@ extension Dictionary {
 }
 
 extension MotionSensorNodeObject : MotionRecorderConfiguration {
-    public var recorderTypes: Set<MotionRecorderType>? {
+    var recorderTypes: Set<MotionRecorderType>? {
         [.accelerometer, .gyro, .gravity, .userAcceleration, .attitude, .rotationRate]
     }
     
-    public var frequency: Double? {
+    var frequency: Double? {
         100
     }
     
-    public var usesCSVEncoding: Bool? {
+    var usesCSVEncoding: Bool? {
         false
     }
     
-    public var shouldDeletePrevious: Bool {
+    var shouldDeletePrevious: Bool {
         true
     }
     
-    public var stopStepIdentifier: String? {
+    var stopStepIdentifier: String? {
         nil
     }
     
-    public var requiresBackgroundAudio: Bool {
+    var requiresBackgroundAudio: Bool {
         true
     }
     
-    public var startStepIdentifier: String? {
+    var startStepIdentifier: String? {
         nil
     }
     
-    public func validate() throws {
+    func validate() throws {
         // do nothing
     }
 }

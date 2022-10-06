@@ -58,35 +58,31 @@ final class MotorControlViewModelTests: XCTestCase {
         XCTAssert(instructionStateRight.flippedImage)
     }
     
-    @MainActor func testTappingStateCorrectTaps() {
+    @MainActor func testTappingStateCorrectTaps() async {
         let assessmentState: AssessmentState = .init(AssessmentObject())
         let tappingStepViewModel: TappingStepViewModel = .init(tappingExample, assessmentState: assessmentState, branchState: assessmentState)
         let taps = 30
         for ii in 0..<taps {
             let tappedButton = getAlternatingButtonIdentifier(ii, modulo: 2)
             let location = tappedButton == TappingButtonIdentifier.left ? CGPoint(x: 100, y: 500) : CGPoint(x: 200, y: 500)
-            tappingStepViewModel.tappedScreen(uptime: TimeInterval(ii),
-                                              timestamp: TimeInterval(ii),
-                                              currentButton: tappedButton,
-                                              location: location,
-                                              duration: 0.05)
+            tappingStepViewModel.addTappingSample(currentButton: tappedButton,
+                                                  location: location,
+                                                  duration: 0.05)
         }
         XCTAssertEqual(tappingStepViewModel.tapCount, 30)
         XCTAssertEqual(tappingStepViewModel.tappingResult.samples.count, 30)
     }
     
-    @MainActor func testTappingStateMixedTaps() {
+    @MainActor func testTappingStateMixedTaps() async {
         let assessmentState: AssessmentState = .init(AssessmentObject())
         let tappingStepViewModel: TappingStepViewModel = .init(tappingExample, assessmentState: assessmentState, branchState: assessmentState)
         let taps = 30
         for ii in 0..<taps {
             let tappedButton = getAlternatingButtonIdentifier(ii, modulo: 3)
             let location = tappedButton == TappingButtonIdentifier.left ? CGPoint(x: 100, y: 500) : CGPoint(x: 200, y: 500)
-            tappingStepViewModel.tappedScreen(uptime: TimeInterval(ii),
-                                              timestamp: TimeInterval(ii),
-                                              currentButton: tappedButton,
-                                              location: location,
-                                              duration: 0.05)
+            tappingStepViewModel.addTappingSample(currentButton: tappedButton,
+                                                  location: location,
+                                                  duration: 0.05)
         }
         XCTAssertEqual(tappingStepViewModel.tapCount, 20)
         XCTAssertEqual(tappingStepViewModel.tappingResult.samples.count, 30)
@@ -96,12 +92,10 @@ final class MotorControlViewModelTests: XCTestCase {
         let assessmentState: AssessmentState = .init(AssessmentObject())
         let tappingStepViewModel: TappingStepViewModel = .init(tappingExample, assessmentState: assessmentState, branchState: assessmentState)
         let taps = 30
-        for ii in 0..<taps {
-            tappingStepViewModel.tappedScreen(uptime: TimeInterval(ii),
-                                              timestamp: TimeInterval(ii),
-                                              currentButton: TappingButtonIdentifier.none,
-                                              location: CGPoint(x: 300, y: 300),
-                                              duration: 0.05)
+        for _ in 0..<taps {
+            tappingStepViewModel.addTappingSample(currentButton: TappingButtonIdentifier.none,
+                                                  location: CGPoint(x: 300, y: 300),
+                                                  duration: 0.05)
         }
         XCTAssertEqual(tappingStepViewModel.tapCount, 0)
         XCTAssertEqual(tappingStepViewModel.tappingResult.samples.count, 30)
