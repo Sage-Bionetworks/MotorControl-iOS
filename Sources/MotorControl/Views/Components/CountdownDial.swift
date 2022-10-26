@@ -13,6 +13,7 @@ struct CountdownDial: View {
     @Binding var remainingDuration: CGFloat
     @Binding var paused: Bool
     @Binding var count: Int
+    let animationCanStart: Bool
     let maxCount: Int
     let label: Text
     
@@ -34,8 +35,8 @@ struct CountdownDial: View {
                 .padding(2.5)
                 .pausableAnimation(progress: $progress,
                                    paused: $paused,
-                                   tapCount: $count,
-                                   remainingDuration: $remainingDuration)
+                                   remainingDuration: $remainingDuration,
+                                   animationCanStart: animationCanStart)
                 .background (
                     Circle()
                         .fill(Color.sageWhite)
