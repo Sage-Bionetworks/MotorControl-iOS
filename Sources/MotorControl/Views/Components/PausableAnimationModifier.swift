@@ -65,16 +65,15 @@ struct PausableAnimationModifier: AnimatableModifier {
     public func body(content: Content) -> some View {
         content
             .onChange(of: paused) { isPaused in
-                if tapCount > 0 {
-                    if isPaused {
-                        withAnimation(.instant) {
-                            progress = animatableData
-                        }
+                guard tapCount > 0 else { return }
+                if isPaused {
+                    withAnimation(.instant) {
+                        progress = animatableData
                     }
-                    else {
-                        withAnimation(animation(remainingDuration)) {
-                            progress = totalProgress
-                        }
+                }
+                else {
+                    withAnimation(animation(remainingDuration)) {
+                        progress = totalProgress
                     }
                 }
             }
