@@ -34,6 +34,7 @@ struct CountdownDial: View {
                 .padding(2.5)
                 .pausableAnimation(progress: $progress,
                                    paused: $paused,
+                                   tapCount: $count,
                                    remainingDuration: $remainingDuration)
                 .background (
                     Circle()
