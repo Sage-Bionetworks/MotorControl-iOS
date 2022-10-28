@@ -34,6 +34,7 @@
 import Foundation
 import AssessmentModel
 import JsonModel
+import ResultModel
 import SharedResources
 
 fileprivate let handSelectionIdentifier = "handSelection"

@@ -36,6 +36,7 @@ import AssessmentModel
 import MobilePassiveData
 import MotionSensor
 import JsonModel
+import ResultModel
 
 /// State object for motion sensor steps
 class MotionSensorStepViewModel : AbstractMotionControlState {
