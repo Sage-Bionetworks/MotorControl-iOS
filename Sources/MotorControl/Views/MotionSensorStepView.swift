@@ -120,6 +120,7 @@ struct MotionSensorStepView: View {
                           remainingDuration: $state.countdown,
                           paused: $state.isPaused,
                           count: $state.secondCount,
+                          animationCanStart: true,
                           maxCount: Int(state.motionConfig.duration),
                           label: Text("seconds", bundle: SharedResources.bundle))
             Spacer()

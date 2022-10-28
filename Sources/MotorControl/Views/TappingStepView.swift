@@ -136,6 +136,7 @@ struct TappingStepView: View {
                           remainingDuration: $state.countdown,
                           paused: $state.isPaused,
                           count: $state.tapCount,
+                          animationCanStart: state.initialTapOccurred,
                           maxCount: 999,
                           label: Text("Tap count", bundle: SharedResources.bundle))
             Spacer()
