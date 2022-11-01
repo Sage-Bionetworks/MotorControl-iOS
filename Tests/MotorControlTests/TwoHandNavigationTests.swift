@@ -30,6 +30,7 @@
 
 import XCTest
 import JsonModel
+import ResultModel
 import AssessmentModel
 import AssessmentModelUI
 @testable import MotorControl

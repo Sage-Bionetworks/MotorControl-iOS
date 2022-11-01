@@ -33,6 +33,7 @@
 import Foundation
 import SwiftUI
 import JsonModel
+import ResultModel
 import MobilePassiveData
 
 extension SerializableResultType {
