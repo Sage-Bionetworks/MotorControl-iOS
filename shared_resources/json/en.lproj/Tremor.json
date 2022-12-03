@@ -1,0 +1,100 @@
+{
+    "identifier":"Tremor",
+    "type": "twoHandAssessment",
+    "shouldHideActions":["goBackward", "skip"],
+    "steps":[
+             {
+                "identifier":"introduction",
+                "type":"overview",
+                "title":"Tremor Test",
+                "detail":"In this activity you will be holding the phone in your lap for 30 seconds. You will do this with each hand. The goal is to measure your tremors in your hand.",
+                "image":{
+                     "type":"fetchable",
+                     "imageName":"hold_phone_left",
+                     "placementType":"topBackground"
+                 },
+                "icons": [
+                          {
+                            "icon":"comfortable_place_to_sit",
+                            "title": "COMFORTABLE PLACE TO SIT"
+                          }
+                        ],
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Get started"
+                    },
+                    "cancel":{
+                        "type":"default",
+                        "iconName" : "closeActivity_Circle"
+                    }
+                 }
+             },
+             {
+                "identifier": "handSelection",
+                "type":"transform",
+                "resourceName": "hand_selection_step"
+             },
+             {
+                "identifier":"holdPhoneInstructions",
+                "type":"instruction",
+                "title":"Hold the phone still",
+                "detail":"While sitting down with your feet resting flat on the floor, you will be holding the phone still in your lap for 30 seconds. You will do this first with one hand and then with your other hand.",
+                "image":{
+                    "type":"fetchable",
+                    "imageName": "tremor_hold_phone",
+                    "placementType":"topBackground"
+                },
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Got it"
+                    }
+                }
+             },
+             {
+                "identifier":"sitDownInstruction",
+                "type":"instruction",
+                "title":"Sit down",
+                "detail":"Find a spot to sit where you can have your feet resting flat on the floor.",
+                "image":{
+                    "type":"fetchable",
+                    "imageName":"sitting",
+                    "placementType":"topBackground"
+                },
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Got a spot"
+                    }
+                }
+             },
+             {
+                 "identifier":"left",
+                 "type":"transform",
+                 "resourceName": "tremor_section_step"
+             },
+             {
+                 "identifier":"right",
+                 "type":"transform",
+                 "resourceName": "tremor_section_step"
+             },
+             {
+                 "identifier":"completion",
+                 "type":"completion",
+                 "title":"Great job!",
+                 "detail":"You have completed the Tremor Test activity.",
+                 "image":{
+                     "type":"fetchable",
+                     "imageName":"completion_tremor",
+                     "placementType":"topBackground"
+                 },
+                 "actions": {
+                     "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Done"
+                     }
+                 }
+             }
+        ]
+}

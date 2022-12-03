@@ -1,0 +1,100 @@
+{
+    "identifier":"Tapping",
+    "type": "twoHandAssessment",
+    "shouldHideActions": ["goBackward", "skip"],
+    "steps":[
+             {
+                "identifier":"introduction",
+                "type":"overview",
+                "title":"Finger Tapping",
+                "detail":"In this activity, we will measure your finger tapping speed and accuracy with each hand.",
+                "image":{
+                     "type":"animated",
+                     "imageNames":["tap_left_1", "tap_left_2"],
+                     "placementType":"topBackground",
+                     "animationDuration": 1
+                },
+                "icons": [
+                          {
+                            "icon":"flat_surface",
+                            "title": "A FLAT SURFACE"
+                          }
+                        ],
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Get started"
+                    }
+                 }
+             },
+             {
+                "identifier":"fingerTappingInstructions",
+                "type":"instruction",
+                "title":"You will finger tap for 30 seconds with each hand",
+                "detail":"This activity measures your tapping speed for each hand. Your medical provider may measure this differently.",
+                "fullInstructionsOnly": true,
+                "image":{
+                     "type":"animated",
+                     "imageNames":["tap_left_1", "tap_left_2"],
+                     "placementType":"topBackground",
+                     "animationDuration": 1
+                },
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Got it"
+                    }
+                }
+             },
+             {
+                "identifier": "handSelection",
+                "type":"transform",
+                "resourceName": "hand_selection_step"
+             },
+             {
+                "identifier":"phoneOnTableInstruction",
+                "type":"instruction",
+                "title":"Put the phone on a table",
+                "detail":"Place your phone on a flat surface such as a table before you begin the activity.",
+                "image":{
+                    "type":"animated",
+                    "imageNames": ["f_flat_surface", "place_phone", "phone_on_surface"],
+                    "animationDuration": 3.0,
+                    "placementType": "topBackground"
+                },
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Did it"
+                    }
+                }
+             },
+             {
+                 "identifier":"left",
+                 "type":"transform",
+                 "resourceName": "tapping_section_step"
+             },
+             {
+                 "identifier":"right",
+                 "type":"transform",
+                 "resourceName": "tapping_section_step"
+             },
+             {
+                 "identifier":"completion",
+                 "type":"completion",
+                 "title":"Great job!",
+                 "detail":"You just completed the Tapping activity.",
+                 "image":{
+                     "type":"fetchable",
+                     "imageName":"completion_finger_tapping",
+                     "placementType":"topBackground"
+                 },
+                 "actions": {
+                     "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Done"
+                     }
+                 }
+             }
+        ]
+}

@@ -1,0 +1,138 @@
+{
+    "identifier":"Kinetic Tremor",
+    "type": "twoHandAssessment",
+    "shouldHideActions":["goBackward", "skip"],
+    "steps":[
+             {
+                "identifier":"introduction",
+                "type":"overview",
+                "title":"Finger-to-Nose",
+                "detail":"In this activity, you’ll hold your phone beside you at arm’s length. You’ll hold your phone with your pointer finger sticking out sideways. Then touch the tip of your nose with the tip of your finger. You will do this repeatedly for 30 seconds. Our goal is to measure your hand movement during the arm swing and then during the precise movement when you touch finger-to-nose.",
+                "image":{
+                    "type":"animated",
+                    "imageNames":["kinetic_hold_phone_left", "finger_to_nose_4", "finger_to_nose_5"],
+                    "placementType":"topBackground",
+                    "animationDuration": 4
+                },
+                "icons": [
+                          {
+                            "icon":"space_to_move_your_arms",
+                            "title": "SPACE TO MOVE YOUR ARMS"
+                          },
+                          {
+                            "icon":"comfortable_place_to_sit",
+                            "title": "COMFORTABLE PLACE TO SIT"
+                          }
+                        ],
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Get Started"
+                    }
+                 }
+             },
+             {
+                 "identifier":"eachHandInstructions",
+                 "type":"instruction",
+                 "title":"Each hand for 30 seconds",
+                 "detail":"We will do this finger-to-nose motion repeatedly for 30 seconds with one hand, and then for 30 seconds with your other hand.",
+                 "fullInstructionsOnly": true,
+                 "image":{
+                     "type":"animated",
+                     "imageNames":["kinetic_hold_phone_left", "finger_to_nose_4", "finger_to_nose_5"],
+                     "placementType":"topBackground",
+                     "animationDuration": 4
+                 },
+                 "actions":{
+                     "goForward":{
+                         "type":"default",
+                         "buttonTitle":"Got it"
+                     }
+                 }
+             },
+             {
+                "identifier": "handSelection",
+                "type":"transform",
+                "resourceName": "hand_selection_step"
+             },
+             {
+                "identifier":"sitDownInstruction",
+                "type":"instruction",
+                "title":"Sit down",
+                "detail":"Find a spot to sit where you can have your feet resting flat on the floor.",
+                "image":{
+                    "type":"fetchable",
+                    "imageName":"finger_to_nose_1",
+                    "placementType":"topBackground"
+                },
+                "actions":{
+                    "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Got a spot"
+                    }
+                }
+             },
+             {
+                 "identifier":"holdPhoneInstructions",
+                 "type":"instruction",
+                 "title":"Hold phone with index finger pointing out",
+                 "detail":"Hold your phone with your pointer finger sticking out sideways from the phone.",
+                 "image":{
+                     "type":"fetchable",
+                     "imageName": "finger_to_nose_2",
+                     "placementType":"topBackground"
+                 },
+                 "actions":{
+                     "goForward":{
+                         "type":"default",
+                         "buttonTitle":"Pointing index finger"
+                     }
+                 }
+             },
+             {
+                 "identifier":"howToTouchNoseInstructions",
+                 "type":"instruction",
+                 "title":"How to touch your nose",
+                 "detail":"Hold your arm straight out beside you, then bend your elbow to bring the tip of your finger to the tip of your nose. Try to touch precisely if you can.",
+                 "image":{
+                     "type":"animated",
+                     "imageNames":["kinetic_hold_phone_left", "finger_to_nose_4", "finger_to_nose_5"],
+                     "placementType":"topBackground",
+                     "animationDuration": 4
+                 },
+                 "actions":{
+                     "goForward":{
+                         "type":"default",
+                         "buttonTitle":"Got it"
+                     }
+                 }
+             },
+             {
+                 "identifier":"left",
+                 "type":"transform",
+                 "resourceName": "kinetic_tremor_section_step"
+             },
+             {
+                 "identifier":"right",
+                 "type":"transform",
+                 "resourceName": "kinetic_tremor_section_step"
+             },
+             {
+                 "identifier":"completion",
+                 "type":"completion",
+                 "title":"Great job!",
+                 "detail":"You have completed the Finger-to-Nose activity.",
+                 "image":{
+                     "type":"fetchable",
+                     "imageName":"completion_tremor",
+                     "placementType":"topBackground"
+                 },
+                 "actions": {
+                     "goForward":{
+                        "type":"default",
+                        "buttonTitle":"Done"
+                     }
+                 }
+             }
+        ]
+}
