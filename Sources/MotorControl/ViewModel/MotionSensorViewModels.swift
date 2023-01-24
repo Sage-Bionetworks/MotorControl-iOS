@@ -128,10 +128,6 @@ class MotionSensorStepViewModel : AbstractMotionControlState {
     }
 }
 
-/// View model for a tremor step
-final class TremorStepViewModel : MotionSensorStepViewModel {
-}
-
 /// View model for a tapping step
 final class TappingStepViewModel : MotionSensorStepViewModel {
     
@@ -186,6 +182,18 @@ final class TappingStepViewModel : MotionSensorStepViewModel {
         tapCount += 1
         previousButton = currentButton
     }
+}
+
+/// View model for a tremor step
+final class TremorStepViewModel : MotionSensorStepViewModel {
+}
+
+/// View model for a walk step
+final class WalkStepViewModel: MotionSensorStepViewModel {
+}
+
+/// View model for a balance step
+final class BalanceStepViewModel: MotionSensorStepViewModel {
 }
 
 fileprivate func createOutputDirectory() -> URL {

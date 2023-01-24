@@ -75,6 +75,12 @@ public struct MotorControlAssessmentView : View {
                 TappingStepView(state: nodeState)
                     .modifier(AppBackgroundListener())
             }
+            else if let nodeState = state as? WalkStepViewModel {
+                MotionSensorStepView(state: nodeState)
+            }
+            else if let nodeState = state as? BalanceStepViewModel {
+                MotionSensorStepView(state: nodeState)
+            }
             else {
                 VStack {
                     Spacer()
@@ -93,16 +99,17 @@ struct AppBackgroundListener : ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .alert(isPresented: $didResignActive) {
-                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: SharedResources.bundle),
-                      message: nil,
-                      dismissButton: .default(Text("OK", bundle: SharedResources.bundle), action: {
-                    assessmentState.status = .continueLater
-                }))
-            }
+//            .alert(isPresented: $didResignActive) {
+//                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: SharedResources.bundle),
+//                      message: nil,
+//                      dismissButton: .default(Text("OK", bundle: SharedResources.bundle), action: {
+//                    assessmentState.status = .continueLater
+//                }))
+//            }
         #if os(iOS)
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                didResignActive = true
+                assessmentState.status = .continueLater
+//                didResignActive = true
             }
             .onAppear {
                 UIApplication.shared.isIdleTimerDisabled = true

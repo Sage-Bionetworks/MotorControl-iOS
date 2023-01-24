@@ -20,7 +20,7 @@ struct MotionSensorStepView: View {
     @State var progress: CGFloat = 0
     let audioFileSoundPlayer: AudioFileSoundPlayer = .init()
     
-    @ObservedObject var state: TremorStepViewModel
+    @ObservedObject var state: MotionSensorStepViewModel
     
     var body: some View {
         content()

@@ -12,6 +12,8 @@ import MobilePassiveData
 extension SerializableNodeType {
     static let tapping: SerializableNodeType = "tapping"
     static let tremor: SerializableNodeType = "tremor"
+    static let walk: SerializableNodeType = "walk"
+    static let balance: SerializableNodeType = "balance"
 }
  
 class TappingNodeObject : MotionSensorNodeObject {
@@ -27,6 +29,18 @@ class TappingNodeObject : MotionSensorNodeObject {
 class TremorNodeObject : MotionSensorNodeObject {
     override class func defaultType() -> SerializableNodeType {
         .tremor
+    }
+}
+
+class WalkNodeObject : MotionSensorNodeObject {
+    override class func defaultType() -> SerializableNodeType {
+        .walk
+    }
+}
+
+class BalanceNodeObject : MotionSensorNodeObject {
+    override class func defaultType() -> SerializableNodeType {
+        .balance
     }
 }
 
