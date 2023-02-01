@@ -95,12 +95,21 @@ public struct MotorControlAssessmentView : View {
 
 struct AppBackgroundListener : ViewModifier {
     @EnvironmentObject var assessmentState: AssessmentState
+    @State var didResignActive = false
 
     func body(content: Content) -> some View {
         content
+//            .alert(isPresented: $didResignActive) {
+//                Alert(title: Text("This activity has been interrupted and cannot continue.", bundle: SharedResources.bundle),
+//                      message: nil,
+//                      dismissButton: .default(Text("OK", bundle: SharedResources.bundle), action: {
+//                    assessmentState.status = .continueLater
+//                }))
+//            }
         #if os(iOS)
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
                 assessmentState.status = .continueLater
+//                didResignActive = true
             }
             .onAppear {
                 UIApplication.shared.isIdleTimerDisabled = true
