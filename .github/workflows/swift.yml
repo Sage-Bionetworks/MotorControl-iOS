@@ -17,6 +17,6 @@ jobs:
     - name: Run tests in Swift Package (macOS)
       run: swift test -v
     - name: Build Swift Package (iOS)
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme MotorControl-Package -destination "platform=iOS Simulator,OS=15.2,name=iPhone 12" | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild build-for-testing -scheme MotorControl-Package -destination "platform=iOS Simulator,OS=16.1,name=iPhone 14" | xcpretty
     - name: Run tests in Swift Package (iOS)
-      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme MotorControl-Package -destination "platform=iOS Simulator,OS=15.2,name=iPhone 12" | xcpretty
+      run: set -o pipefail && env NSUnbufferedIO=YES xcodebuild test-without-building -scheme MotorControl-Package -destination "platform=iOS Simulator,OS=16.1,name=iPhone 14" | xcpretty
