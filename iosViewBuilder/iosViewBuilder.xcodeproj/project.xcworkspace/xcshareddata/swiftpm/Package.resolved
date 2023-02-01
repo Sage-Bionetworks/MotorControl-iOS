@@ -20,15 +20,6 @@
         }
       },
       {
-        "package": "MobilePassiveData",
-        "repositoryURL": "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-        "state": {
-          "branch": null,
-          "revision": "33a124d928a8499c88ac36543f414d7604f26573",
-          "version": "1.5.1"
-        }
-      },
-      {
         "package": "SharedMobileUI",
         "repositoryURL": "https://github.com/Sage-Bionetworks/SharedMobileUI-AppleOS.git",
         "state": {
