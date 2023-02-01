@@ -43,7 +43,6 @@
 		8004DF0B28AFFE1D0001A1F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8004DF0D28AFFE1F0001A1F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8004DF1028AFFE1F0001A1F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		801EE09B298874EA00027872 /* MobilePassiveData-SDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "MobilePassiveData-SDK"; path = "../../MobilePassiveData-SDK"; sourceTree = "<group>"; };
 		807B71FA28D507D2008A9F51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		80F71BD92978B66000FD19E4 /* WalkingAssessmentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingAssessmentObject.swift; sourceTree = "<group>"; };
 		FF0B3AD928ECF8B2003D42AB /* MotionSensorViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionSensorViewModels.swift; sourceTree = "<group>"; };
@@ -86,7 +85,6 @@
 		8004DEFD28AFFE1D0001A1F8 = {
 			isa = PBXGroup;
 			children = (
-				801EE09B298874EA00027872 /* MobilePassiveData-SDK */,
 				FFA0978C28ECFB67003AF899 /* MotorControl-iOS */,
 				8004DF0828AFFE1D0001A1F8 /* iosViewBuilder */,
 				8004DF0728AFFE1D0001A1F8 /* Products */,
