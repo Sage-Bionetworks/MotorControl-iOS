@@ -19,6 +19,4 @@ final class WalkingAssessmentObject : AbstractAssessmentObject {
     convenience init() {
         self.init(identifier: "example", children: [])
     }
-    
-    /// Maybe need to change nodenavigator in assessment model to handle full instructions
 }

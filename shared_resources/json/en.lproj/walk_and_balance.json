@@ -1,71 +1,71 @@
 {
     "identifier":"WalkAndBalance",
     "type": "walkAssessment",
-    "usesTrackedData":true,
     "shouldHideActions":["goBackward", "skip"],
     "steps":[
-             {
-                "identifier":"introduction",
-                "type":"overview",
-                "title":"Walk and Balance",
-                "subtitle":"In this activity you will be walking continuously at your normal pace for 30 seconds, followed by standing still for 30 seconds.",
-                 "image":{
-                     "type":"animated",
-                     "imageNames":["walking_1", "walking_2", "walking_3", "walking_4", "walking_5", "walking_6", "walking_7", "walking_8", "walking_9", "walking_10", "balance_1", "balance_1", "balance_1", "balance_2", "balance_3", "balance_4", "balance_5", "balance_6", "balance_7", "balance_8", "balance_9", "balance_10", "balance_11"],
-                     "placementType":"topMarginBackground",
-                     "animationRepeatCount": 1,
-                     "animationDuration":10.5
-                 },
-                "icons": [
-                          {
-                            "icon":"smooth_surface",
-                            "title": "A SMOOTH SURFACE"
-                          },
-                          {
-                            "icon":"pants_with_pockets",
-                            "title": "PANTS WITH POCKETS"
-                          },
-                          {
-                            "icon":"walking_shoes",
-                            "title": "WALKING SHOES"
-                          }
-                        ],
-                "actions":{
-                    "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Get started"
-                    }
-                 }
-             },
-             {
-                 "identifier":"walk",
-                 "type":"transform",
-                 "resourceName": "walk_section_step"
-             },
-             {
-                 "identifier":"balance",
-                 "type":"transform",
-                 "resourceName": "balance_section_step"
-             },
-             {
-                 "identifier":"completion",
-                 "type":"completion",
-                 "title":"Great job!",
-                 "subtitle":"WALK_BALANCE_COMPLETION",
-                 "image":{
-                     "type":"fetchable",
-                     "imageName":"completion_walk",
-                     "placementType":"topBackground"
-                 },
-                 "actions": {
-                     "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Done"
+                {
+                    "identifier":"introduction",
+                    "type":"overview",
+                    "title":"Walk and Balance",
+                    "subtitle":"In this activity you will be walking continuously at your normal pace for 30 seconds, followed by standing still for 30 seconds.",
+                    "image":{
+                         "type":"animated",
+                         "imageNames":["walking_1", "walking_2", "walking_3", "walking_4", "walking_5", "walking_6", "walking_7", "walking_8", "walking_9", "walking_10", "balance_1", "balance_1", "balance_1", "balance_2", "balance_3", "balance_4", "balance_5", "balance_6", "balance_7", "balance_8", "balance_9", "balance_10", "balance_11"],
+                         "placementType":"topMarginBackground",
+                         "animationRepeatCount": 1,
+                         "animationDuration":10.5
+                    },
+                    "icons":
+                            [
+                                {
+                                    "icon":"smooth_surface",
+                                    "title": "A SMOOTH SURFACE"
+                                },
+                                {
+                                    "icon":"pants_with_pockets",
+                                    "title": "PANTS WITH POCKETS"
+                                },
+                                {
+                                    "icon":"walking_shoes",
+                                    "title": "WALKING SHOES"
+                                }
+                            ],
+                    "actions":{
+                        "goForward":{
+                            "type":"default",
+                            "buttonTitle":"Get started"
+                        }
                      }
                  },
-                 "spokenInstructions":{
-                     "start":"Great job, you are done with the Walk and Balance test."
+                 {
+                     "identifier":"walk",
+                     "type":"transform",
+                     "resourceName": "walk_section_step"
+                 },
+                 {
+                     "identifier":"balance",
+                     "type":"transform",
+                     "resourceName": "balance_section_step"
+                 },
+                 {
+                     "identifier":"completion",
+                     "type":"completion",
+                     "title":"Great job!",
+                     "subtitle":"WALK_BALANCE_COMPLETION",
+                     "image":{
+                         "type":"fetchable",
+                         "imageName":"completion_walk",
+                         "placementType":"topBackground"
+                     },
+                     "actions": {
+                         "goForward":{
+                            "type":"default",
+                            "buttonTitle":"Done"
+                         }
+                     },
+                     "spokenInstructions":{
+                         "start":"Great job, you are done with the Walk and Balance test."
+                     }
                  }
-             }
         ]
 }

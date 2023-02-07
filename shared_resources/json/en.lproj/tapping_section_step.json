@@ -16,8 +16,7 @@
                 },
                 "actions":{
                     "goForward":{
-                        "type":"default",
-                        "buttonTitle": "Start the test"
+                        "type":"default"
                     }
                 }
              },
@@ -30,7 +29,6 @@
                       "imageName":"tap_left_1",
                       "placementType":"fullsizeBackground"
                   },
-                  "commands":["shouldDisableIdleTimer", "playSound"],
                   "spokenInstructions":{
                       "start":"Tap the buttons with your %@ hand.",
                       "end":"Great job! You’ve finished tapping with your %@ hand."

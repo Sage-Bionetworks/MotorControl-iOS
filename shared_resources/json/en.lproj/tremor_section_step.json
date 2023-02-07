@@ -14,8 +14,7 @@
                     },
                     "actions":{
                         "goForward":{
-                            "type":"default",
-                            "buttonTitle":"Hold phone"
+                            "type":"default"
                         }
                     }
               },
@@ -28,7 +27,6 @@
                       "imageName":"hold_phone_left",
                       "placementType":"fullsizeBackground"
                   },
-                  "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
                   "title": "Hold the phone still in your %@ hand.",
                   "spokenInstructions":{
                       "start":"With your %@ hand in your lap, keep holding your phone with the screen facing up for 30 seconds.",

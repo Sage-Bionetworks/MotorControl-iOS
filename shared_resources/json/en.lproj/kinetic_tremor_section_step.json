@@ -14,8 +14,7 @@
                     },
                     "actions":{
                         "goForward":{
-                            "type":"default",
-                            "buttonTitle":"Start"
+                            "type":"default"
                         }
                     }
               },
@@ -23,8 +22,7 @@
                     "identifier":"countdown",
                     "type":"countdown",
                     "detail":"Begin in...",
-                    "duration":5,
-                    "commands":["playSoundOnStart", "transitionAutomatically"]
+                    "duration":5
               },
               {
                   "identifier":"tremor",
@@ -35,7 +33,6 @@
                       "imageName":"kinetic_hold_phone_left",
                       "placementType":"fullsizeBackground"
                   },
-                  "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
                   "title": "Touch your nose with your %@ index finger",
                   "spokenInstructions":{
                       "start":"Touch your nose with your %@ index finger",

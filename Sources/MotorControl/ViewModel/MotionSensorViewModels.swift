@@ -188,14 +188,6 @@ final class TappingStepViewModel : MotionSensorStepViewModel {
 final class TremorStepViewModel : MotionSensorStepViewModel {
 }
 
-/// View model for a walk step
-final class WalkStepViewModel: MotionSensorStepViewModel {
-}
-
-/// View model for a balance step
-final class BalanceStepViewModel: MotionSensorStepViewModel {
-}
-
 fileprivate func createOutputDirectory() -> URL {
     URL(fileURLWithPath: UUID().uuidString, isDirectory: true, relativeTo: FileManager.default.temporaryDirectory)
 }

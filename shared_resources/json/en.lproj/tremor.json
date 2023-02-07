@@ -47,8 +47,7 @@
                 },
                 "actions":{
                     "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Got it"
+                        "type":"default"
                     }
                 }
              },
@@ -64,8 +63,7 @@
                 },
                 "actions":{
                     "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Got a spot"
+                        "type":"default"
                     }
                 }
              },
