@@ -11,9 +11,14 @@ import MobilePassiveData
 
 extension SerializableNodeType {
     static let tapping: SerializableNodeType = "tapping"
-    static let tremor: SerializableNodeType = "tremor"
-    static let walk: SerializableNodeType = "walk"
-    static let balance: SerializableNodeType = "balance"
+    static let motion: SerializableNodeType = "motion"
+    static let backgroundCountdown: SerializableNodeType = "backgroundCountdown"
+}
+
+class BackgroundCountdownStepObject : AbstractCountdownStepObject, Encodable {
+    public override class func defaultType() -> SerializableNodeType {
+        .backgroundCountdown
+    }
 }
  
 class TappingNodeObject : MotionSensorNodeObject {
@@ -26,34 +31,18 @@ class TappingNodeObject : MotionSensorNodeObject {
     }
 }
 
-class TremorNodeObject : MotionSensorNodeObject {
-    override class func defaultType() -> SerializableNodeType {
-        .tremor
-    }
-}
-
-protocol WalkOrBalanceNodeObject {
-}
-
-class WalkNodeObject : MotionSensorNodeObject, WalkOrBalanceNodeObject {
-    override class func defaultType() -> SerializableNodeType {
-        .walk
-    }
-}
-
-class BalanceNodeObject : MotionSensorNodeObject, WalkOrBalanceNodeObject {
-    override class func defaultType() -> SerializableNodeType {
-        .balance
-    }
-}
-
 class MotionSensorNodeObject : AbstractStepObject {
     private enum CodingKeys : String, CodingKey {
-        case duration, spokenInstructions
+        case duration, spokenInstructions, allowScreenLock
+    }
+    
+    override class func defaultType() -> SerializableNodeType {
+        .motion
     }
     
     let duration: TimeInterval
     let spokenInstructions: [Int : String]?
+    let allowScreenLock: Bool
     
     enum SpokenInstructionKeys : String, CodingKey {
         case start, halfway, countdown, end
@@ -70,23 +59,27 @@ class MotionSensorNodeObject : AbstractStepObject {
     init() {
         self.duration = 30
         self.spokenInstructions = nil
+        self.allowScreenLock = false
         super.init(identifier: "example")
     }
     
-    init(identifier: String, title: String? = nil, subtitle: String? = nil, detail: String? = nil, imageInfo: ImageInfo? = nil) {
+    init(identifier: String, title: String? = nil, subtitle: String? = nil, detail: String? = nil, imageInfo: ImageInfo? = nil, allowScreenLock: Bool = false) {
         self.duration = 30
         self.spokenInstructions = nil
+        self.allowScreenLock = allowScreenLock
         super.init(identifier: identifier, title: title, subtitle: subtitle, detail: detail, imageInfo: imageInfo)
     }
     
     init(identifier: String, copyFrom object: MotionSensorNodeObject) {
         self.duration = object.duration
         self.spokenInstructions = object.spokenInstructions
+        self.allowScreenLock = object.allowScreenLock
         super.init(identifier: identifier, copyFrom: object)
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.allowScreenLock = try container.decodeIfPresent(Bool.self, forKey: .allowScreenLock) ?? false
         let stepDuration = try container.decode(TimeInterval.self, forKey: .duration)
         self.duration = stepDuration
         if let dictionary = try container.decodeIfPresent([String : String].self, forKey: .spokenInstructions) {
@@ -166,12 +159,12 @@ extension MotionSensorNodeObject : MotionRecorderConfiguration {
         true
     }
     
+    var requiresBackgroundAudio: Bool {
+         true
+     }
+    
     var stopStepIdentifier: String? {
         nil
-    }
-    
-    var requiresBackgroundAudio: Bool {
-        true
     }
     
     var startStepIdentifier: String? {

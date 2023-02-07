@@ -15,7 +15,7 @@
               },
               {
                   "identifier":"tremor",
-                  "type":"tremor",
+                  "type":"motion",
                   "duration":30,
                   "image":{
                       "type":"fetchable",

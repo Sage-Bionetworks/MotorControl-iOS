@@ -34,10 +34,10 @@ let package = Package(
                  "1.6.0"..<"3.0.0"),
         .package(name: "AssessmentModel",
                  url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
-                 from: "0.9.0"),
+                 from: "0.11.1"),
         .package(name: "MobilePassiveData",
                  url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.4.0"),
+                 from: "1.5.0"),
     ],
     targets: [
         .target(

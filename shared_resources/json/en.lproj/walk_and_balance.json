@@ -51,20 +51,9 @@
                      "identifier":"completion",
                      "type":"completion",
                      "title":"Great job!",
-                     "subtitle":"WALK_BALANCE_COMPLETION",
-                     "image":{
-                         "type":"fetchable",
-                         "imageName":"completion_walk",
-                         "placementType":"topBackground"
-                     },
-                     "actions": {
-                         "goForward":{
-                            "type":"default",
-                            "buttonTitle":"Done"
-                         }
-                     },
+                     "subtitle":"You have completed the walk and balance activity.",
                      "spokenInstructions":{
-                         "start":"Great job, you are done with the Walk and Balance test."
+                         "start": "Great job, you are done with the Walk and Balance activity."
                      }
                  }
         ]

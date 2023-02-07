@@ -6,38 +6,38 @@ import SwiftUI
 import AssessmentModelUI
 
 struct ContentView: View {
-    @StateObject var viewModel: ViewModel = .init()
+    @State var current: AssessmentState?
+    @State var isPresented: Bool = false
     
     var body: some View {
         LazyVStack(spacing: 16) {
             ForEach(MotorControlIdentifier.allCases, id: \.rawValue) { name in
                 Button(name.rawValue) {
-                    viewModel.current = .init(try! name.instantiateAssessmentState())
+                    current = .init(try! name.instantiateAssessmentState())
+                    isPresented = true
                 }
             }
         }
-        .fullScreenCover(isPresented: $viewModel.isPresented) {
-            AssessmentListener(viewModel)
-                .preferredColorScheme(.light)
+        .fullScreenCover(isPresented: $isPresented) {
+            if let state = current {
+                AssessmentListener(state, isPresented: $isPresented)
+                    .preferredColorScheme(.light)
+            }
         }
-    }
-    
-    class ViewModel : ObservableObject {
-        @Published var isPresented: Bool = false
-        var current: AssessmentState? {
-            didSet {
-                isPresented = (current != nil)
+        .onChange(of: isPresented) { newValue in
+            if !isPresented {
+                current = nil
             }
         }
     }
     
     struct AssessmentListener : View {
-        @ObservedObject var viewModel: ViewModel
+        @Binding var isPresented: Bool
         @ObservedObject var state: AssessmentState
         
-        init(_ viewModel: ViewModel) {
-            self.viewModel = viewModel
-            self.state = viewModel.current!
+        init(_ state: AssessmentState, isPresented: Binding<Bool>) {
+            self._isPresented = isPresented
+            self.state = state
         }
         
         var body: some View {
@@ -59,8 +59,7 @@ struct ContentView: View {
                     
                     // Exit
                     guard newValue >= .finished else { return }
-                    viewModel.isPresented = false
-                    viewModel.current = nil
+                    isPresented = false
                 }
         }
     }

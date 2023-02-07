@@ -8,6 +8,7 @@ import AssessmentModelUI
 import JsonModel
 import SharedResources
 import SharedMobileUI
+import MobilePassiveData
 
 extension MotorControlAssessmentView : AssessmentDisplayView {
     public static func instantiateAssessmentState(_ identifier: String, config: Data?, restoredResult: Data?, interruptionHandling: InterruptionHandling?) throws -> AssessmentState {
@@ -56,29 +57,28 @@ public struct MotorControlAssessmentView : View {
             }
             else if let step = state.step as? CompletionStep {
                 CompletionStepView(step)
+                    .speakInstructions(step: step)
             }
             else if state.step is CountdownStep {
                 CountdownStepView(state)
                     .surveyTintColor(.textForeground)
+                    .backgroundLockOverride(isOn: state.step is BackgroundCountdownStepObject)
+                    .speakInstructions(step: state.step)
             }
             else if state.step is OverviewStep {
                 OverviewView(nodeState: state)
             }
             else if let nodeState = state as? MotorControlInstructionState {
                 InstructionView(nodeState: nodeState)
+                    .speakInstructions(step: state.step)
             }
             else if let nodeState = state as? TappingStepViewModel {
                 TappingStepView(state: nodeState)
-                    .modifier(AppBackgroundListener())
+                    .appBackgroundListener(isOn: true)
             }
             else if let nodeState = state as? MotionSensorStepViewModel {
-                if nodeState.step is WalkOrBalanceNodeObject {
-                    MotionSensorStepView(state: nodeState)
-                }
-                else {
-                    MotionSensorStepView(state: nodeState)
-                        .modifier(AppBackgroundListener())
-                }
+                MotionSensorStepView(state: nodeState)
+                    .appBackgroundListener(isOn: !nodeState.motionConfig.allowScreenLock)
             }
             else {
                 VStack {
@@ -89,6 +89,64 @@ public struct MotorControlAssessmentView : View {
                 }
             }
         }
+    }
+}
+
+extension View {
+    
+    @ViewBuilder
+    func appBackgroundListener(isOn: Bool) -> some View {
+        if isOn {
+            modifier(AppBackgroundListener())
+        }
+        else {
+            self
+        }
+    }
+    
+    @ViewBuilder
+    func backgroundLockOverride(isOn: Bool) -> some View {
+        if isOn {
+            modifier(BackgroundLockOverride())
+        }
+        else {
+            self
+        }
+    }
+    
+    func speakInstructions(step: Step) -> some View {
+        modifier(SpokenInstructionSynthesizer(step: step))
+    }
+}
+
+struct SpokenInstructionSynthesizer : ViewModifier {
+    let step: Step
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                if let instruction = step.spokenInstruction(at: 0) {
+                    TextToSpeechSynthesizer.shared.speak(text: instruction, completion: nil)
+                }
+            }
+            .onDisappear {
+                if let instruction = step.spokenInstruction(at: .infinity) {
+                    TextToSpeechSynthesizer.shared.speak(text: instruction, completion: nil)
+                }
+            }
+    }
+}
+
+struct BackgroundLockOverride : ViewModifier {
+    let audioSessionIdentifier = "org.sagebase.BackgroundLockOverride.\(UUID())"
+    
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                AudioSessionController.shared.startBackgroundAudioIfNeeded(on: audioSessionIdentifier)
+            }
+            .onDisappear {
+                AudioSessionController.shared.stopAudioSession(on: audioSessionIdentifier)
+            }
     }
 }
 
