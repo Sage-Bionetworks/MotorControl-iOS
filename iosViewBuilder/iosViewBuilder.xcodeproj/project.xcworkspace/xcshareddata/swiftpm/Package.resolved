@@ -1,41 +1,43 @@
 {
-  "pins" : [
-    {
-      "identity" : "assessmentmodelkmm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
-      "state" : {
-        "revision" : "036c67beda06a82b2a1f8e8aceb15ceb7b43c084",
-        "version" : "0.10.1"
+  "object": {
+    "pins": [
+      {
+        "package": "AssessmentModel",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
+        "state": {
+          "branch": null,
+          "revision": "3e9991bdbe297f8be13ce95d51dd83d099ad0699",
+          "version": "0.11.0"
+        }
+      },
+      {
+        "package": "JsonModel",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "4431edad387697d8db879212c4ca8dacbc436b5f",
+          "version": "1.6.0"
+        }
+      },
+      {
+        "package": "MobilePassiveData",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
+        "state": {
+          "branch": null,
+          "revision": "33a124d928a8499c88ac36543f414d7604f26573",
+          "version": "1.5.1"
+        }
+      },
+      {
+        "package": "SharedMobileUI",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/SharedMobileUI-AppleOS.git",
+        "state": {
+          "branch": null,
+          "revision": "02192711c7f739df823bf187bd1b4cad9fe921c1",
+          "version": "0.19.0"
+        }
       }
-    },
-    {
-      "identity" : "jsonmodel-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-      "state" : {
-        "revision" : "4431edad387697d8db879212c4ca8dacbc436b5f",
-        "version" : "1.6.0"
-      }
-    },
-    {
-      "identity" : "mobilepassivedata-sdk",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-      "state" : {
-        "revision" : "33a124d928a8499c88ac36543f414d7604f26573",
-        "version" : "1.5.1"
-      }
-    },
-    {
-      "identity" : "sharedmobileui-appleos",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Sage-Bionetworks/SharedMobileUI-AppleOS.git",
-      "state" : {
-        "revision" : "a3c4ff73d2b222d5a246f617d5c2b062eb3abfe4",
-        "version" : "0.17.0"
-      }
-    }
-  ],
-  "version" : 2
+    ]
+  },
+  "version": 1
 }
