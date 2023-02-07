@@ -13,7 +13,7 @@ import ResultModel
 /// State object for motion sensor steps
 class MotionSensorStepViewModel : AbstractMotionControlState {
     var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
-    let voicePrompter: TextToSpeechSynthesizer = .init()
+    let voicePrompter: TextToSpeechSynthesizer = .shared
     let spokenInstructions: [Int : String]
     var instructionCache: Set<Int> = []
     let recorder: MotionRecorder
