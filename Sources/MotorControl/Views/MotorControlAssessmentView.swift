@@ -78,7 +78,7 @@ public struct MotorControlAssessmentView : View {
             }
             else if let nodeState = state as? MotionSensorStepViewModel {
                 MotionSensorStepView(state: nodeState)
-                    .appBackgroundListener(isOn: !nodeState.motionConfig.requiresBackgroundAudio)
+                    .appBackgroundListener(isOn: !nodeState.motionConfig.allowScreenLock)
             }
             else {
                 VStack {

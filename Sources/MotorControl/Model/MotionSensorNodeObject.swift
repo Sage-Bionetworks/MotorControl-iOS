@@ -33,7 +33,7 @@ class TappingNodeObject : MotionSensorNodeObject {
 
 class MotionSensorNodeObject : AbstractStepObject {
     private enum CodingKeys : String, CodingKey {
-        case duration, spokenInstructions, requiresBackgroundAudio
+        case duration, spokenInstructions, allowScreenLock
     }
     
     override class func defaultType() -> SerializableNodeType {
@@ -42,7 +42,7 @@ class MotionSensorNodeObject : AbstractStepObject {
     
     let duration: TimeInterval
     let spokenInstructions: [Int : String]?
-    let requiresBackgroundAudio: Bool
+    let allowScreenLock: Bool
     
     enum SpokenInstructionKeys : String, CodingKey {
         case start, halfway, countdown, end
@@ -59,27 +59,27 @@ class MotionSensorNodeObject : AbstractStepObject {
     init() {
         self.duration = 30
         self.spokenInstructions = nil
-        self.requiresBackgroundAudio = false
+        self.allowScreenLock = false
         super.init(identifier: "example")
     }
     
-    init(identifier: String, title: String? = nil, subtitle: String? = nil, detail: String? = nil, imageInfo: ImageInfo? = nil, requiresBackgroundAudio: Bool = false) {
+    init(identifier: String, title: String? = nil, subtitle: String? = nil, detail: String? = nil, imageInfo: ImageInfo? = nil, allowScreenLock: Bool = false) {
         self.duration = 30
         self.spokenInstructions = nil
-        self.requiresBackgroundAudio = requiresBackgroundAudio
+        self.allowScreenLock = allowScreenLock
         super.init(identifier: identifier, title: title, subtitle: subtitle, detail: detail, imageInfo: imageInfo)
     }
     
     init(identifier: String, copyFrom object: MotionSensorNodeObject) {
         self.duration = object.duration
         self.spokenInstructions = object.spokenInstructions
-        self.requiresBackgroundAudio = object.requiresBackgroundAudio
+        self.allowScreenLock = object.allowScreenLock
         super.init(identifier: identifier, copyFrom: object)
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.requiresBackgroundAudio = try container.decodeIfPresent(Bool.self, forKey: .requiresBackgroundAudio) ?? false
+        self.allowScreenLock = try container.decodeIfPresent(Bool.self, forKey: .allowScreenLock) ?? false
         let stepDuration = try container.decode(TimeInterval.self, forKey: .duration)
         self.duration = stepDuration
         if let dictionary = try container.decodeIfPresent([String : String].self, forKey: .spokenInstructions) {
@@ -158,6 +158,10 @@ extension MotionSensorNodeObject : MotionRecorderConfiguration {
     var shouldDeletePrevious: Bool {
         true
     }
+    
+    var requiresBackgroundAudio: Bool {
+         true
+     }
     
     var stopStepIdentifier: String? {
         nil

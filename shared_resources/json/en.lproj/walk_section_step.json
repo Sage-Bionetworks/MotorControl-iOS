@@ -69,7 +69,7 @@
                     "type": "motion",
                     "title": "Walk back and forth",
                     "duration": 30,
-                    "requiresBackgroundAudio": true,
+                    "allowScreenLock": true,
                     "image": {
                         "type": "fetchable",
                         "imageName": "walking_10",

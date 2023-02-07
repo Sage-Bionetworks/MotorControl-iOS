@@ -53,7 +53,7 @@
                     "type": "motion",
                     "title": "Turn around and then stand still",
                     "duration": 30,
-                    "requiresBackgroundAudio": true,
+                    "allowScreenLock": true,
                     "image": {
                         "type": "fetchable",
                         "imageName": "balance_1",
