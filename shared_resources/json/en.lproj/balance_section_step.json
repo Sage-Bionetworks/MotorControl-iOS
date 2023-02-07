@@ -14,6 +14,9 @@
                         "placementType": "topMarginBackground",
                         "animationRepeatCount": 1,
                         "animationDuration": 6.5
+                    },
+                    "spokenInstructions": {
+                        "start": "Take your phone out to review the instructions for the balance test."
                     }
                 },
                 {
@@ -32,7 +35,7 @@
                 },
                 {
                     "identifier": "countdown",
-                    "type": "countdown",
+                    "type": "backgroundCountdown",
                     "subtitle": "Begin in...",
                     "fullInstructionsOnly": true,
                     "image": {
@@ -47,9 +50,10 @@
                 },
                 {
                     "identifier": "motion",
-                    "type": "balance",
+                    "type": "motion",
                     "title": "Turn around and then stand still",
                     "duration": 30,
+                    "requiresBackgroundAudio": true,
                     "image": {
                         "type": "fetchable",
                         "imageName": "balance_1",
@@ -58,8 +62,7 @@
                     "spokenInstructions": {
                         "start": "Turn around in a full circle, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to not move.",
                         "halfway": "Halfway done.",
-                        "23": "Almost done.",
-                        "end":"Great job, you are done with this task."
+                        "23": "Almost done."
                     }
                 }
             ]

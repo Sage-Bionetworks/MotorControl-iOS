@@ -117,18 +117,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "detail":"You have completed the Finger-to-Nose activity.",
-                 "image":{
-                     "type":"fetchable",
-                     "imageName":"completion_tremor",
-                     "placementType":"topBackground"
-                 },
-                 "actions": {
-                     "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Done"
-                     }
-                 }
+                 "detail":"You have completed the Finger-to-Nose activity."
              }
         ]
 }

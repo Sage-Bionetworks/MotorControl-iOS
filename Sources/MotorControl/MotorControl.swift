@@ -50,9 +50,8 @@ final class MotorControlFactory : AssessmentFactory {
         
         nodeSerializer.add(HandInstructionObject())
         nodeSerializer.add(TappingNodeObject())
-        nodeSerializer.add(TremorNodeObject())
-        nodeSerializer.add(WalkNodeObject())
-        nodeSerializer.add(BalanceNodeObject())
+        nodeSerializer.add(MotionSensorNodeObject())
+        nodeSerializer.add(BackgroundCountdownStepObject(identifier: "example", duration: 5))
         
         resultSerializer.add(TappingResultObject())
     }
