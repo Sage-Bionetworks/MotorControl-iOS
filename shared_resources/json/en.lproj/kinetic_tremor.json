@@ -1,5 +1,5 @@
 {
-    "identifier":"Kinetic Tremor",
+    "identifier":"kinetic-tremor",
     "type": "twoHandAssessment",
     "shouldHideActions":["goBackward", "skip"],
     "steps":[
@@ -27,7 +27,7 @@
                 "actions":{
                     "goForward":{
                         "type":"default",
-                        "buttonTitle":"Get started"
+                        "buttonTitle":"Get Started"
                     }
                  }
              },

@@ -32,19 +32,19 @@ class TremorNodeObject : MotionSensorNodeObject {
     }
 }
 
-class WalkNodeObject : WalkOrBalanceNodeObject {
+protocol WalkOrBalanceNodeObject {
+}
+
+class WalkNodeObject : MotionSensorNodeObject, WalkOrBalanceNodeObject {
     override class func defaultType() -> SerializableNodeType {
         .walk
     }
 }
 
-class BalanceNodeObject : WalkOrBalanceNodeObject {
+class BalanceNodeObject : MotionSensorNodeObject, WalkOrBalanceNodeObject {
     override class func defaultType() -> SerializableNodeType {
         .balance
     }
-}
-
-class WalkOrBalanceNodeObject : MotionSensorNodeObject {
 }
 
 class MotionSensorNodeObject : AbstractStepObject {

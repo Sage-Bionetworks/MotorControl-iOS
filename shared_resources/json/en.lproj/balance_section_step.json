@@ -14,11 +14,6 @@
                         "placementType": "topMarginBackground",
                         "animationRepeatCount": 1,
                         "animationDuration": 6.5
-                    },
-                    "actions": {
-                        "goForward": {
-                            "type": "default"
-                        }
                     }
                 },
                 {
@@ -33,11 +28,6 @@
                         "placementType": "topBackground",
                         "animationDuration": 2,
                         "animationRepeatCount": 1
-                    },
-                    "actions": {
-                        "goForward": {
-                            "type": "default"
-                        }
                     }
                 },
                 {

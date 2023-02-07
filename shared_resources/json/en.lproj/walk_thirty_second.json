@@ -1,5 +1,5 @@
 {
-    "identifier": "Walk30Seconds",
+    "identifier": "walk-thirty-second",
     "type": "walkAssessment",
     "steps": [
                 {
@@ -30,7 +30,7 @@
                     "actions":{
                         "goForward":{
                             "type":"default",
-                            "buttonTitle":"Get started"
+                            "buttonTitle":"Get Started"
                         }
                     }
                 },

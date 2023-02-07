@@ -11,11 +11,6 @@
                         "type":"fetchable",
                         "imageName":"kinetic_hold_phone_left",
                         "placementType":"topBackground"
-                    },
-                    "actions":{
-                        "goForward":{
-                            "type":"default"
-                        }
                     }
               },
               {

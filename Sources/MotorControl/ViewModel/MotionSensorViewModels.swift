@@ -184,14 +184,6 @@ final class TappingStepViewModel : MotionSensorStepViewModel {
     }
 }
 
-/// View model for a tremor step
-final class TremorStepViewModel : MotionSensorStepViewModel {
-}
-
-/// View model for a walk or balance step. Necessary to differentiate between Tremor because WalkOrBalance steps should not exit on interruptions.
-final class WalkOrBalanceStepViewModel : MotionSensorStepViewModel {
-}
-
 fileprivate func createOutputDirectory() -> URL {
     URL(fileURLWithPath: UUID().uuidString, isDirectory: true, relativeTo: FileManager.default.temporaryDirectory)
 }

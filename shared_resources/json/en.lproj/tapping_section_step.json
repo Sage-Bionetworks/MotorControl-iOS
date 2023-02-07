@@ -13,11 +13,6 @@
                     "imageNames": ["tap_left_1", "tap_left_2"],
                     "animationDuration": 1.0,
                     "placementType": "topBackground"
-                },
-                "actions":{
-                    "goForward":{
-                        "type":"default"
-                    }
                 }
              },
               {

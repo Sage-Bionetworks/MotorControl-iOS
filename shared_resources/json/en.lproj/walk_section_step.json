@@ -13,11 +13,6 @@
                         "imageNames": ["walking_1", "walking_2", "walking_3", "walking_4", "walking_5", "walking_6", "walking_7", "walking_8", "walking_9", "walking_10", "walking_11", "walking_12"],
                         "placementType": "topMarginBackground",
                         "animationDuration": 6.0
-                    },
-                    "actions": {
-                        "goForward": {
-                            "type": "default"
-                        }
                     }
                 },
                 {
@@ -29,11 +24,6 @@
                         "type": "fetchable",
                         "imageName": "turn_up_volume",
                         "placementType": "topMarginBackground"
-                    },
-                    "actions": {
-                        "goForward": {
-                            "type": "default"
-                        }
                     }
                 },
                 {
@@ -45,11 +35,6 @@
                         "type": "fetchable",
                         "imageName": "pants_w_pocket",
                         "placementType": "topBackground"
-                    },
-                    "actions": {
-                        "goForward": {
-                            "type": "default"
-                        }
                     }
                 },
                 {
@@ -63,11 +48,6 @@
                         "placementType": "topMarginBackground",
                         "animationDuration": 2,
                         "animationRepeatCount": 1
-                    },
-                    "actions": {
-                        "goForward": {
-                            "type": "default"
-                        }
                     }
                 },
                 {

@@ -71,12 +71,14 @@ public struct MotorControlAssessmentView : View {
                 TappingStepView(state: nodeState)
                     .modifier(AppBackgroundListener())
             }
-            else if let nodeState = state as? WalkOrBalanceStepViewModel {
-                MotionSensorStepView(state: nodeState)
-            }
-            else if let nodeState = state as? TremorStepViewModel {
-                MotionSensorStepView(state: nodeState)
-                    .modifier(AppBackgroundListener())
+            else if let nodeState = state as? MotionSensorStepViewModel {
+                if nodeState.step is WalkOrBalanceNodeObject {
+                    MotionSensorStepView(state: nodeState)
+                }
+                else {
+                    MotionSensorStepView(state: nodeState)
+                        .modifier(AppBackgroundListener())
+                }
             }
             else {
                 VStack {

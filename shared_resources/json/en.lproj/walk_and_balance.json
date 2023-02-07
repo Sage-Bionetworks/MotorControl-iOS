@@ -1,5 +1,5 @@
 {
-    "identifier":"WalkAndBalance",
+    "identifier":"walk-and-balance",
     "type": "walkAssessment",
     "shouldHideActions":["goBackward", "skip"],
     "steps":[
@@ -33,7 +33,7 @@
                     "actions":{
                         "goForward":{
                             "type":"default",
-                            "buttonTitle":"Get started"
+                            "buttonTitle":"Get Started"
                         }
                      }
                  },

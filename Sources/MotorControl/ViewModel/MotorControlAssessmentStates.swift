@@ -21,15 +21,10 @@ final class MotorControlAssessmentViewModel : AssessmentViewModel {
                                         assessmentState: state,
                                         branchState: currentBranchState)
         }
-        else if let step = node as? WalkOrBalanceNodeObject {
-            return WalkOrBalanceStepViewModel(step,
-                                              assessmentState: state,
-                                              branchState: currentBranchState)
-        }
         else if let step = node as? MotionSensorNodeObject {
-            return TremorStepViewModel(step,
-                                       assessmentState: state,
-                                       branchState: currentBranchState)
+            return MotionSensorStepViewModel(step,
+                                             assessmentState: state,
+                                             branchState: currentBranchState)
         }
         else {
             return super.nodeState(for: node)
