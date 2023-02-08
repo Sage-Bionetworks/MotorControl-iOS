@@ -13,7 +13,7 @@ import ResultModel
 /// State object for motion sensor steps
 class MotionSensorStepViewModel : AbstractMotionControlState {
     var motionConfig: MotionSensorNodeObject { node as! MotionSensorNodeObject }
-    let voicePrompter: TextToSpeechSynthesizer = .init()
+    let voicePrompter: TextToSpeechSynthesizer = .shared
     let spokenInstructions: [Int : String]
     var instructionCache: Set<Int> = []
     let recorder: MotionRecorder
@@ -126,10 +126,6 @@ class MotionSensorStepViewModel : AbstractMotionControlState {
             return ErrorResultObject(identifier: node.identifier, error: error)
         }
     }
-}
-
-/// View model for a tremor step
-final class TremorStepViewModel : MotionSensorStepViewModel {
 }
 
 /// View model for a tapping step

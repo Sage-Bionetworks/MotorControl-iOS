@@ -1,0 +1,85 @@
+{
+    "identifier": "walk",
+    "type": "section",
+    "steps": [
+                {
+                    "identifier": "walkInstructions",
+                    "type": "instruction",
+                    "title": "Walk for 30 seconds",
+                    "detail": "You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
+                    "fullInstructionsOnly": true,
+                    "image": {
+                        "type": "animated",
+                        "imageNames": ["walking_1", "walking_2", "walking_3", "walking_4", "walking_5", "walking_6", "walking_7", "walking_8", "walking_9", "walking_10", "walking_11", "walking_12"],
+                        "placementType": "topMarginBackground",
+                        "animationDuration": 6.0
+                    }
+                },
+                {
+                    "identifier": "volumeUp",
+                    "type": "instruction",
+                    "title": "Turn the volume up",
+                    "detail": "Bring your phone with you and turn up your phone volume so you can hear the instructions while you are walking.",
+                    "image": {
+                        "type": "fetchable",
+                        "imageName": "turn_up_volume",
+                        "placementType": "topMarginBackground"
+                    }
+                },
+                {
+                    "identifier": "pantsWithPocket",
+                    "type": "instruction",
+                    "title": "Pants with front pockets",
+                    "detail": "Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets you can place the phone in the waistband of your pants.",
+                    "image": {
+                        "type": "fetchable",
+                        "imageName": "pants_w_pocket",
+                        "placementType": "topBackground"
+                    }
+                },
+                {
+                    "identifier": "phoneInPocket",
+                    "type": "instruction",
+                    "title": "Put the phone in your pocket",
+                    "detail": "This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
+                    "image": {
+                        "type": "animated",
+                        "imageNames": ["phone_in_pocket_1", "phone_in_pocket_2", "phone_in_pocket_3", "phone_in_pocket_4"],
+                        "placementType": "topMarginBackground",
+                        "animationDuration": 2,
+                        "animationRepeatCount": 1
+                    }
+                },
+                {
+                    "identifier": "countdown",
+                    "type": "backgroundCountdown",
+                    "subtitle": "Begin in...",
+                    "image": {
+                        "type": "fetchable",
+                        "imageName": "walking_10",
+                        "placementType": "fullsizeBackground"
+                    },
+                    "duration": 5,
+                    "spokenInstructions": {
+                        "start": "Place the phone in your pocket."
+                    }
+                },
+                {
+                    "identifier": "motion",
+                    "type": "motion",
+                    "title": "Walk back and forth",
+                    "duration": 30,
+                    "allowScreenLock": true,
+                    "image": {
+                        "type": "fetchable",
+                        "imageName": "walking_10",
+                        "placementType": "fullsizeBackground"
+                    },
+                    "spokenInstructions": {
+                        "start": "Walk for 30 seconds. If you need to turn back, turn gently around as if you are turning around a cone.",
+                        "halfway": "Halfway done.",
+                        "23": "Almost done."
+                    }
+                }
+            ]
+}

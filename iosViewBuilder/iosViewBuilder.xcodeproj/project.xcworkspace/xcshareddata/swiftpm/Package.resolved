@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
         "state": {
           "branch": null,
-          "revision": "7b1f1af7676edb4490a9dec66c7023f1522e6943",
-          "version": "0.8.7"
+          "revision": "0efc7de4679b61c0c27c4117558de87318fd77dc",
+          "version": "0.11.1"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
         "state": {
           "branch": null,
-          "revision": "35fb922cbea12d58de17eb8e0d1125f9f7ab0ca2",
-          "version": "1.5.1"
+          "revision": "4431edad387697d8db879212c4ca8dacbc436b5f",
+          "version": "1.6.0"
         }
       },
       {
@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
         "state": {
           "branch": null,
-          "revision": "e614b0f469230cdec16446842a148a55fe3eb6d3",
-          "version": "1.3.2"
+          "revision": "33a124d928a8499c88ac36543f414d7604f26573",
+          "version": "1.5.1"
         }
       },
       {
@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/Sage-Bionetworks/SharedMobileUI-AppleOS.git",
         "state": {
           "branch": null,
-          "revision": "a3c4ff73d2b222d5a246f617d5c2b062eb3abfe4",
-          "version": "0.17.0"
+          "revision": "02192711c7f739df823bf187bd1b4cad9fe921c1",
+          "version": "0.19.0"
         }
       }
     ]
