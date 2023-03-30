@@ -5,7 +5,6 @@
 //
 
 import XCTest
-import SwiftUI
 
 final class MotorControlUITests: XCTestCase {
 

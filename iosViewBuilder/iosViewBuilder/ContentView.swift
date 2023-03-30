@@ -44,7 +44,7 @@ struct ContentView: View {
         
         var body: some View {
             VStack {
-                ExpandableViewHelper(manifest: manifest)
+                ExpandableViewContainer(manifest: manifest)
                 MotorControlAssessmentView(state)
                     .onChange(of: state.status) { newValue in
                         print("assessment status = \(newValue)")
@@ -55,7 +55,6 @@ struct ContentView: View {
                                 let data = try state.result.jsonEncodedData()
                                 let output = String(data: data, encoding: .utf8)!
                                 print("assessment result = \n\(output)\n")
-                                
                                 try addBranchResults(state.assessmentResult, nil, &manifest)
                             }
                             catch {
@@ -72,9 +71,10 @@ struct ContentView: View {
         }
         
         /**
-         The methods below were pulled from BridgeClientKMM for testing purposes and displaying that motion and tapping files are correctly generated in the automated UI tests
-            - arabara
+         The methods below were pulled from BridgeClientKMM for testing purposes and displaying that motion and tapping files are correctly
+         generated in the automated UI tests - arabara
          */
+        
         private func addBranchResults(_ branchResult: BranchNodeResult, _ stepPath: String? = nil, _ manifest: inout Array<FileInfo>) throws {
             try recursiveAddFiles(branchResult.stepHistory, stepPath, &manifest)
             if let asyncResults = branchResult.asyncResults {
@@ -159,7 +159,7 @@ struct ExpandableView<Header: View, Content: View>: View {
     }
 }
 
-struct ExpandableViewHelper : View {
+struct ExpandableViewContainer : View {
     let manifest: Array<FileInfo>
     
     var body: some View {
