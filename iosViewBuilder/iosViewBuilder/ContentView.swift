@@ -4,6 +4,7 @@
 
 import SwiftUI
 import AssessmentModelUI
+import JsonModel
 
 struct ContentView: View {
     @StateObject var viewModel: ViewModel = .init()
@@ -34,6 +35,7 @@ struct ContentView: View {
     struct AssessmentListener : View {
         @ObservedObject var viewModel: ViewModel
         @ObservedObject var state: AssessmentState
+        @State var manifest = Array<FileInfo>()
         
         init(_ viewModel: ViewModel) {
             self.viewModel = viewModel
@@ -41,28 +43,72 @@ struct ContentView: View {
         }
         
         var body: some View {
-            MotorControlAssessmentView(state)
-                .onChange(of: state.status) { newValue in
-                    print("assessment status = \(newValue)")
-                    
-                    // In a real use-case this is where you might save and upload data
-                    if newValue == .readyToSave {
-                        do {
-                            let data = try state.result.jsonEncodedData()
-                            let output = String(data: data, encoding: .utf8)!
-                            print("assessment result = \n\(output)\n")
+            VStack {
+                ExpandableViewHelper(manifest: manifest)
+                MotorControlAssessmentView(state)
+                    .onChange(of: state.status) { newValue in
+                        print("assessment status = \(newValue)")
+                        
+                        // In a real use-case this is where you might save and upload data
+                        if newValue == .readyToSave {
+                            do {
+                                let data = try state.result.jsonEncodedData()
+                                let output = String(data: data, encoding: .utf8)!
+                                print("assessment result = \n\(output)\n")
+                                
+                                try addBranchResults(state.assessmentResult, nil, &manifest)
+                            }
+                            catch {
+                                assertionFailure("Failed to encode result: \(error)")
+                            }
                         }
-                        catch {
-                            assertionFailure("Failed to encode result: \(error)")
-                        }
+                        
+                        // Exit
+                        guard newValue >= .finished else { return }
+                        viewModel.isPresented = false
+                        viewModel.current = nil
                     }
-                    
-                    // Exit
-                    guard newValue >= .finished else { return }
-                    viewModel.isPresented = false
-                    viewModel.current = nil
-                }
+            }
         }
+        
+        /**
+         The methods below were pulled from BridgeClientKMM for testing purposes and displaying that motion and tapping files are correctly generated in the automated UI tests
+            - arabara
+         */
+        private func addBranchResults(_ branchResult: BranchNodeResult, _ stepPath: String? = nil, _ manifest: inout Array<FileInfo>) throws {
+            try recursiveAddFiles(branchResult.stepHistory, stepPath, &manifest)
+            if let asyncResults = branchResult.asyncResults {
+                try recursiveAddFiles(asyncResults, stepPath, &manifest)
+            }
+        }
+        
+        private func recursiveAddFiles(_ results: [ResultData], _ stepPath: String? = nil, _ manifest: inout Array<FileInfo>) throws {
+            try results.forEach {
+                try recursiveAdd($0, stepPath, &manifest)
+            }
+        }
+        
+        private func recursiveAdd(_ result: ResultData, _ stepPath: String? = nil, _ manifest: inout Array<FileInfo>) throws {
+            let pathSuffix = stepPath.map { "\($0)/" } ?? ""
+            let path = "\(pathSuffix)\(result.identifier)"
+            
+            if let branchResult = result as? BranchNodeResult {
+                try addBranchResults(branchResult, path, &manifest)
+            }
+            else if let collectionResult = result as? CollectionResult {
+                try recursiveAddFiles(collectionResult.children, path, &manifest)
+            }
+            else if let fileArchivable = result as? FileArchivable,
+                    let (fileInfo, _) = try fileArchivable.buildArchivableFileData(at: stepPath),
+                    let manifestInfo = manifestFileInfo(for: fileArchivable, fileInfo: fileInfo) {
+                manifest.append(manifestInfo)
+            }
+        }
+        
+        func manifestFileInfo(for result: FileArchivable, fileInfo: FileInfo) -> FileInfo? {
+            fileInfo
+        }
+        
     }
 }
 
@@ -74,4 +120,72 @@ struct ContentView_Previews: PreviewProvider {
 
 extension Bundle {
     static let module: Bundle = .main
+}
+
+
+/**
+ Helper views below to display data of files that were generated by the measures
+ */
+struct ExpandableView<Header: View, Content: View>: View {
+    @State var isExpanded: Bool = false
+    
+    var background: Color
+    var label: () -> Header
+    var content: () -> Content
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            HStack {
+                label()
+                Spacer()
+                Button(action: {
+                    withAnimation{ isExpanded.toggle() }
+                }) {
+                    Image(systemName: isExpanded ? "chevron.up.circle.fill" : "chevron.down.circle.fill")
+                        .font(.system(size: 25))
+                        .foregroundColor(.black)
+                        .padding()
+                }
+            }
+            .background(background)
+            
+            if isExpanded {
+                VStack {
+                    content()
+                }
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: isExpanded ? .none : 0)
+            }
+        }
+    }
+}
+
+struct ExpandableViewHelper : View {
+    let manifest: Array<FileInfo>
+    
+    var body: some View {
+        ForEach(0..<manifest.count, id: \.self) { index in
+            
+            ExpandableView(background: .sageWhite) {
+                Text(manifest[index].filename)
+                    .accessibilityLabel(manifest[index].filename)
+                    .padding()
+            } content: {
+                ManifestText(file: manifest[index])
+            }
+        }
+    }
+}
+
+struct ManifestText: View {
+    let file: FileInfo
+    
+    var body: some View {
+        VStack {
+            Text("Timestamp: \(file.timestamp.description)")
+            Text("Content Type: \(file.contentType?.description ?? "nil")")
+            Text("Identifier: \(file.identifier?.description ?? "nil")")
+            Text("Step Path: \(file.stepPath?.description ?? "nil")")
+            Text("JSON Schema: \(file.jsonSchema?.description ?? "nil")")
+        }
+    }
 }
