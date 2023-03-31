@@ -42,11 +42,6 @@
                      "imageNames":["kinetic_hold_phone_left", "finger_to_nose_4", "finger_to_nose_5"],
                      "placementType":"topBackground",
                      "animationDuration": 4
-                 },
-                 "actions":{
-                     "goForward":{
-                         "type":"default"
-                     }
                  }
              },
              {
@@ -63,11 +58,6 @@
                     "type":"fetchable",
                     "imageName":"finger_to_nose_1",
                     "placementType":"topBackground"
-                },
-                "actions":{
-                    "goForward":{
-                        "type":"default"
-                    }
                 }
              },
              {
@@ -79,11 +69,6 @@
                      "type":"fetchable",
                      "imageName": "finger_to_nose_2",
                      "placementType":"topBackground"
-                 },
-                 "actions":{
-                     "goForward":{
-                         "type":"default"
-                     }
                  }
              },
              {
@@ -96,11 +81,6 @@
                      "imageNames":["kinetic_hold_phone_left", "finger_to_nose_4", "finger_to_nose_5"],
                      "placementType":"topBackground",
                      "animationDuration": 4
-                 },
-                 "actions":{
-                     "goForward":{
-                         "type":"default"
-                     }
                  }
              },
              {
@@ -117,18 +97,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "detail":"You have completed the Finger-to-Nose activity.",
-                 "image":{
-                     "type":"fetchable",
-                     "imageName":"completion_tremor",
-                     "placementType":"topBackground"
-                 },
-                 "actions": {
-                     "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Done"
-                     }
-                 }
+                 "detail":"You have completed the Finger-to-Nose activity."
              }
         ]
 }

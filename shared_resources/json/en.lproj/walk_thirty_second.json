@@ -44,16 +44,8 @@
                     "type":"completion",
                     "title":"Great job!",
                     "detail":"You have completed the 30 second walk activity.",
-                    "image":{
-                        "type":"fetchable",
-                        "imageName":"completion_walk",
-                        "placementType":"topBackground"
-                    },
-                    "actions": {
-                        "goForward":{
-                           "type":"default",
-                           "buttonTitle":"Done"
-                        }
+                    "spokenInstructions": {
+                        "start": "Great job, you are done with the 30 second walk activity."
                     }
                 }
             ]

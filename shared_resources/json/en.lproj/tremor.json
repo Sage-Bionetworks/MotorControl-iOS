@@ -44,11 +44,6 @@
                     "type":"fetchable",
                     "imageName": "tremor_hold_phone",
                     "placementType":"topBackground"
-                },
-                "actions":{
-                    "goForward":{
-                        "type":"default"
-                    }
                 }
              },
              {
@@ -60,11 +55,6 @@
                     "type":"fetchable",
                     "imageName":"sitting",
                     "placementType":"topBackground"
-                },
-                "actions":{
-                    "goForward":{
-                        "type":"default"
-                    }
                 }
              },
              {
@@ -81,18 +71,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "detail":"You have completed the Tremor Test activity.",
-                 "image":{
-                     "type":"fetchable",
-                     "imageName":"completion_tremor",
-                     "placementType":"topBackground"
-                 },
-                 "actions": {
-                     "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Done"
-                     }
-                 }
+                 "detail":"You have completed the Tremor Test activity."
              }
         ]
 }

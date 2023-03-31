@@ -140,4 +140,4 @@ struct MotionSensorStepView_Previews: PreviewProvider {
     }
 }
 
-fileprivate let example1 = TremorNodeObject(identifier: "example", title: "Here's some text that tells you to do something", imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle))
+fileprivate let example1 = MotionSensorNodeObject(identifier: "example", title: "Here's some text that tells you to do something", imageInfo: FetchableImage(imageName: "hold_phone_left", bundle: SharedResources.bundle))

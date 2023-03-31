@@ -52,7 +52,7 @@
                 },
                 {
                     "identifier": "countdown",
-                    "type": "countdown",
+                    "type": "backgroundCountdown",
                     "subtitle": "Begin in...",
                     "image": {
                         "type": "fetchable",
@@ -66,9 +66,10 @@
                 },
                 {
                     "identifier": "motion",
-                    "type": "walk",
+                    "type": "motion",
                     "title": "Walk back and forth",
                     "duration": 30,
+                    "allowScreenLock": true,
                     "image": {
                         "type": "fetchable",
                         "imageName": "walking_10",
@@ -77,8 +78,7 @@
                     "spokenInstructions": {
                         "start": "Walk for 30 seconds. If you need to turn back, turn gently around as if you are turning around a cone.",
                         "halfway": "Halfway done.",
-                        "23": "Almost done.",
-                        "end":"Great job! You’re done with this task."
+                        "23": "Almost done."
                     }
                 }
             ]
