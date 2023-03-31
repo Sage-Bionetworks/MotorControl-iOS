@@ -67,7 +67,7 @@ struct TappingStepView: View {
     @ViewBuilder
     private func singleTappingButton(target: TappingButtonIdentifier, buttonId: String) -> some View {
         Text("Tap", bundle: SharedResources.bundle)
-            .accessibilityAddTraits(.isButton)
+//            .accessibilityAddTraits(.isButton)
             .accessibilityLabel(buttonId)
             .frame(width: 100, height: 100)
             .foregroundColor(Color.textForeground)
