@@ -65,9 +65,9 @@ struct TappingStepView: View {
     }
     
     @ViewBuilder
-    private func singleTappingButton(target: TappingButtonIdentifier, buttonId: String) -> some View {
+    private func singleTappingButton(target: TappingButtonIdentifier) -> some View {
         Text("Tap", bundle: SharedResources.bundle)
-            .accessibilityLabel(buttonId)
+            .accessibilityLabel("\(target.rawValue.uppercased())_TAP")
             .frame(width: 100, height: 100)
             .foregroundColor(Color.textForeground)
             .background(surveyTint.saturation(2))
@@ -93,9 +93,9 @@ struct TappingStepView: View {
     private func tappingButtons() -> some View {
         HStack {
             Spacer()
-            singleTappingButton(target: .left, buttonId: "LEFT_TAP")
+            singleTappingButton(target: .left)
             Spacer()
-            singleTappingButton(target: .right, buttonId: "RIGHT_TAP")
+            singleTappingButton(target: .right)
             Spacer()
         }
     }

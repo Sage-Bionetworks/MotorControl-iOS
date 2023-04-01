@@ -28,7 +28,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         next(app)
         conductMotion(app, nextButtonString: "Next", duration: 40)
-        conductMotion(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductMotion(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "right_tremor.json",
             "left_tremor.json"
         ])
@@ -46,7 +46,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         next(app)
         next(app)
-        conductMotion(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductMotion(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "left_tremor.json"
         ])
     }
@@ -63,7 +63,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         next(app)
         next(app)
-        conductMotion(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductMotion(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "right_tremor.json"
         ])
     }
@@ -83,7 +83,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         next(app)
         conductMotion(app, nextButtonString: "Next", duration: 40)
-        conductMotion(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductMotion(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "right_tremor.json",
             "left_tremor.json"
         ])
@@ -103,7 +103,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         next(app)
         next(app)
-        conductMotion(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductMotion(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "left_tremor.json"
         ])
     }
@@ -122,7 +122,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         next(app)
         next(app)
-        conductMotion(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductMotion(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "right_tremor.json"
         ])
     }
@@ -140,7 +140,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         next(app)
         conductTapping(app, nextButtonString: "Next", duration: 40)
-        conductTapping(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductTapping(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "right_tapping.json",
             "left_tapping.json",
             "right_tapping",
@@ -160,7 +160,7 @@ final class MotorControlUITests: XCTestCase {
         handSelectionLeftOrRight(app, hand: "LEFT")
         next(app)
         next(app)
-        conductTapping(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductTapping(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "left_tapping.json",
             "left_tapping"
         ])
@@ -178,7 +178,7 @@ final class MotorControlUITests: XCTestCase {
         handSelectionLeftOrRight(app, hand: "RIGHT")
         next(app)
         next(app)
-        conductTapping(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductTapping(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "right_tapping.json",
             "right_tapping",
         ])
@@ -196,7 +196,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         next(app)
         next(app)
-        conductMotion(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductMotion(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "walk_motion.json"
         ])
     }
@@ -215,7 +215,7 @@ final class MotorControlUITests: XCTestCase {
         next(app)
         conductMotion(app, nextButtonString: "Next", duration: 40)
         next(app)
-        conductMotion(app, nextButtonString: "Done", duration: 40, expectedFiles: [
+        conductMotion(app, nextButtonString: "Exit", duration: 40, expectedFiles: [
             "walk_motion.json",
             "balance_motion.json"
         ])
@@ -282,7 +282,7 @@ final class MotorControlUITests: XCTestCase {
         
         let buttons = [leftTapButton, rightTapButton]
         for ii in 0..<25 {
-            buttons[ii%2].tap()
+            buttons[ii % 2].tap()
         }
         
         let success = app.buttons[nextButtonString].waitForExistence(timeout: TimeInterval(floatLiteral: duration))
