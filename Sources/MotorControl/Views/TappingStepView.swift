@@ -67,6 +67,7 @@ struct TappingStepView: View {
     @ViewBuilder
     private func singleTappingButton(target: TappingButtonIdentifier) -> some View {
         Text("Tap", bundle: SharedResources.bundle)
+            .accessibilityLabel("\(target.rawValue.uppercased())_TAP")
             .frame(width: 100, height: 100)
             .foregroundColor(Color.textForeground)
             .background(surveyTint.saturation(2))
@@ -83,7 +84,7 @@ struct TappingStepView: View {
                         state.startRecorder()
                         withAnimation(.linear(duration: state.motionConfig.duration)) {
                             progress = 1.0
-                        } 
+                        }
                     }
             )
     }
