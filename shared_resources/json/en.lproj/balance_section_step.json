@@ -1,0 +1,69 @@
+{
+    "identifier": "balance",
+    "type": "section",
+    "steps": [
+                {
+                    "identifier": "turnAroundInstructions",
+                    "type": "instruction",
+                    "title": "Turn around, and then stand still",
+                    "detail": "You’ll turn around in a circle and stand still, with your feet shoulder-width apart.\n\nRest your arms by your side and try to avoid moving for 30 seconds.",
+                    "fullInstructionsOnly": true,
+                    "image": {
+                        "type": "animated",
+                        "imageNames": ["balance_1", "balance_1", "balance_1", "balance_2", "balance_3", "balance_4", "balance_5", "balance_6", "balance_7", "balance_8", "balance_9", "balance_10", "balance_11"],
+                        "placementType": "topMarginBackground",
+                        "animationRepeatCount": 1,
+                        "animationDuration": 6.5
+                    },
+                    "spokenInstructions": {
+                        "start": "Take your phone out to review the instructions for the balance test."
+                    }
+                },
+                {
+                    "identifier": "phoneInPocket",
+                    "type": "instruction",
+                    "title": "Put the phone in your pocket",
+                    "detail": "This test measures how well you balance and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
+                    "fullInstructionsOnly": true,
+                    "image": {
+                        "type": "animated",
+                        "imageNames": ["phone_in_pocket_1", "phone_in_pocket_2", "phone_in_pocket_3", "phone_in_pocket_4"],
+                        "placementType": "topBackground",
+                        "animationDuration": 2,
+                        "animationRepeatCount": 1
+                    }
+                },
+                {
+                    "identifier": "countdown",
+                    "type": "backgroundCountdown",
+                    "subtitle": "Begin in...",
+                    "fullInstructionsOnly": true,
+                    "image": {
+                        "type": "fetchable",
+                        "imageName": "balance_1",
+                        "placementType": "fullsizeBackground"
+                    },
+                    "duration": 5,
+                    "spokenInstructions": {
+                        "start": "Place the phone in your pocket."
+                    }
+                },
+                {
+                    "identifier": "motion",
+                    "type": "motion",
+                    "title": "Turn around and then stand still",
+                    "duration": 30,
+                    "allowScreenLock": true,
+                    "image": {
+                        "type": "fetchable",
+                        "imageName": "balance_1",
+                        "placementType": "fullsizeBackground"
+                    },
+                    "spokenInstructions": {
+                        "start": "Turn around in a full circle, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to not move.",
+                        "halfway": "Halfway done.",
+                        "23": "Almost done."
+                    }
+                }
+            ]
+}

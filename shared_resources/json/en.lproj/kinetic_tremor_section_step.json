@@ -11,31 +11,23 @@
                         "type":"fetchable",
                         "imageName":"kinetic_hold_phone_left",
                         "placementType":"topBackground"
-                    },
-                    "actions":{
-                        "goForward":{
-                            "type":"default",
-                            "buttonTitle":"Start"
-                        }
                     }
               },
               {
                     "identifier":"countdown",
                     "type":"countdown",
                     "detail":"Begin in...",
-                    "duration":5,
-                    "commands":["playSoundOnStart", "transitionAutomatically"]
+                    "duration":5
               },
               {
                   "identifier":"tremor",
-                  "type":"tremor",
+                  "type":"motion",
                   "duration":30,
                   "image":{
                       "type":"fetchable",
                       "imageName":"kinetic_hold_phone_left",
                       "placementType":"fullsizeBackground"
                   },
-                  "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
                   "title": "Touch your nose with your %@ index finger",
                   "spokenInstructions":{
                       "start":"Touch your nose with your %@ index finger",

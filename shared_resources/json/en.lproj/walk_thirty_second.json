@@ -1,0 +1,52 @@
+{
+    "identifier": "walk-thirty-second",
+    "type": "walkAssessment",
+    "steps": [
+                {
+                    "identifier":"introduction",
+                    "type":"overview",
+                    "title":"30 Second Walk",
+                    "subtitle":"In this activity, you will be walking continuously at your normal pace for 30 seconds.",
+                    "image":{
+                        "type":"animated",
+                        "imageNames":["walking_1", "walking_2", "walking_3", "walking_4", "walking_5", "walking_6", "walking_7", "walking_8", "walking_9", "walking_10", "walking_11", "walking_12"],
+                        "placementType":"topMarginBackground",
+                        "animationDuration":5.0
+                    },
+                    "icons": [
+                        {
+                            "icon":"smooth_surface",
+                            "title": "A SMOOTH SURFACE"
+                        },
+                        {
+                            "icon":"pants_with_pockets",
+                            "title": "PANTS WITH POCKETS"
+                        },
+                        {
+                            "icon":"walking_shoes",
+                            "title": "WALKING SHOES"
+                        }
+                    ],
+                    "actions":{
+                        "goForward":{
+                            "type":"default",
+                            "buttonTitle":"Get Started"
+                        }
+                    }
+                },
+                {
+                    "identifier":"walk",
+                    "type":"transform",
+                    "resourceName": "walk_section_step"
+                },
+                {
+                    "identifier":"completion",
+                    "type":"completion",
+                    "title":"Great job!",
+                    "detail":"You have completed the 30 second walk activity.",
+                    "spokenInstructions": {
+                        "start": "Great job, you are done with the 30 second walk activity."
+                    }
+                }
+            ]
+}

@@ -11,6 +11,8 @@
 		8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8004DF0B28AFFE1D0001A1F8 /* ContentView.swift */; };
 		8004DF0E28AFFE1F0001A1F8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8004DF0D28AFFE1F0001A1F8 /* Assets.xcassets */; };
 		8004DF1128AFFE1F0001A1F8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8004DF1028AFFE1F0001A1F8 /* Preview Assets.xcassets */; };
+		804C521229D7AEDF00F97AD7 /* MotorControlUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804C521129D7AEDF00F97AD7 /* MotorControlUITests.swift */; };
+		80F71BDA2978B66000FD19E4 /* WalkingAssessmentObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F71BD92978B66000FD19E4 /* WalkingAssessmentObject.swift */; };
 		FF0B3ACC28ECF83F003D42AB /* JsonModel in Frameworks */ = {isa = PBXBuildFile; productRef = FF0B3ACB28ECF83F003D42AB /* JsonModel */; };
 		FF0B3ACF28ECF85E003D42AB /* AssessmentModel in Frameworks */ = {isa = PBXBuildFile; productRef = FF0B3ACE28ECF85E003D42AB /* AssessmentModel */; };
 		FF0B3AD128ECF85E003D42AB /* AssessmentModelUI in Frameworks */ = {isa = PBXBuildFile; productRef = FF0B3AD028ECF85E003D42AB /* AssessmentModelUI */; };
@@ -36,13 +38,26 @@
 		FFA0978E28ECFB74003AF899 /* LocalPreview in Frameworks */ = {isa = PBXBuildFile; productRef = FFA0978D28ECFB74003AF899 /* LocalPreview */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		804C521529D7AEDF00F97AD7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8004DEFE28AFFE1D0001A1F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8004DF0528AFFE1D0001A1F8;
+			remoteInfo = iosViewBuilder;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		8004DF0628AFFE1D0001A1F8 /* iosViewBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosViewBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8004DF0928AFFE1D0001A1F8 /* iosViewBuilderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iosViewBuilderApp.swift; sourceTree = "<group>"; };
 		8004DF0B28AFFE1D0001A1F8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8004DF0D28AFFE1F0001A1F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8004DF1028AFFE1F0001A1F8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		804C520F29D7AEDF00F97AD7 /* MotorControlUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotorControlUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		804C521129D7AEDF00F97AD7 /* MotorControlUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotorControlUITests.swift; sourceTree = "<group>"; };
 		807B71FA28D507D2008A9F51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		80F71BD92978B66000FD19E4 /* WalkingAssessmentObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingAssessmentObject.swift; sourceTree = "<group>"; };
 		FF0B3AD928ECF8B2003D42AB /* MotionSensorViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotionSensorViewModels.swift; sourceTree = "<group>"; };
 		FF0B3ADA28ECF8B2003D42AB /* MotorControlAssessmentStates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControlAssessmentStates.swift; sourceTree = "<group>"; };
 		FF0B3ADB28ECF8B2003D42AB /* MotorControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MotorControl.swift; sourceTree = "<group>"; };
@@ -77,6 +92,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		804C520C29D7AEDF00F97AD7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -85,6 +107,7 @@
 			children = (
 				FFA0978C28ECFB67003AF899 /* MotorControl-iOS */,
 				8004DF0828AFFE1D0001A1F8 /* iosViewBuilder */,
+				804C521029D7AEDF00F97AD7 /* MotorControlUITests */,
 				8004DF0728AFFE1D0001A1F8 /* Products */,
 				8004DF3528AFFFCE0001A1F8 /* Frameworks */,
 			);
@@ -94,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				8004DF0628AFFE1D0001A1F8 /* iosViewBuilder.app */,
+				804C520F29D7AEDF00F97AD7 /* MotorControlUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,6 +148,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		804C521029D7AEDF00F97AD7 /* MotorControlUITests */ = {
+			isa = PBXGroup;
+			children = (
+				804C521129D7AEDF00F97AD7 /* MotorControlUITests.swift */,
+			);
+			path = MotorControlUITests;
 			sourceTree = "<group>";
 		};
 		FF0B3AD728ECF8B2003D42AB /* MotorControl */ = {
@@ -162,6 +194,7 @@
 				FF0B3ADF28ECF8B2003D42AB /* MotionSensorNodeObject.swift */,
 				FF0B3AE028ECF8B2003D42AB /* HandInstructionObject.swift */,
 				FF0B3AE128ECF8B2003D42AB /* TwoHandAssessmentObject.swift */,
+				80F71BD92978B66000FD19E4 /* WalkingAssessmentObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -219,6 +252,24 @@
 			productReference = 8004DF0628AFFE1D0001A1F8 /* iosViewBuilder.app */;
 			productType = "com.apple.product-type.application";
 		};
+		804C520E29D7AEDF00F97AD7 /* MotorControlUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 804C521929D7AEDF00F97AD7 /* Build configuration list for PBXNativeTarget "MotorControlUITests" */;
+			buildPhases = (
+				804C520B29D7AEDF00F97AD7 /* Sources */,
+				804C520C29D7AEDF00F97AD7 /* Frameworks */,
+				804C520D29D7AEDF00F97AD7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				804C521629D7AEDF00F97AD7 /* PBXTargetDependency */,
+			);
+			name = MotorControlUITests;
+			productName = MotorControlUITests;
+			productReference = 804C520F29D7AEDF00F97AD7 /* MotorControlUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -226,11 +277,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					8004DF0528AFFE1D0001A1F8 = {
 						CreatedOnToolsVersion = 13.4.1;
+					};
+					804C520E29D7AEDF00F97AD7 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 8004DF0528AFFE1D0001A1F8;
 					};
 				};
 			};
@@ -253,6 +308,7 @@
 			projectRoot = "";
 			targets = (
 				8004DF0528AFFE1D0001A1F8 /* iosViewBuilder */,
+				804C520E29D7AEDF00F97AD7 /* MotorControlUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -264,6 +320,13 @@
 			files = (
 				8004DF1128AFFE1F0001A1F8 /* Preview Assets.xcassets in Resources */,
 				8004DF0E28AFFE1F0001A1F8 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		804C520D29D7AEDF00F97AD7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +347,7 @@
 				FF0B3AF828ECF8B2003D42AB /* MotionSensorStepView.swift in Sources */,
 				8004DF0C28AFFE1D0001A1F8 /* ContentView.swift in Sources */,
 				FF0B3AED28ECF8B2003D42AB /* MotorControlAssessmentStates.swift in Sources */,
+				80F71BDA2978B66000FD19E4 /* WalkingAssessmentObject.swift in Sources */,
 				8004DF0A28AFFE1D0001A1F8 /* iosViewBuilderApp.swift in Sources */,
 				FF0B3AF928ECF8B2003D42AB /* TappingStepView.swift in Sources */,
 				FF0B3AEC28ECF8B2003D42AB /* MotionSensorViewModels.swift in Sources */,
@@ -296,7 +360,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		804C520B29D7AEDF00F97AD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				804C521229D7AEDF00F97AD7 /* MotorControlUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		804C521629D7AEDF00F97AD7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8004DF0528AFFE1D0001A1F8 /* iosViewBuilder */;
+			targetProxy = 804C521529D7AEDF00F97AD7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8004DF2828AFFE1F0001A1F8 /* Debug */ = {
@@ -430,6 +510,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,6 +541,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -470,6 +552,44 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		804C521729D7AEDF00F97AD7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = motorcontrol.MotorControlUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iosViewBuilder;
+			};
+			name = Debug;
+		};
+		804C521829D7AEDF00F97AD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = motorcontrol.MotorControlUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = iosViewBuilder;
 			};
 			name = Release;
 		};
@@ -490,6 +610,15 @@
 			buildConfigurations = (
 				8004DF2B28AFFE1F0001A1F8 /* Debug */,
 				8004DF2C28AFFE1F0001A1F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		804C521929D7AEDF00F97AD7 /* Build configuration list for PBXNativeTarget "MotorControlUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				804C521729D7AEDF00F97AD7 /* Debug */,
+				804C521829D7AEDF00F97AD7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

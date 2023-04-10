@@ -12,16 +12,22 @@ import SharedResources
 public enum MotorControlIdentifier : String, Codable, StringEnumSet, DocumentableStringEnum {
     
     /// The tremor test.
-    case tremor = "Tremor"
+    case tremor = "tremor"
     
     /// The kinetic tremor, or finger to nose, test.
-    case kineticTremor = "Kinetic_Tremor"
+    case kineticTremor = "kinetic-tremor"
     
     /// The tapping test.
-    case tapping = "Finger_Tapping"
+    case tapping = "finger-tapping"
+
+    /// The 30 Second Walk test.
+    case walkThirtySecond = "walk-thirty-second"
+    
+    /// The Walk and Balance test.
+    case walkAndBalance = "walk-and-balance"
 
     public func instantiateAssessmentState() throws -> AssessmentState {
-        let filename = self.rawValue
+        let filename = self.rawValue.replacingOccurrences(of: "-", with: "_")
         guard let url = SharedResources.bundle.url(forResource: filename, withExtension: "json")
         else {
             throw ValidationError.unexpectedNullObject("Could not find JSON file \(filename).")
@@ -40,10 +46,12 @@ final class MotorControlFactory : AssessmentFactory {
         super.init()
         
         assessmentSerializer.add(TwoHandAssessmentObject())
+        assessmentSerializer.add(WalkingAssessmentObject())
         
         nodeSerializer.add(HandInstructionObject())
         nodeSerializer.add(TappingNodeObject())
-        nodeSerializer.add(TremorNodeObject())
+        nodeSerializer.add(MotionSensorNodeObject())
+        nodeSerializer.add(BackgroundCountdownStepObject(identifier: "example", duration: 5))
         
         resultSerializer.add(TappingResultObject())
     }

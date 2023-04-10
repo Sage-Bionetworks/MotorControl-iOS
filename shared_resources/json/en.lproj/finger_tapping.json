@@ -1,5 +1,5 @@
 {
-    "identifier":"Tapping",
+    "identifier":"finger-tapping",
     "type": "twoHandAssessment",
     "shouldHideActions": ["goBackward", "skip"],
     "steps":[
@@ -23,7 +23,7 @@
                 "actions":{
                     "goForward":{
                         "type":"default",
-                        "buttonTitle":"Get started"
+                        "buttonTitle":"Get Started"
                     }
                  }
              },
@@ -38,12 +38,6 @@
                      "imageNames":["tap_left_1", "tap_left_2"],
                      "placementType":"topBackground",
                      "animationDuration": 1
-                },
-                "actions":{
-                    "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Got it"
-                    }
                 }
              },
              {
@@ -61,12 +55,6 @@
                     "imageNames": ["f_flat_surface", "place_phone", "phone_on_surface"],
                     "animationDuration": 3.0,
                     "placementType": "topBackground"
-                },
-                "actions":{
-                    "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Did it"
-                    }
                 }
              },
              {
@@ -83,18 +71,7 @@
                  "identifier":"completion",
                  "type":"completion",
                  "title":"Great job!",
-                 "detail":"You just completed the Tapping activity.",
-                 "image":{
-                     "type":"fetchable",
-                     "imageName":"completion_finger_tapping",
-                     "placementType":"topBackground"
-                 },
-                 "actions": {
-                     "goForward":{
-                        "type":"default",
-                        "buttonTitle":"Done"
-                     }
-                 }
+                 "detail":"You just completed the Tapping activity."
              }
         ]
 }
