@@ -29,14 +29,11 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(name: "JsonModel",
-                 url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
+        .package(url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
                  "1.6.0"..<"3.0.0"),
-        .package(name: "AssessmentModel",
-                 url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
-                 from: "0.11.1"),
-        .package(name: "MobilePassiveData",
-                 url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
+        .package(url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
+                 "0.12.0"..<"2.0.0"),
+        .package(url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
                  from: "1.5.0"),
     ],
     targets: [
@@ -44,16 +41,16 @@ let package = Package(
             name: "MotorControl",
             dependencies: [
                 "SharedResources",
-                .product(name: "JsonModel", package: "JsonModel"),
-                .product(name: "AssessmentModel", package: "AssessmentModel"),
-                .product(name: "AssessmentModelUI", package: "AssessmentModel"),
-                .product(name: "MobilePassiveData", package: "MobilePassiveData"),
-                .product(name: "MotionSensor", package: "MobilePassiveData"),
+                .product(name: "JsonModel", package: "JsonModel-Swift"),
+                .product(name: "AssessmentModel", package: "AssessmentModelKMM"),
+                .product(name: "AssessmentModelUI", package: "AssessmentModelKMM"),
+                .product(name: "MobilePassiveData", package: "MobilePassiveData-SDK"),
+                .product(name: "MotionSensor", package: "MobilePassiveData-SDK"),
             ]
         ),
         .target(name: "SharedResources",
                 dependencies: [
-                    .product(name: "JsonModel", package: "JsonModel"),
+                    .product(name: "JsonModel", package: "JsonModel-Swift"),
                 ],
                 path: "shared_resources"),
         
