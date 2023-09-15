@@ -29,12 +29,12 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
-                 "1.6.0"..<"3.0.0"),
-        .package(url: "https://github.com/Sage-Bionetworks/AssessmentModelKMM.git",
-                 "0.12.0"..<"2.0.0"),
-        .package(url: "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
-                 from: "1.5.0"),
+        .package(url: "https://github.com/BridgeDigitalHealth/JsonModel-Swift.git",
+                 from: "2.3.1"),
+        .package(url: "https://github.com/BridgeDigitalHealth/AssessmentModelKMM.git",
+                 from: "1.0.2"),
+        .package(url: "https://github.com/BridgeDigitalHealth/MobilePassiveData-SDK.git",
+                 from: "1.6.2"),
     ],
     targets: [
         .target(
